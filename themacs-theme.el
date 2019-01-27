@@ -28,6 +28,25 @@
 ;;; Code:
 
 (deftheme themacs)
+
+;; TODO: how can we make use of this alist in the face definitions below?
+;; https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el#L104
+(defvar themacs-default-colors-alist
+  '(("themacs-white"       . "#FFFFFF")
+    ("themacs-white-1"     . "#EEEEEE") ;; off-white
+    ("themacs-offwhite"    . "#EEEEEE")
+    ("themacs-lightblue"   . "#84BDF4")
+    ("themacs-limegreen"   .  "#55FF55")
+    ("themacs-cyan"        .  "#00D7FF")
+    ("themacs-gray"        .  "#aaaaaa")
+    ("themacs-darkgray"    .  "#555555")
+    ("themacs-paleyellow"  .  "#FFBF5A")
+    ("themacs-purplepink"  .  "#E81050")
+    ("themacs-orange"      .  "#E86310")
+    ("themacs-red"         .  "#E81022")
+    )
+  "List of Themacs colors.")
+
 (let ((class '((class color) (min-colors 89)))
       (fg1 "#eeeeee") ;; off-white
       (fg2 "#dbdbdb")
