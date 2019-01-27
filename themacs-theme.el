@@ -29,7 +29,7 @@
 
 (deftheme themacs)
 (let ((class '((class color) (min-colors 89)))
-      (fg1 "#eeeeee") ;; offwhite
+      (fg1 "#eeeeee") ;; off-white
       (fg2 "#dbdbdb")
       (fg3 "#c8c8c8")
       (fg4 "#b5b5b5")
@@ -37,17 +37,18 @@
       (bg2 "#243443")
       (bg3 "#374554")
       (bg4 "#4a5764")
-      (builtin "#84BDF4")
-      (keyword "#84BDF4")
-      (const   "#00d7ff")
-      (comment "#aaaaaa")
-      (discrete "#555555")
-      (func    "#55FF55")
-      (str     "#FFBF5A") ;"#F48313") ;"#55FFFF")
-      (type    "#55FF55")
-      (var     "#55FF55")
-      (warning "#e81050")
-      (warning2 "#e86310")
+      (builtin "#84BDF4")  ;; light-blue
+      (keyword "#84BDF4")  ;; light-blue
+      (const   "#00d7ff")  ;; cyan
+      (comment "#aaaaaa")  ;; grey
+      (discrete "#555555") ;; dark grey
+      (func    "#55FF55")  ;; lime green
+      (str     "#FFBF5A")  ;; pale yellow
+      (type    "#55FF55")  ;; lime green
+      (var     "#55FF55")  ;; lime green
+      (warning "#e81050")  ;; purple-pink
+      (warning2 "#e86310") ;; orange
+      (error1   "#E81022") ;; red
       (orange "#ff9800"))
   (custom-theme-set-faces
    'themacs
