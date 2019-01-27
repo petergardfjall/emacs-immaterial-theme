@@ -68,15 +68,15 @@
    `(term-color-black ((,class (:foreground ,fg2 :background nil))))
    ;; region selection
    `(region ((,class (:background ,bg2))))
-   ;;`(highlight ((,class (:foreground ,fg3 :background ,bg3))))
    `(highlight ((,class (:background ,bg2))))
    `(hl-line ((,class (:background  ,bg2))))
    ;; linum-mode column
    `(linum  ((t (:foreground ,discrete :background ,bg1 :height 1.0 :weight normal))))
    `(fringe ((,class (:background ,bg1))))
    `(cursor ((,class (:background ,orange))))
-   `(show-paren-match-face ((,class (:background ,warning))))
-   `(isearch ((,class (:bold t :foreground ,warning :background ,bg3))))
+   `(show-paren-match-face ((,class (:background ,func))))
+   `(show-paren-mismatch-face ((,class (:background ,error1))))
+   `(isearch ((,class (:bold t :foreground ,fg1 :background ,bg2))))
    `(mode-line ((,class (:box (:line-width 1 :color ,keyword) :bold t :foreground ,fg1 :background ,bg1))))
    ;; mode-line
    `(mode-line           ((,class (:foreground ,fg1 :background ,bg1 :box (:color ,keyword :line-width 1)))))
