@@ -77,11 +77,15 @@
    `(cursor ((,class (:background ,orange))))
    `(show-paren-match-face ((,class (:background ,warning))))
    `(isearch ((,class (:bold t :foreground ,warning :background ,bg3))))
-   `(mode-line ((,class (:box (:line-width 1 :color nil) :bold t :foreground ,fg4 :background ,bg2))))
-   `(mode-line-inactive ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,var :background ,bg1 :weight normal))))
-   `(mode-line-buffer-id ((,class (:bold t :foreground ,fg1 :background nil))))
-   `(mode-line-highlight ((,class (:foreground ,comment :box nil :weight normal))))
-   `(mode-line-emphasis ((,class (:foreground ,fg1))))
+   `(mode-line ((,class (:box (:line-width 1 :color ,keyword) :bold t :foreground ,fg1 :background ,bg1))))
+   ;; mode-line
+   `(mode-line           ((,class (:foreground ,fg1 :background ,bg1 :box (:color ,keyword :line-width 1)))))
+   `(mode-line-buffer-id ((,class (:inherit bold :foreground ,keyword))))
+   `(mode-line-inactive  ((,class (:foreground ,fg1 :background ,bg1  :box (:color ,keyword :line-width 1)))))
+   ;; powerline
+   `(powerline-active1 ((,class (:background ,discrete :foreground ,fg1))))
+   `(powerline-inactive1 ((,class (:background ,bg2 :foreground ,fg1))))
+
    `(vertical-border ((,class (:foreground ,fg3))))
    `(minibuffer-prompt ((,class (:bold t :foreground ,keyword))))
    `(default-italic ((,class (:italic t))))
