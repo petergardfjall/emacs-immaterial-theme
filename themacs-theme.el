@@ -29,46 +29,55 @@
 
 (deftheme themacs)
 
-;; TODO: how can we make use of this alist in the face definitions below?
-;; https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el#L104
-(defvar themacs-default-colors-alist
-  '(("themacs-white"       . "#FFFFFF")
-    ("themacs-white-1"     . "#EEEEEE") ;; off-white
-    ("themacs-offwhite"    . "#EEEEEE")
-    ("themacs-lightblue"   . "#84BDF4")
-    ("themacs-limegreen"   .  "#55FF55")
-    ("themacs-cyan"        .  "#00D7FF")
-    ("themacs-gray"        .  "#aaaaaa")
-    ("themacs-darkgray"    .  "#555555")
-    ("themacs-paleyellow"  .  "#FFBF5A")
-    ("themacs-purplepink"  .  "#E81050")
-    ("themacs-orange"      .  "#E86310")
-    ("themacs-red"         .  "#E81022")
-    )
-  "List of Themacs colors.")
+(defun themacs-color (color-name)
+  (let ((colmap '(("white"       . "#FFFFFF")
+		  ("white-1"     . "#EEEEEE") ;; off-white
+		  ("gray+2"      . "#dbdbdb")
+		  ("gray+1"      . "#c8c8c8")
+		  ("gray"        . "#b5b5b5")
+		  ("gray-1"      . "#aaaaaa")
+		  ("gray-2"      . "#777777")
+		  ("gray-3"      . "#555555")
+		  ("gray-4"      . "#333333")
+		  ("blue+2"      . "#51a4f7")
+		  ("blue+1"      . "#4790d8")
+		  ("blue"        . "#366ba0")
+		  ("blue-1"      . "#224466")
+		  ("blue-2"      . "#112233")
+		  ("lightblue"   . "#84BDF4")
+		  ("limegreen"   .  "#55FF55")
+		  ("cyan"        .  "#00D7FF")
+		  ("gray"        .  "#aaaaaa")
+		  ("darkgray"    .  "#555555")
+		  ("paleyellow"  .  "#FFBF5A")
+		  ("pink"        .  "#e75480")
+		  ("orange"      .  "#E86310")
+		  ("red"         .  "#E81022"))))
+    (cdr (assoc color-name colmap))))
+
 
 (let ((class '((class color) (min-colors 89)))
-      (fg1 "#eeeeee") ;; off-white
-      (fg2 "#dbdbdb")
-      (fg3 "#c8c8c8")
-      (fg4 "#b5b5b5")
-      (bg1 "#112233")
-      (bg2 "#243443")
-      (bg3 "#374554")
-      (bg4 "#4a5764")
-      (builtin "#84BDF4")  ;; light-blue
-      (keyword "#84BDF4")  ;; light-blue
-      (const   "#00d7ff")  ;; cyan
-      (comment "#aaaaaa")  ;; grey
-      (discrete "#555555") ;; dark grey
-      (func    "#55FF55")  ;; lime green
-      (str     "#FFBF5A")  ;; pale yellow
-      (type    "#55FF55")  ;; lime green
-      (var     "#55FF55")  ;; lime green
-      (warning "#e81050")  ;; purple-pink
-      (warning2 "#e86310") ;; orange
-      (error1   "#E81022") ;; red
-      (orange "#ff9800"))
+      (fg1 (themacs-color "white-1"))
+      (fg2 (themacs-color "gray+2"))
+      (fg3 (themacs-color "gray+1"))
+      (fg4 (themacs-color "gray"))
+      (bg1 (themacs-color "blue-2"))
+      (bg2 (themacs-color "blue-1"))
+      (bg3 (themacs-color "blue"))
+      (bg4 (themacs-color "blue+1"))
+      (builtin  (themacs-color "lightblue"))
+      (keyword  (themacs-color "lightblue"))
+      (const    (themacs-color "cyan"))
+      (comment  (themacs-color "gray-1"))
+      (discrete (themacs-color "gray-2"))
+      (func     (themacs-color "limegreen"))
+      (str      (themacs-color "pale-yellow"))
+      (type     (themacs-color "limegreen"))
+      (var      (themacs-color "limegreen"))
+      (warning  (themacs-color "orange"))
+      (warning2 (themacs-color "pink"))
+      (error1   (themacs-color "red"))
+      (cursor   (themacs-color "orange")))
   (custom-theme-set-faces
    'themacs
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
