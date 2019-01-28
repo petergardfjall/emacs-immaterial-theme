@@ -101,15 +101,18 @@
    ;; linum-mode column
    `(linum  ((t (:foreground ,discrete :background ,bg1 :height 1.0 :weight normal))))
    `(fringe ((,class (:background ,bg1))))
-   `(cursor ((,class (:background ,orange))))
-   `(show-paren-match-face ((,class (:background ,func))))
+   `(cursor ((,class (:background ,cursor))))
+   `(show-paren-match-face ((,class (:background ,fg1 :foreground ,bg1))))
    `(show-paren-mismatch-face ((,class (:background ,error1))))
    `(isearch ((,class (:bold t :foreground ,fg1 :background ,bg2))))
-   `(mode-line ((,class (:box (:line-width 1 :color ,keyword) :bold t :foreground ,fg1 :background ,bg1))))
+   `(mode-line ((,class (:box (:line-width 1 :color ,fg1) :bold t :foreground ,fg1 :background ,bg1))))
+
    ;; mode-line
-   `(mode-line           ((,class (:foreground ,fg1 :background ,bg1 :box (:color ,keyword :line-width 1)))))
-   `(mode-line-buffer-id ((,class (:inherit bold :foreground ,keyword))))
-   `(mode-line-inactive  ((,class (:foreground ,fg1 :background ,bg1  :box (:color ,keyword :line-width 1)))))
+   ;; mode-line of the active buffer (e.g. in case of split window)
+   `(mode-line           ((,class (:foreground ,fg1 :background ,bg2 :box (:color ,bg1 :line-width 1)))))
+   ;; mode-line of the inactive buffer (e.g. in case of split window)
+   `(mode-line-inactive  ((,class (:foreground ,fg1 :background ,bg1  :box (:color ,bg1 :line-width 1)))))
+   `(mode-line-buffer-id ((,class (:inherit bold :foreground ,fg1))))
    ;; powerline
    `(powerline-active1 ((,class (:background ,discrete :foreground ,fg1))))
    `(powerline-inactive1 ((,class (:background ,bg2 :foreground ,fg1))))
