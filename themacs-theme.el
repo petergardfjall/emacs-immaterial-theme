@@ -147,19 +147,32 @@
    `(term-color-magenta ((,class (:foreground ,builtin :background ,builtin))))
    `(term-color-cyan ((,class (:foreground ,str :background ,str))))
    `(term-color-white ((,class (:foreground ,fg2 :background ,fg2))))
+
+   ;; Face used for the common part of completions in the echo area
    `(company-echo-common ((,class (:foreground ,bg1 :background ,fg1))))
-   `(company-preview ((,class (:background ,bg1 :foreground ,var))))
-   `(company-preview-common ((,class (:foreground ,bg2 :foreground ,fg3))))
-   `(company-preview-search ((,class (:foreground ,type :background ,bg1))))
+   ;; display (single remaining) suggestion while typing
+   `(company-preview ((,class (:background ,bg2 :foreground ,fg1))))
+   `(company-preview-common ((,class (:background ,bg2 :foreground ,fg1))))
+   `(company-preview-search ((,class (:foreground ,bg2 :background ,fg1))))
+   ;; scrollbar style in company tooltip
    `(company-scrollbar-bg ((,class (:background ,bg3))))
-   `(company-scrollbar-fg ((,class (:foreground ,keyword))))
-   `(company-tooltip ((,class (:foreground ,fg2 :background ,bg1 :bold t))))
-   `(company-tooltop-annotation ((,class (:foreground ,const))))
-   `(company-tooltip-common ((,class ( :foreground ,fg3))))
+   `(company-scrollbar-fg ((,class (:foreground ,bg1))))
+   ;; general style of tooltip popup
+   `(company-tooltip ((,class (:foreground ,bg2 :background ,fg2 :bold t))))
+   ;; annotation appearance (could be the return-type of a function)
+   `(company-tooltip-annotation ((,class (:weight normal :foreground ,bg2 :background ,fg2))))
+   ;; annotation appearance for the selected item in the completion list
+   `(company-tooltip-annotation-selection ((,class (:weight normal :inherit company-tooltip-selection))))
+   `(company-tooltip-search ((,class (:weight normal :inherit company-tooltip-selection))))
+   ;; the highlight style to use when typing and showing common search prefix
+   `(company-tooltip-common ((,class (:weight extra-bold :foreground ,bg1))))
    `(company-tooltip-common-selection ((,class (:foreground ,str))))
-   `(company-tooltip-mouse ((,class (:inherit highlight))))
+   ;; style for item mouse is hovering over
+   `(company-tooltip-mouse ((,class (:inherit company-tooltip-selection))))
    `(company-tooltip-selection ((,class (:background ,bg3 :foreground ,fg3))))
-   `(company-template-field ((,class (:inherit region))))))
+   `(company-tooltip-selection ((,class (:weight bold :foreground ,fg3 :background ,bg3))))
+
+   ))
 
 ;;;###autoload
 (when load-file-name
