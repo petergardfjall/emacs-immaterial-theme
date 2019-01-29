@@ -174,6 +174,10 @@
    `(company-tooltip-selection ((,class (:background ,bg3 :foreground ,fg3))))
    `(company-tooltip-selection ((,class (:weight bold :foreground ,fg3 :background ,bg3))))
 
+   ;; sh-mode
+   `(sh-heredoc ((,class (:foreground nil :inherit font-lock-string-face :weight normal))))
+   `(sh-quoted-exec ((,class (:foreground nil :inherit font-lock-function-name-face))))
+
    ))
 
 ;;;###autoload
