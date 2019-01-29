@@ -71,7 +71,7 @@
       (comment  (themacs-color "gray-1"))
       (discrete (themacs-color "gray-2"))
       (func     (themacs-color "limegreen"))
-      (str      (themacs-color "pale-yellow"))
+      (str      (themacs-color "paleyellow"))
       (type     (themacs-color "limegreen"))
       (var      (themacs-color "limegreen"))
       (warning  (themacs-color "orange"))
