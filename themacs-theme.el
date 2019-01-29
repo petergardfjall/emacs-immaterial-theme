@@ -52,7 +52,7 @@
 		  ("paleyellow"  .  "#FFBF5A")
 		  ("pink"        .  "#e75480")
 		  ("orange"      .  "#E86310")
-		  ("red"         .  "#E81022"))))
+		  ("red"         .  "#FF5555"))))
     (cdr (assoc color-name colmap))))
 
 
@@ -139,16 +139,16 @@
    `(trailing-whitespace ((,class :foreground nil :background ,warning)))
    `(lazy-highlight ((,class (:foreground ,fg2 :background ,bg3))))
 
-   ;; shell/terminal
-   `(term ((,class (:foreground ,fg1 :background ,bg1))))
-   `(term-color-black ((,class (:foreground ,bg3 :background ,bg3))))
-   `(term-color-blue ((,class (:foreground ,func :background ,func))))
-   `(term-color-red ((,class (:foreground ,keyword :background ,bg3))))
-   `(term-color-green ((,class (:foreground ,type :background ,bg3))))
-   `(term-color-yellow ((,class (:foreground ,var :background ,var))))
-   `(term-color-magenta ((,class (:foreground ,builtin :background ,builtin))))
-   `(term-color-cyan ((,class (:foreground ,str :background ,str))))
-   `(term-color-white ((,class (:foreground ,fg2 :background ,fg2))))
+   ;; ansi-term/term
+   `(term ((,class (:foreground nil :background nil :inherit default))))
+   `(term-color-black   ((,class (:foreground ,fg1 :background ,fg1))))
+   `(term-color-red     ((,class (:foreground ,(themacs-color "red") :background ,(themacs-color "red")))))
+   `(term-color-green   ((,class (:foreground ,(themacs-color "limegreen") :background ,(themacs-color "limegreen")))))
+   `(term-color-yellow  ((,class (:foreground ,(themacs-color "paleyellow") :background ,(themacs-color "paleyellow")))))
+   `(term-color-blue    ((,class (:foreground ,(themacs-color "lightblue") :background ,(themacs-color "lightblue")))))
+   `(term-color-magenta ((,class (:foreground ,(themacs-color "pink") :background ,(themacs-color "pink")))))
+   `(term-color-cyan    ((,class (:foreground ,(themacs-color "cyan") :background ,(themacs-color "cyan")))))
+   `(term-color-white   ((,class (:foreground ,bg1 :background ,bg1))))
 
    ;; Face used for the common part of completions in the echo area
    `(company-echo-common ((,class (:foreground ,bg1 :background ,fg1))))
