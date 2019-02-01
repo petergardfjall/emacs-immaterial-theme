@@ -84,7 +84,7 @@ over the default ones defined in themacs-color-alist."
       (var      (themacs-color "secondary"))
       (warning  (themacs-color "warning"))
       (error    (themacs-color "error"))
-      (cursor   (themacs-color "warning")))
+      (cursor   (themacs-color "cursor")))
   (custom-theme-set-faces
    'themacs
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
