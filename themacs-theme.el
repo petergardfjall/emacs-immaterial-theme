@@ -29,29 +29,42 @@
 
 (deftheme themacs)
 
-(defvar themacs-color-alist
+(defvar themacs-color-override-alist
+  '(())
+  "Values provided here will override values in themacs-color-alist.
+The material color tool https://material.io/tools/color/ is recommended
+for constructing primary and secondary color schemes.")
+
+;; Tip: enable rainbow-mode to preview the colors.
+(defconst themacs-color-alist
   '(("background-primary"    . "#112233")
     ("background-secondary"  . "#224466")
     ("background-tertiary"   . "#366ba0")
     ("foreground-primary"    . "#eeeeee")
     ("foreground-secondary"  . "#dbdbdb")
     ("foreground-tertiary"   . "#c8c8c8")
-    ("primary-light"   . "#84BDF4")
-    ("primary"         . "#51a4f7")
-    ("primary-dark"    . "#4790d8")
-    ("secondary-dark"  . "#00AA00")
-    ("secondary"       . "#55FF55")
-    ("secondary-light" . "#55FFFF")
+    ("primary-light"   . "#82e9de")
+    ("primary"         . "#4db6ac")
+    ("primary-dark"    . "#00867d")
+    ("secondary-dark"  . "#7da453")
+    ("secondary"       . "#aed581")
+    ("secondary-light" . "#e1ffb1")
     ("error"           . "#FF5555")
     ("warning"         . "#E86310")
     ("discrete"        . "#777777")
     ("cursor"          . "#E86310")
     )
-  "The color palette to use."
-  )
+  "The default color palette to use for the theme.
+Values can be overridden via themacs-color-override-alist).
+The palette was created using the https://material.io/tools/color/ tool.")
 
 (defun themacs-color (color-name)
-  (cdr (assoc color-name themacs-color-alist)))
+  "Retrieves the hex color value registered for a ´COLOR-NAME´.
+The overrides in themacs-color-override-alist take precedence
+over the default ones defined in themacs-color-alist."
+  (let ((colmap (append themacs-color-override-alist themacs-color-alist)))
+    (cdr (assoc color-name colmap))))
+  
 
 (let ((class '((class color) (min-colors 89)))
       (fg1      (themacs-color "foreground-primary"))
@@ -60,13 +73,13 @@
       (bg1      (themacs-color "background-primary"))
       (bg2      (themacs-color "background-secondary"))
       (bg3      (themacs-color "background-tertiary"))
-      (builtin  (themacs-color "primary"))
+      (builtin  (themacs-color "primary-light"))
       (keyword  (themacs-color "primary-light"))
       (const    (themacs-color "secondary"))
       (comment  (themacs-color "discrete"))
       (linum-fg (themacs-color "discrete"))
       (func     (themacs-color "secondary"))
-      (str      (themacs-color "secondary-light"))
+      (str      (themacs-color "primary"))
       (type     (themacs-color "secondary"))
       (var      (themacs-color "secondary"))
       (warning  (themacs-color "warning"))
