@@ -104,7 +104,7 @@ over the default ones defined in themacs-color-alist."
    `(font-lock-warning-face ((,class (:foreground ,warning :background ,bg2))))
    `(term-color-black ((,class (:foreground ,fg2 :background nil))))
    ;; region selection
-   `(region ((,class (:background ,bg2))))
+   `(region ((,class (:foreground ,fg1 :background ,bg2))))
    `(highlight ((,class (:background ,bg2))))
    `(hl-line ((,class (:background  ,bg2))))
    ;; linum-mode column
