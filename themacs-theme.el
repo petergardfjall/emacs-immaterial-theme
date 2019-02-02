@@ -212,6 +212,13 @@ over the default ones defined in themacs-color-alist."
    ;;
    `(sh-heredoc ((,class (:foreground nil :inherit font-lock-string-face :weight normal))))
    `(sh-quoted-exec ((,class (:foreground nil :inherit font-lock-function-name-face))))
+   ;;
+   ;; neotree
+   ;;
+   `(neo-dir-link-face ((,class (:foreground ,keyword :inherit bold))))
+   `(neo-expand-btn-face ((,class (:foreground ,fg1))))
+   `(neo-file-link-face ((,class (:foreground ,fg1))))
+   `(neo-root-dir-face ((,class (:foreground ,func :inherit bold))))
 
    ))
 
