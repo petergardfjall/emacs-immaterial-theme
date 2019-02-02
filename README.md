@@ -91,13 +91,13 @@ The default theme in `go-mode`:
 
 ![default theme](screenshots/default-gomode.png)
 
-A theme with updated primary colors:
+With an updated `primary` palette:
 
     (setq immaterial-color-override-alist
       '(("primary"         . "#ce93d8")
         ("primary-light"   . "#ffc4ff")
         ("primary-dark"    . "#9c64a6")))
-  
+
 ![customized theme](screenshots/custom-gomode.png)
 
 ## Install
