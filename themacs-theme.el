@@ -37,9 +37,13 @@ for constructing primary and secondary color schemes.")
 
 ;; Tip: enable rainbow-mode to preview the colors.
 (defconst themacs-color-alist
-  '(("background-primary"    . "#112233")
-    ("background-secondary"  . "#224466")
-    ("background-tertiary"   . "#366ba0")
+  '(
+    ;;("background-primary"    . "#112233")
+    ;;("background-secondary"  . "#224466")
+    ;;("background-tertiary"   . "#366ba0")
+    ("background-primary"    . "#102027")
+    ("background-secondary"  . "#37474f")
+    ("background-tertiary"   . "#62727b")
     ("foreground-primary"    . "#eeeeee")
     ("foreground-secondary"  . "#dbdbdb")
     ("foreground-tertiary"   . "#c8c8c8")
