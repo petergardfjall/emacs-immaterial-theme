@@ -44,38 +44,25 @@ elements:
 The following are the full list of colors defined in the default
 `themacs-color-alist`:
 
- - `background-primary`:
-   ![#102027](https://placehold.it/15/102027/000000?text=+) `#102027`
- - `background-secondary`;
-   ![#37474f](https://placehold.it/15/37474f/000000?text=+) `#37474f`
- - `background-tertiary`:
-   ![#62727b](https://placehold.it/15/62727b/000000?text=+) `#62727b`
- - `foreground-primary`:
-   ![#eeeeee](https://placehold.it/15/eeeeee/000000?text=+) `#eeeeee`
- - `foreground-secondary`:
-   ![#dbdbdb](https://placehold.it/15/dbdbdb/000000?text=+) `#dbdbdb`
- - `foreground-tertiary`:
-   ![#c8c8c8](https://placehold.it/15/c8c8c8/000000?text=+) `#c8c8c8`
- - `primary`:
-   ![#4db6ac](https://placehold.it/15/4db6ac/000000?text=+) `#4db6ac`
- - `primary-light`:
-   ![#82e9de](https://placehold.it/15/82e9de/000000?text=+) `#82e9de`
- - `primary-dark`:
-   ![#00867d](https://placehold.it/15/00867d/000000?text=+) `#00867d`
- - `secondary`:
-   ![#aed581](https://placehold.it/15/aed581/000000?text=+) `#aed581`
- - `secondary-light`:
-   ![#e1ffb1](https://placehold.it/15/e1ffb1/000000?text=+) `#e1ffb1`
- - `secondary-dark`:
-   ![#7da453](https://placehold.it/15/7da453/000000?text=+) `#7da453`
- - `error`:
-   ![#FF5555](https://placehold.it/15/FF5555/000000?text=+) `#ff5555`
- - `warning`:
-   ![#e86310](https://placehold.it/15/e86310/000000?text=+) `#e86310`
- - `discrete`:
-   ![#777777](https://placehold.it/15/777777/000000?text=+) `#777777`
- - `cursor`:
-   ![#e86310](https://placehold.it/15/e86310/000000?text=+) `#e86310`
+ 
+ | Property               | Color                                                              |
+ | --------               | -----                                                              |
+ | `background-primary`   | ![#102027](https://placehold.it/15/102027/000000?text=+) `#102027` |
+ | `background-secondary` | ![#37474f](https://placehold.it/15/37474f/000000?text=+) `#37474f` |
+ | `background-tertiary`  | ![#62727b](https://placehold.it/15/62727b/000000?text=+) `#62727b` |
+ | `foreground-primary`   | ![#eeeeee](https://placehold.it/15/eeeeee/000000?text=+) `#eeeeee` |
+ | `foreground-secondary` | ![#dbdbdb](https://placehold.it/15/dbdbdb/000000?text=+) `#dbdbdb` |
+ | `foreground-tertiary`  | ![#c8c8c8](https://placehold.it/15/c8c8c8/000000?text=+) `#c8c8c8` |
+ | `primary`              | ![#4db6ac](https://placehold.it/15/4db6ac/000000?text=+) `#4db6ac` |
+ | `primary-light`        | ![#82e9de](https://placehold.it/15/82e9de/000000?text=+) `#82e9de` |
+ | `primary-dark`         | ![#00867d](https://placehold.it/15/00867d/000000?text=+) `#00867d` |
+ | `secondary`            | ![#aed581](https://placehold.it/15/aed581/000000?text=+) `#aed581` |
+ | `secondary-light`      | ![#e1ffb1](https://placehold.it/15/e1ffb1/000000?text=+) `#e1ffb1` |
+ | `secondary-dark`       | ![#7da453](https://placehold.it/15/7da453/000000?text=+) `#7da453` |
+ | `error`                | ![#FF5555](https://placehold.it/15/FF5555/000000?text=+) `#ff5555` |
+ | `warning`              | ![#e86310](https://placehold.it/15/e86310/000000?text=+) `#e86310` |
+ | `discrete`             | ![#777777](https://placehold.it/15/777777/000000?text=+) `#777777` |
+ | `cursor`               | ![#e86310](https://placehold.it/15/e86310/000000?text=+) `#e86310` |
 
 Each of these values can be overridden through the
 `themacs-color-override-alist` variable, which overrides the defaults in the
