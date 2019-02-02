@@ -44,7 +44,7 @@ elements:
 The following are the full list of colors defined in the default
 `themacs-color-alist`:
 
- 
+
  | Property               | Color                                                              |
  | --------               | -----                                                              |
  | `background-primary`   | ![#102027](https://placehold.it/15/102027/000000?text=+) `#102027` |
@@ -83,6 +83,22 @@ variants of a certain color.
 comes in handy for highlighting each hex color being edited in you emacs init
 file.
 
+
+
+## Screenshots
+
+The default theme in `go-mode`:
+
+![default theme](screenshots/default-gomode.png)
+
+A theme with updated primary colors:
+
+    (setq themacs-color-override-alist
+      '(("primary"         . "#ce93d8")
+        ("primary-light"   . "#ffc4ff")
+        ("primary-dark"    . "#9c64a6")))
+  
+![customized theme](screenshots/custom-gomode.png)
 
 ## Install
 
