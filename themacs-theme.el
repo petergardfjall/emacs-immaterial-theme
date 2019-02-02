@@ -1,6 +1,6 @@
 ;;; themacs-theme.el --- Theme
 
-;; Copyright (C) 2016 ,
+;; Copyright (C) 2019
 
 ;; Author: Peter Gardfjäll
 ;; Version: 0.1

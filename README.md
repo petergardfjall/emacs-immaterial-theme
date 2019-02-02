@@ -1,5 +1,10 @@
 # themacs
 
+*Note: for good results in a pure terminal environment, consider installing
+Emacs 26 and [enable
+truecolors](https://github.com/syl20bnr/spacemacs/wiki/Terminal) in your
+terminal.*
+
 Themacs `/theme-acs/` is an emacs color theme, loosely based on the principles
 of Google's [Material
 design](https://material.io/design/color/the-color-system.html#color-theme-creation). More
