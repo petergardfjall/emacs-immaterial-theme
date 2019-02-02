@@ -1,42 +1,55 @@
-;;; themacs-theme.el --- Theme
+;;; immaterial-theme.el --- Theme
 
 ;; Copyright (C) 2019
 
 ;; Author: Peter Gardfjäll
+;; Keywords: themes
+;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
 ;; Version: 0.1
-;; Package-Requires: ((emacs "24"))
-;; Created with ThemeCreator, https://github.com/mswift42/themecreator.
+;; Package-Requires: ((emacs "25"))
 
-
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program. If not, see <http://www.gnu.org/licenses/>.
+;; Permission is hereby granted, free of charge, to any person obtaining a copy
+;; of this software and associated documentation files (the "Software"), to deal
+;; in the Software without restriction, including without limitation the rights
+;; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+;; copies of the Software, and to permit persons to whom the Software is
+;; furnished to do so, subject to the following conditions:
+;;
+;; The above copyright notice and this permission notice shall be included in all
+;; copies or substantial portions of the Software.
+;;
+;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+;; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+;; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+;; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+;; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+;; SOFTWARE.
 
 ;; This file is not part of Emacs.
 
 ;;; Commentary:
 
+;; To use the theme, put the following in your Emacs configuration file:
+;;
+;;   (load-theme 'immaterial t)
+;;
+;; Requirements: Emacs 25.
+;;
+
 ;;; Code:
 
-(deftheme themacs)
+(deftheme immaterial
+  "A customizable theme based on Material design principles.")
 
-(defvar themacs-color-override-alist
+(defvar immaterial-color-override-alist
   '(())
-  "Values provided here will override values in themacs-color-alist.
+  "Values provided here will override values in immaterial-color-alist.
 The material color tool https://material.io/tools/color/ is recommended
 for constructing primary and secondary color schemes.")
 
 ;; Tip: enable rainbow-mode to preview the colors.
-(defconst themacs-color-alist
+(defconst immaterial-color-alist
   '(
     ;;("background-primary"    . "#112233")
     ;;("background-secondary"  . "#224466")
@@ -59,39 +72,39 @@ for constructing primary and secondary color schemes.")
     ("cursor"          . "#e86310")
     )
   "The default color palette to use for the theme.
-Values can be overridden via themacs-color-override-alist).
+Values can be overridden via immaterial-color-override-alist).
 The palette was created using the https://material.io/tools/color/ tool.")
 
-(defun themacs-color (color-name)
+(defun immaterial-color (color-name)
   "Retrieves the hex color value registered for a ´COLOR-NAME´.
-The overrides in themacs-color-override-alist take precedence
-over the default ones defined in themacs-color-alist."
-  (let ((colmap (append themacs-color-override-alist themacs-color-alist)))
+The overrides in immaterial-color-override-alist take precedence
+over the default ones defined in immaterial-color-alist."
+  (let ((colmap (append immaterial-color-override-alist immaterial-color-alist)))
     (cdr (assoc color-name colmap))))
 
 
 (let ((class '((class color) (min-colors 89)))
-      (fg1      (themacs-color "foreground-primary"))
-      (fg2      (themacs-color "foreground-secondary"))
-      (fg3      (themacs-color "foreground-tertiary"))
-      (bg1      (themacs-color "background-primary"))
-      (bg2      (themacs-color "background-secondary"))
-      (bg3      (themacs-color "background-tertiary"))
-      (keyword  (themacs-color "primary"))
-      (builtin  (themacs-color "primary-light"))
-      (const    (themacs-color "primary-dark"))
-      (type     (themacs-color "secondary"))
-      (var      (themacs-color "secondary-light"))
-      (func     (themacs-color "secondary-dark"))
-      (str      (themacs-color "secondary-dark"))
-      (comment  (themacs-color "discrete"))
-      (linum-fg (themacs-color "discrete"))
-      (negation (themacs-color "warning"))
-      (warning  (themacs-color "warning"))
-      (error    (themacs-color "error"))
-      (cursor   (themacs-color "cursor")))
+      (fg1      (immaterial-color "foreground-primary"))
+      (fg2      (immaterial-color "foreground-secondary"))
+      (fg3      (immaterial-color "foreground-tertiary"))
+      (bg1      (immaterial-color "background-primary"))
+      (bg2      (immaterial-color "background-secondary"))
+      (bg3      (immaterial-color "background-tertiary"))
+      (keyword  (immaterial-color "primary"))
+      (builtin  (immaterial-color "primary-light"))
+      (const    (immaterial-color "primary-dark"))
+      (type     (immaterial-color "secondary"))
+      (var      (immaterial-color "secondary-light"))
+      (func     (immaterial-color "secondary-dark"))
+      (str      (immaterial-color "secondary-dark"))
+      (comment  (immaterial-color "discrete"))
+      (linum-fg (immaterial-color "discrete"))
+      (negation (immaterial-color "warning"))
+      (warning  (immaterial-color "warning"))
+      (error    (immaterial-color "error"))
+      (cursor   (immaterial-color "cursor")))
   (custom-theme-set-faces
-   'themacs
+   'immaterial
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
 
    ;;
@@ -174,12 +187,12 @@ over the default ones defined in themacs-color-alist."
    ;;
    `(term ((,class (:foreground nil :background nil :inherit default))))
    `(term-color-black   ((,class (:foreground ,fg1 :background ,fg1))))
-   `(term-color-red     ((,class (:foreground ,(themacs-color "error") :background ,(themacs-color "red")))))
-   `(term-color-blue   ((,class (:foreground ,(themacs-color "primary-light") :background ,(themacs-color "primary-light")))))
-   `(term-color-yellow  ((,class (:foreground ,(themacs-color "primary") :background ,(themacs-color "primary")))))
-   `(term-color-magenta ((,class (:foreground ,(themacs-color "warning") :background ,(themacs-color "warning")))))
-   `(term-color-cyan    ((,class (:foreground ,(themacs-color "secondary-dark") :background ,(themacs-color "secondary-dark")))))
-   `(term-color-green    ((,class (:foreground ,(themacs-color "secondary") :background ,(themacs-color "secondary")))))
+   `(term-color-red     ((,class (:foreground ,(immaterial-color "error") :background ,(immaterial-color "red")))))
+   `(term-color-blue   ((,class (:foreground ,(immaterial-color "primary-light") :background ,(immaterial-color "primary-light")))))
+   `(term-color-yellow  ((,class (:foreground ,(immaterial-color "primary") :background ,(immaterial-color "primary")))))
+   `(term-color-magenta ((,class (:foreground ,(immaterial-color "warning") :background ,(immaterial-color "warning")))))
+   `(term-color-cyan    ((,class (:foreground ,(immaterial-color "secondary-dark") :background ,(immaterial-color "secondary-dark")))))
+   `(term-color-green    ((,class (:foreground ,(immaterial-color "secondary") :background ,(immaterial-color "secondary")))))
    `(term-color-white   ((,class (:foreground ,bg1 :background ,bg1))))
    ;;
    ;; company -- "complete any" completion engine
@@ -227,10 +240,6 @@ over the default ones defined in themacs-color-alist."
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory load-file-name))))
 
-(provide-theme 'themacs)
+(provide-theme 'immaterial)
 
-;; Local Variables:
-;; no-byte-compile: t
-;; End:
-
-;;; themacs-theme.el ends here
+;;; immaterial-theme.el ends here

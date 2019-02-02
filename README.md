@@ -1,12 +1,12 @@
-# themacs
+# immaterial
 
 *Note: for good results in a pure terminal environment, consider installing
 Emacs 26 and [enable
 truecolors](https://github.com/syl20bnr/spacemacs/wiki/Terminal) in your
 terminal.*
 
-Themacs `/theme-acs/` is an emacs color theme, loosely based on the principles
-of Google's [Material
+Immaterial is an emacs color theme, loosely based on the principles of Google's
+[Material
 design](https://material.io/design/color/the-color-system.html#color-theme-creation). More
 specifically, it defines (and allows users to _redefine_) the following coloring
 elements:
@@ -22,13 +22,13 @@ elements:
   `foreground-tertiary` with falling degree of use in the theme.
 
 - `primary`: used for certain parts of the syntax highlighting (for example,
-  keywords). Refer to [the code](themacs-theme.el) for details.
+  keywords). Refer to [the code](immaterial-theme.el) for details.
 
   Comes in three variants, which are used to add some slight variation in the
   syntactic highlighting: `primary`, `primary-dark`, `primary-light`.
 
 - `secondary`: used for certain parts of the syntax highlighting (for example,
-  types and variables). Refer to [the code](themacs-theme.el) for details.
+  types and variables). Refer to [the code](immaterial-theme.el) for details.
 
   Comes in three variants, which are used to add some slight variation in the
   syntactic highlighting: `secondary`, `secondary-dark`, `secondary-light`.
@@ -42,7 +42,7 @@ elements:
     - `cursor`: the color of the cursor.
 
 The following are the full list of colors defined in the default
-`themacs-color-alist`:
+`immaterial-color-alist`:
 
 
  | Property               | Color                                                              |
@@ -65,11 +65,11 @@ The following are the full list of colors defined in the default
  | `cursor`               | ![#e86310](https://placehold.it/15/e86310/000000?text=+) `#e86310` |
 
 Each of these values can be overridden through the
-`themacs-color-override-alist` variable, which overrides the defaults in the
-`themacs-color-alist`. As an example, to provide a different primary color
+`immaterial-color-override-alist` variable, which overrides the defaults in the
+`immaterial-color-alist`. As an example, to provide a different primary color
 palette:
 
-    (setq themacs-color-override-alist
+    (setq immaterial-color-override-alist
       '(("primary"         . "#ffa726")
         ("primary-light"   . "#ffd95b")
         ("primary-dark"    . "#c77800")
@@ -93,7 +93,7 @@ The default theme in `go-mode`:
 
 A theme with updated primary colors:
 
-    (setq themacs-color-override-alist
+    (setq immaterial-color-override-alist
       '(("primary"         . "#ce93d8")
         ("primary-light"   . "#ffc4ff")
         ("primary-dark"    . "#9c64a6")))
@@ -102,16 +102,16 @@ A theme with updated primary colors:
 
 ## Install
 
-Add the `themacs-theme.el` file to `~/.emacs.d/themes` and add the following to
+Add the `immaterial-theme.el` file to `~/.emacs.d/themes` and add the following to
 your `init.el`:
 
      (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-     (load-theme 'themacs t)
+     (load-theme 'immaterial t)
 
-You may optionally customize the theme via `themacs-color-override-alist`. For
+You may optionally customize the theme via `immaterial-color-override-alist`. For
 example:
 
-    (setq themacs-color-override-alist
+    (setq immaterial-color-override-alist
           '(("primary"         . "#ffa726")
             ("primary-light"   . "#ffd95b")
             ("primary-dark"    . "#c77800")
