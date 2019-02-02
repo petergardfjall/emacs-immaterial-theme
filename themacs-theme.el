@@ -43,12 +43,12 @@ for constructing primary and secondary color schemes.")
     ("foreground-primary"    . "#eeeeee")
     ("foreground-secondary"  . "#dbdbdb")
     ("foreground-tertiary"   . "#c8c8c8")
-    ("primary-light"   . "#82e9de")
     ("primary"         . "#4db6ac")
+    ("primary-light"   . "#82e9de")
     ("primary-dark"    . "#00867d")
-    ("secondary-dark"  . "#7da453")
     ("secondary"       . "#aed581")
     ("secondary-light" . "#e1ffb1")
+    ("secondary-dark"  . "#7da453")
     ("error"           . "#FF5555")
     ("warning"         . "#E86310")
     ("discrete"        . "#777777")
@@ -64,7 +64,7 @@ The overrides in themacs-color-override-alist take precedence
 over the default ones defined in themacs-color-alist."
   (let ((colmap (append themacs-color-override-alist themacs-color-alist)))
     (cdr (assoc color-name colmap))))
-  
+
 
 (let ((class '((class color) (min-colors 89)))
       (fg1      (themacs-color "foreground-primary"))
@@ -73,36 +73,52 @@ over the default ones defined in themacs-color-alist."
       (bg1      (themacs-color "background-primary"))
       (bg2      (themacs-color "background-secondary"))
       (bg3      (themacs-color "background-tertiary"))
+      (keyword  (themacs-color "primary"))
       (builtin  (themacs-color "primary-light"))
-      (keyword  (themacs-color "primary-light"))
-      (const    (themacs-color "secondary"))
+      (const    (themacs-color "primary-dark"))
+      (type     (themacs-color "secondary"))
+      (var      (themacs-color "secondary-light"))
+      (func     (themacs-color "secondary-dark"))
+      (str      (themacs-color "secondary-dark"))
       (comment  (themacs-color "discrete"))
       (linum-fg (themacs-color "discrete"))
-      (func     (themacs-color "secondary"))
-      (str      (themacs-color "primary"))
-      (type     (themacs-color "secondary"))
-      (var      (themacs-color "secondary"))
+      (negation (themacs-color "warning"))
       (warning  (themacs-color "warning"))
       (error    (themacs-color "error"))
       (cursor   (themacs-color "cursor")))
   (custom-theme-set-faces
    'themacs
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
+
+   ;;
+   ;; Syntax higlighting/font-lock minor mode. (syntax rules are provided by
+   ;; the particular major-mode).
+   ;;
+   ;; for the names of built-in functions.
    `(font-lock-builtin-face ((,class (:foreground ,builtin))))
+   ;; for comments
    `(font-lock-comment-face ((,class (:foreground ,comment))))
+   ;; for comment delimiters, like ‘/*’ and ‘*/’ in C.
    `(font-lock-comment-delimiter-face ((,class (:foreground ,comment))))
-   `(font-lock-negation-char-face ((,class (:foreground ,const))))
-   `(font-lock-reference-face ((,class (:foreground ,const))))
+   ;; for easily-overlooked negation characters.
+   `(font-lock-negation-char-face ((,class (:foreground ,negation))))
+   ;; for the names of constants, like ‘NULL’ in C.
    `(font-lock-constant-face ((,class (:foreground ,const))))
+   ;; for documentation strings in the code.
    `(font-lock-doc-face ((,class (:foreground ,comment))))
-   `(font-lock-doc-string-face ((,class (:foreground ,comment))))
+   ;; for the name of a function being defined or declared.
    `(font-lock-function-name-face ((,class (:foreground ,func ))))
+   ;; for a keyword with special syntactic significance, like ‘if’.
    `(font-lock-keyword-face ((,class (:bold t :foreground ,keyword))))
+   ;; for string literals.
    `(font-lock-string-face ((,class (:foreground ,str))))
+   ;; for the names of user-defined data types.
    `(font-lock-type-face ((,class (:foreground ,type))))
+   ;; for the name of a variable being defined or declared.
    `(font-lock-variable-name-face ((,class (:foreground ,var))))
+   ;; for a construct that is peculiar, or that greatly changes the meaning of
+   ;; other text, like ‘;;;###autoload’ in Emacs Lisp and ‘#error’ in C.
    `(font-lock-warning-face ((,class (:foreground ,warning :background ,bg2))))
-   `(term-color-black ((,class (:foreground ,fg2 :background nil))))
    ;; region selection
    `(region ((,class (:foreground ,fg1 :background ,bg2))))
    `(highlight ((,class (:background ,bg2))))
@@ -116,7 +132,9 @@ over the default ones defined in themacs-color-alist."
    `(isearch ((,class (:bold t :foreground ,fg1 :background ,bg2))))
    `(mode-line ((,class (:box (:line-width 1 :color ,fg1) :bold t :foreground ,fg1 :background ,bg1))))
 
+   ;;
    ;; mode-line
+   ;;
    ;; mode-line of the active buffer (e.g. in case of split window)
    `(mode-line           ((,class (:foreground ,fg1 :background ,bg2 :box (:color ,bg1 :line-width 1)))))
    ;; mode-line of the inactive buffer (e.g. in case of split window)
@@ -147,8 +165,9 @@ over the default ones defined in themacs-color-alist."
    `(slime-repl-inputed-output-face ((,class (:foreground ,type))))
    `(trailing-whitespace ((,class :foreground nil :background ,warning)))
    `(lazy-highlight ((,class (:foreground ,fg2 :background ,bg3))))
-
+   ;;
    ;; ansi-term/term
+   ;;
    `(term ((,class (:foreground nil :background nil :inherit default))))
    `(term-color-black   ((,class (:foreground ,fg1 :background ,fg1))))
    `(term-color-red     ((,class (:foreground ,(themacs-color "error") :background ,(themacs-color "red")))))
@@ -158,7 +177,9 @@ over the default ones defined in themacs-color-alist."
    `(term-color-cyan    ((,class (:foreground ,(themacs-color "secondary-dark") :background ,(themacs-color "secondary-dark")))))
    `(term-color-green    ((,class (:foreground ,(themacs-color "secondary") :background ,(themacs-color "secondary")))))
    `(term-color-white   ((,class (:foreground ,bg1 :background ,bg1))))
-
+   ;;
+   ;; company -- "complete any" completion engine
+   ;;
    ;; Face used for the common part of completions in the echo area
    `(company-echo-common ((,class (:foreground ,bg1 :background ,fg1))))
    ;; display (single remaining) suggestion while typing
@@ -182,8 +203,9 @@ over the default ones defined in themacs-color-alist."
    `(company-tooltip-mouse ((,class (:inherit company-tooltip-selection))))
    `(company-tooltip-selection ((,class (:background ,bg3 :foreground ,fg3))))
    `(company-tooltip-selection ((,class (:weight bold :foreground ,fg3 :background ,bg3))))
-
+   ;;
    ;; sh-mode
+   ;;
    `(sh-heredoc ((,class (:foreground nil :inherit font-lock-string-face :weight normal))))
    `(sh-quoted-exec ((,class (:foreground nil :inherit font-lock-function-name-face))))
 
