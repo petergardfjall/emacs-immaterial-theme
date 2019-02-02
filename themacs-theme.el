@@ -53,10 +53,10 @@ for constructing primary and secondary color schemes.")
     ("secondary"       . "#aed581")
     ("secondary-light" . "#e1ffb1")
     ("secondary-dark"  . "#7da453")
-    ("error"           . "#FF5555")
-    ("warning"         . "#E86310")
+    ("error"           . "#ff5555")
+    ("warning"         . "#e86310")
     ("discrete"        . "#777777")
-    ("cursor"          . "#E86310")
+    ("cursor"          . "#e86310")
     )
   "The default color palette to use for the theme.
 Values can be overridden via themacs-color-override-alist).
