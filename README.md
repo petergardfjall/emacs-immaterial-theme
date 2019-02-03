@@ -100,6 +100,26 @@ With an updated `primary` palette:
 
 ![customized theme](screenshots/custom-gomode.png)
 
+Updated to produce a light theme:
+
+    (setq immaterial-color-override-alist
+	  '(("background-primary"    . "#fdf6e3")
+        ("background-secondary"  . "#eee8d5")
+        ("background-tertiary"   . "#bbb6a4")
+        ("foreground-primary"    . "#566668")
+        ("foreground-secondary"  . "#93a1a1")
+        ("foreground-tertiary"   . "#839496")
+        ("primary"         . "#1b5e20")
+        ("primary-light"   . "#4c8c4a")
+        ("primary-dark"    . "#003300")
+        ("secondary"       . "#0d47a1")
+        ("secondary-light" . "#5472d3")
+        ("secondary-dark"  . "#002171")))
+
+![custom light theme](screenshots/custom-light-gomode.png)
+
+
+
 ## Install
 
 Add the `immaterial-theme.el` file to `~/.emacs.d/themes` and add the following to
