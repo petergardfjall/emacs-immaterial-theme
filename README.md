@@ -1,4 +1,4 @@
-# immaterial
+# emacs-immaterial-theme
 
 *Note: for good results in a pure terminal environment, consider installing
 Emacs 26 and [enable
@@ -103,7 +103,7 @@ With an updated `primary` palette:
 Updated to produce a light theme:
 
     (setq immaterial-color-override-alist
-	  '(("background-primary"    . "#fdf6e3")
+      '(("background-primary"    . "#fdf6e3")
         ("background-secondary"  . "#eee8d5")
         ("background-tertiary"   . "#bbb6a4")
         ("foreground-primary"    . "#566668")
