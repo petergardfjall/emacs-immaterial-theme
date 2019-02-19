@@ -1,11 +1,12 @@
-;;; immaterial-theme.el --- Theme
+;;; immaterial-theme.el --- A customizable emacs color theme loosely based on
+;;; material design principles.
 
-;; Copyright (C) 2019
+;; Copyright (C) 2019 Peter Gardfjäll
 
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.1
+;; Version: 0.1.0
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -15,8 +16,8 @@
 ;; copies of the Software, and to permit persons to whom the Software is
 ;; furnished to do so, subject to the following conditions:
 ;;
-;; The above copyright notice and this permission notice shall be included in all
-;; copies or substantial portions of the Software.
+;; The above copyright notice and this permission notice shall be included in
+;; all copies or substantial portions of the Software.
 ;;
 ;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 ;; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -25,8 +26,6 @@
 ;; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
-
-;; This file is not part of Emacs.
 
 ;;; Commentary:
 
@@ -50,11 +49,7 @@ for constructing primary and secondary color schemes.")
 
 ;; Tip: enable rainbow-mode to preview the colors.
 (defconst immaterial-color-alist
-  '(
-    ;;("background-primary"    . "#112233")
-    ;;("background-secondary"  . "#224466")
-    ;;("background-tertiary"   . "#366ba0")
-    ("background-primary"    . "#102027")
+  '(("background-primary"    . "#102027")
     ("background-secondary"  . "#37474f")
     ("background-tertiary"   . "#62727b")
     ("foreground-primary"    . "#eeeeee")
@@ -69,8 +64,7 @@ for constructing primary and secondary color schemes.")
     ("error"           . "#ff5555")
     ("warning"         . "#e86310")
     ("discrete"        . "#777777")
-    ("cursor"          . "#e86310")
-    )
+    ("cursor"          . "#e86310"))
   "The default color palette to use for the theme.
 Values can be overridden via immaterial-color-override-alist).
 The palette was created using the https://material.io/tools/color/ tool.")
@@ -106,7 +100,6 @@ over the default ones defined in immaterial-color-alist."
   (custom-theme-set-faces
    'immaterial
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
-
    ;;
    ;; Syntax higlighting/font-lock minor mode. (syntax rules are provided by
    ;; the particular major-mode).
@@ -139,6 +132,7 @@ over the default ones defined in immaterial-color-alist."
    ;; region selection
    `(region ((,class (:foreground ,fg1 :background ,bg2))))
    `(highlight ((,class (:background ,bg2))))
+   ;; hl-line-mode background
    `(hl-line ((,class (:background  ,bg2))))
    ;; linum-mode column
    `(linum  ((t (:foreground ,linum-fg :background ,bg1 :height 1.0 :weight normal))))
@@ -147,17 +141,17 @@ over the default ones defined in immaterial-color-alist."
    `(show-paren-match-face ((,class (:background ,fg1 :foreground ,bg1))))
    `(show-paren-mismatch-face ((,class (:background ,error))))
    `(isearch ((,class (:bold t :foreground ,fg1 :background ,bg2))))
-   `(mode-line ((,class (:box (:line-width 1 :color ,fg1) :bold t :foreground ,fg1 :background ,bg1))))
-
    ;;
    ;; mode-line
    ;;
    ;; mode-line of the active buffer (e.g. in case of split window)
-   `(mode-line           ((,class (:foreground ,fg1 :background ,bg2 :box (:color ,bg1 :line-width 1)))))
+   `(mode-line ((,class (:foreground ,fg1 :background ,bg2 :box (:color ,bg1)))))
    ;; mode-line of the inactive buffer (e.g. in case of split window)
-   `(mode-line-inactive  ((,class (:foreground ,fg1 :background ,bg1  :box (:color ,bg1 :line-width 1)))))
+   `(mode-line-inactive  ((,class (:foreground ,fg1 :background ,bg1  :box (:color ,bg1)))))
    `(mode-line-buffer-id ((,class (:inherit bold :foreground ,fg1))))
+   ;;
    ;; powerline
+   ;;
    `(powerline-active1 ((,class (:background ,bg3 :foreground ,fg1))))
    `(powerline-inactive1 ((,class (:background ,bg2 :foreground ,fg1))))
 
@@ -232,7 +226,6 @@ over the default ones defined in immaterial-color-alist."
    `(neo-expand-btn-face ((,class (:foreground ,fg1))))
    `(neo-file-link-face ((,class (:foreground ,fg1))))
    `(neo-root-dir-face ((,class (:foreground ,func :inherit bold))))
-
    ))
 
 ;;;###autoload
