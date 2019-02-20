@@ -226,6 +226,10 @@ over the default ones defined in immaterial-color-alist."
    `(neo-expand-btn-face ((,class (:foreground ,fg1))))
    `(neo-file-link-face ((,class (:foreground ,fg1))))
    `(neo-root-dir-face ((,class (:foreground ,func :inherit bold))))
+   ;;
+   ;; markdown-mode
+   ;;
+   `(markdown-code-face ((,class (:foreground ,(immaterial-color "primary-light")))))
    ))
 
 ;;;###autoload
