@@ -1,5 +1,4 @@
-;;; immaterial-theme.el --- A customizable emacs color theme loosely based on
-;;; material design principles.
+;;; immaterial-theme.el --- A customizable theme loosely based on material design principles.
 
 ;; Copyright (C) 2019 Peter Gardfjäll
 
