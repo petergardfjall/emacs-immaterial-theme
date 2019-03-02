@@ -1,3 +1,7 @@
+[![MELPA](https://melpa.org/packages/immaterial-theme-badge.svg)](https://melpa.org/#/immaterial-theme)
+[![MELPA Stable](https://stable.melpa.org/packages/immaterial-theme-badge.svg)](https://stable.melpa.org/#/immaterial-theme)
+
+
 # emacs-immaterial-theme
 
 *Note: for good results in a pure terminal environment, consider installing
@@ -122,14 +126,26 @@ Updated to produce a light theme:
 
 ## Install
 
-Add the `immaterial-theme.el` file to `~/.emacs.d/themes` and add the following to
-your `init.el`:
+- From MELPA (or MELPA stable) via:
 
-     (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-     (load-theme 'immaterial t)
+        M-x package-install RET immaterial-theme
+        (load-theme 'immaterial t)
 
-You may optionally customize the theme via `immaterial-color-override-alist`. For
-example:
+- Via `use-package`:
+
+        (use-package immaterial-theme
+          :ensure t
+          :config
+          (load-theme 'immaterial t))
+
+- By adding `immaterial-theme.el` to `~/.emacs.d/themes` and the following to
+  your `init.el`:
+
+        (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+        (load-theme 'immaterial t)
+
+You may optionally customize the theme via
+`immaterial-color-override-alist`. For example:
 
     (setq immaterial-color-override-alist
           '(("primary"         . "#ffa726")
