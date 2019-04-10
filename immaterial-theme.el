@@ -135,6 +135,9 @@ over the default ones defined in immaterial-color-alist."
    `(hl-line ((,class (:background  ,bg2))))
    ;; linum-mode column
    `(linum  ((t (:foreground ,linum-fg :background ,bg1 :height 1.0 :weight normal))))
+   ;; display-line-numbers-mode (emacs26+)
+   `(line-number  ((t (:foreground ,linum-fg :background ,bg1 :height 1.0 :weight normal))))
+   `(line-number-current-line  ((t (:foreground ,fg1 :background ,bg1 :height 1.0 :weight normal))))
    `(fringe ((,class (:background ,bg1))))
    `(cursor ((,class (:background ,cursor))))
    `(show-paren-match-face ((,class (:background ,fg1 :foreground ,bg1))))
