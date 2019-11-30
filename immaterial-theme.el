@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.1.3
+;; Version: 0.2.0
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,6 +39,11 @@
 
 (deftheme immaterial
   "A customizable theme based on Material design principles.")
+
+(defface immaterial-small-face
+  '((t :height 0.95))
+  "Face that can be used via :inherit on faces that should have a smaller font size."
+  :group 'immaterial-faces)
 
 (defvar immaterial-color-override-alist
   '(())
@@ -77,25 +82,32 @@ over the default ones defined in immaterial-color-alist."
 
 
 (let ((class '((class color) (min-colors 89)))
-      (fg1      (immaterial-color "foreground-primary"))
-      (fg2      (immaterial-color "foreground-secondary"))
-      (fg3      (immaterial-color "foreground-tertiary"))
-      (bg1      (immaterial-color "background-primary"))
-      (bg2      (immaterial-color "background-secondary"))
-      (bg3      (immaterial-color "background-tertiary"))
-      (keyword  (immaterial-color "primary"))
-      (builtin  (immaterial-color "primary-light"))
-      (const    (immaterial-color "primary-dark"))
-      (type     (immaterial-color "secondary"))
-      (var      (immaterial-color "secondary-light"))
-      (func     (immaterial-color "secondary-dark"))
-      (str      (immaterial-color "secondary-dark"))
-      (comment  (immaterial-color "discrete"))
-      (linum-fg (immaterial-color "discrete"))
-      (negation (immaterial-color "warning"))
-      (warning  (immaterial-color "warning"))
-      (error    (immaterial-color "error"))
-      (cursor   (immaterial-color "cursor")))
+      (fg1        (immaterial-color "foreground-primary"))
+      (fg2        (immaterial-color "foreground-secondary"))
+      (fg3        (immaterial-color "foreground-tertiary"))
+      (bg1        (immaterial-color "background-primary"))
+      (bg2        (immaterial-color "background-secondary"))
+      (bg3        (immaterial-color "background-tertiary"))
+      (prim       (immaterial-color "primary"))
+      (prim-light (immaterial-color "primary-light"))
+      (prim-dark  (immaterial-color "primary-dark"))
+      (sec        (immaterial-color "secondary"))
+      (sec-light  (immaterial-color "secondary-light"))
+      (sec-dark   (immaterial-color "secondary-dark"))
+      (discrete   (immaterial-color "discrete"))
+
+      (keyword    (immaterial-color "primary"))
+      (builtin    (immaterial-color "primary-light"))
+      (const      (immaterial-color "primary-dark"))
+      (str        (immaterial-color "primary"))
+      (type       (immaterial-color "secondary"))
+      (var        (immaterial-color "secondary-dark"))
+      (func       (immaterial-color "secondary-dark"))
+      (linum-fg   (immaterial-color "discrete"))
+      (negation   (immaterial-color "warning"))
+      (warning    (immaterial-color "warning"))
+      (error      (immaterial-color "error"))
+      (cursor     (immaterial-color "cursor")))
   (custom-theme-set-faces
    'immaterial
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
@@ -103,32 +115,46 @@ over the default ones defined in immaterial-color-alist."
    ;; Syntax higlighting/font-lock minor mode. (syntax rules are provided by
    ;; the particular major-mode).
    ;;
-   ;; for the names of built-in functions.
-   `(font-lock-builtin-face ((,class (:foreground ,builtin))))
-   ;; for comments
-   `(font-lock-comment-face ((,class (:foreground ,comment))))
-   ;; for comment delimiters, like ‘/*’ and ‘*/’ in C.
-   `(font-lock-comment-delimiter-face ((,class (:foreground ,comment))))
-   ;; for easily-overlooked negation characters.
-   `(font-lock-negation-char-face ((,class (:foreground ,negation))))
-   ;; for the names of constants, like ‘NULL’ in C.
-   `(font-lock-constant-face ((,class (:foreground ,const))))
-   ;; for documentation strings in the code.
-   `(font-lock-doc-face ((,class (:foreground ,comment))))
-   ;; for the name of a function being defined or declared.
-   `(font-lock-function-name-face ((,class (:foreground ,func ))))
+
    ;; for a keyword with special syntactic significance, like ‘if’.
    `(font-lock-keyword-face ((,class (:bold t :foreground ,keyword))))
+   ;; for the names of built-in functions.
+   `(font-lock-builtin-face ((,class (:foreground ,builtin))))
+   ;; for the names of constants, like ‘NULL’ in C.
+   `(font-lock-constant-face ((,class (:foreground ,const))))
    ;; for string literals.
    `(font-lock-string-face ((,class (:foreground ,str))))
+
    ;; for the names of user-defined data types.
    `(font-lock-type-face ((,class (:foreground ,type))))
    ;; for the name of a variable being defined or declared.
    `(font-lock-variable-name-face ((,class (:foreground ,var))))
+   ;; for the name of a function being defined or declared.
+   `(font-lock-function-name-face ((,class (:foreground ,func ))))
+
+   ;; for comments
+   `(font-lock-comment-face ((,class (:foreground ,discrete, :italic t))))
+   ;; for comment delimiters, like ‘/*’ and ‘*/’ in C.
+   `(font-lock-comment-delimiter-face ((,class (:foreground ,discrete :italic t))))
+   ;; for documentation strings in the code.
+   `(font-lock-doc-face ((,class (:foreground ,discrete :italic t))))
+
+   ;; for easily-overlooked negation characters.
+   `(font-lock-negation-char-face ((,class (:foreground ,negation))))
    ;; for a construct that is peculiar, or that greatly changes the meaning of
    ;; other text, like ‘;;;###autoload’ in Emacs Lisp and ‘#error’ in C.
    `(font-lock-warning-face ((,class (:foreground ,warning :background ,bg2))))
+
+   ;;
+   ;; Buttons and links
+   ;;
+   `(button ((,class (:foreground ,sec :weight bold :underline t))))
+   `(link ((,class (:foreground ,sec :weight bold :underline t))))
+   `(link-visited ((,class (:foreground ,sec :weight bold :underline t))))
+
+   ;;
    ;; region selection
+   ;;
    `(region ((,class (:foreground ,fg1 :background ,bg2))))
    `(highlight ((,class (:background ,bg2))))
    ;; hl-line-mode background
@@ -147,35 +173,44 @@ over the default ones defined in immaterial-color-alist."
    ;; mode-line
    ;;
    ;; mode-line of the active buffer (e.g. in case of split window)
-   `(mode-line ((,class (:foreground ,fg1 :background ,bg2 :box (:color ,bg1)))))
+   `(mode-line ((,class (:foreground ,fg1 :background ,bg2))))
    ;; mode-line of the inactive buffer (e.g. in case of split window)
-   `(mode-line-inactive  ((,class (:foreground ,fg1 :background ,bg1  :box (:color ,bg1)))))
-   `(mode-line-buffer-id ((,class (:inherit bold :foreground ,fg1))))
+   `(mode-line-inactive  ((,class (:foreground ,discrete :background ,bg1))))
+   `(mode-line-buffer-id ((,class (:foreground ,fg1 :weight bold))))
+
    ;;
    ;; powerline
    ;;
+   ;; for active buffer in the frame
    `(powerline-active1 ((,class (:background ,bg3 :foreground ,fg1))))
-   `(powerline-inactive1 ((,class (:background ,bg2 :foreground ,fg1))))
+   `(powerline-active2 ((,class (:background ,bg2 :foreground ,fg1))))
+   ;; for inactive buffers in the frame
+   `(powerline-inactive1 ((,class (:background ,bg1 :foreground ,discrete))))
+   `(powerline-inactive2 ((,class (:background ,bg1 :foreground ,discrete))))
 
    `(vertical-border ((,class (:foreground ,fg3))))
-   `(minibuffer-prompt ((,class (:bold t :foreground ,keyword))))
+   `(minibuffer-prompt ((,class (:bold t :foreground ,prim))))
    `(default-italic ((,class (:italic t))))
-   `(link ((,class (:foreground ,const :underline t))))
+   `(link ((,class (:foreground ,prim-dark :underline t))))
 
-   `(gnus-header-content ((,class (:foreground ,keyword))))
-   `(gnus-header-from ((,class (:foreground ,var))))
-   `(gnus-header-name ((,class (:foreground ,type))))
-   `(gnus-header-subject ((,class (:foreground ,func :bold t))))
+   `(gnus-header-content ((,class (:foreground ,prim))))
+   `(gnus-header-from ((,class (:foreground ,sec-dark))))
+   `(gnus-header-name ((,class (:foreground ,sec))))
+   `(gnus-header-subject ((,class (:foreground ,sec-dark :bold t))))
    `(warning ((,class (:foreground ,warning))))
-   `(ac-completion-face ((,class (:underline t :foreground ,keyword))))
-   `(info-quoted-name ((,class (:foreground ,builtin))))
+   `(ac-completion-face ((,class (:underline t :foreground ,prim))))
+   `(info-quoted-name ((,class (:foreground ,prim-light))))
    `(info-string ((,class (:foreground ,str))))
-   `(icompletep-determined ((,class :foreground ,builtin)))
-   `(undo-tree-visualizer-current-face ((,class :foreground ,builtin)))
+   `(icompletep-determined ((,class :foreground ,prim-light)))
+   ;;
+   ;; undo-tree
+   ;;
+   `(undo-tree-visualizer-current-face ((,class :foreground ,prim-light)))
    `(undo-tree-visualizer-default-face ((,class :foreground ,fg2)))
-   `(undo-tree-visualizer-unmodified-face ((,class :foreground ,var)))
-   `(undo-tree-visualizer-register-face ((,class :foreground ,type)))
-   `(slime-repl-inputed-output-face ((,class (:foreground ,type))))
+   `(undo-tree-visualizer-unmodified-face ((,class :foreground ,sec-dark)))
+   `(undo-tree-visualizer-register-face ((,class :foreground ,sec)))
+
+   `(slime-repl-inputed-output-face ((,class (:foreground ,sec))))
    `(trailing-whitespace ((,class :foreground nil :background ,warning)))
    `(lazy-highlight ((,class (:foreground ,fg2 :background ,bg3))))
    ;;
@@ -224,14 +259,37 @@ over the default ones defined in immaterial-color-alist."
    ;;
    ;; neotree
    ;;
-   `(neo-dir-link-face ((,class (:foreground ,keyword :inherit bold))))
+   `(neo-dir-link-face ((,class (:foreground ,prim :inherit bold))))
    `(neo-expand-btn-face ((,class (:foreground ,fg1))))
    `(neo-file-link-face ((,class (:foreground ,fg1))))
-   `(neo-root-dir-face ((,class (:foreground ,func :inherit bold))))
+   `(neo-root-dir-face ((,class (:foreground ,sec-dark :inherit bold))))
    ;;
    ;; markdown-mode
    ;;
-   `(markdown-code-face ((,class (:foreground ,(immaterial-color "primary-light")))))
+   `(markdown-header-face-1 ((,class (:foreground ,sec-dark :weight bold))))
+   `(markdown-header-face-2 ((,class (:foreground ,sec-dark :weight bold))))
+   `(markdown-header-face-3 ((,class (:foreground ,sec-dark :weight bold))))
+   `(markdown-header-face-4 ((,class (:foreground ,sec-dark :weight bold))))
+   `(markdown-header-face-5 ((,class (:foreground ,sec-dark :weight bold))))
+   `(markdown-header-face-6 ((,class (:foreground ,sec-dark :weight bold))))
+   `(markdown-code-face ((,class (:foreground ,prim))))
+   `(markdown-link-face ((,class (:foreground ,sec))))
+   `(markdown-url-face ((,class (:foreground ,sec))))
+   `(markdown-plain-url-face ((,class (:foreground ,sec))))
+   ;;
+   ;; treemacs
+   ;;
+
+   `(treemacs-root-face ((,class (:foreground ,sec-dark :inherit bold))))
+   `(treemacs-directory-face ((,class (:foreground ,sec-dark))))
+   `(treemacs-file-face ((,class (:inherit immaterial-small-face))))
+   `(treemacs-term-node-face ((,class (:foreground ,sec-dark :weight bold))))
+   `(treemacs-git-modified-face ((,class (:foreground ,fg1 :weight bold))))
+   `(treemacs-git-added-face ((,class (:foreground ,prim-dark :weight bold))))
+   `(treemacs-git-renamed-face ((,class (:foreground ,prim-dark :italic t))))
+   `(treemacs-git-ignored-face ((,class (:foreground ,discrete))))
+   `(treemacs-git-untracked-face ((,class (:foreground ,discrete))))
+   `(treemacs-git-conflict-face ((,class (:foreground ,error :weight bold))))
    ))
 
 ;;;###autoload
