@@ -298,7 +298,7 @@ over the default ones defined in immaterial-color-alist."
    ;; lsp-ui
    ;;
    ;; ui-doc popup
-   `(lsp-ui-doc-background ((,class (:backgroundw ,bg-on))))
+   `(lsp-ui-doc-background ((,class (:background ,bg-on))))
    ))
 
 ;;;###autoload
