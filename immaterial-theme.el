@@ -299,6 +299,39 @@ over the default ones defined in immaterial-color-alist."
    ;;
    ;; ui-doc popup
    `(lsp-ui-doc-background ((,class (:background ,bg-on))))
+
+   ;;
+   ;; ido
+   ;;
+   `(ido-first-match ((,class (:weight bold))))
+   `(ido-only-match ((,class (:weight bold))))
+   `(ido-subdir ((,class (:foreground ,sec-dark))))
+
+   ;;
+   ;; ivy/swiper
+   ;;
+   `(ivy-current-match ((,class (:weight bold :background ,bg-on))))
+   ;; how to highlight the matching part of the search expression on presented
+   ;; search candidates in the minibuffer.
+   `(ivy-minibuffer-match-face-1 ((,class (:inherit isearch))))
+   `(ivy-minibuffer-match-face-2 ((,class (:inherit isearch))))
+   `(ivy-minibuffer-match-face-3 ((,class (:inherit isearch))))
+   `(ivy-minibuffer-match-face-4 ((,class (:inherit isearch))))
+   ;; ivy information for grep-like searches (such as counsel-ag)
+   `(ivy-grep-info ((,class (:foreground ,sec-dark))))
+   `(ivy-grep-line-number ((,class (:foreground ,sec-dark))))
+   ;; how to highlight the matching part of the search expression on presented
+   ;; search candidates in the buffer itself.
+   `(swiper-match-face-1 ((,class (:inherit isearch))))
+   `(swiper-match-face-2 ((,class (:inherit isearch))))
+   `(swiper-match-face-3 ((,class (:inherit isearch))))
+   `(swiper-match-face-4 ((,class (:inherit isearch))))
+
+   ;;
+   ;; ivy-posframe
+   ;;
+   `(ivy-posframe ((,class (:background ,bg-off))))
+   `(ivy-posframe-border ((,class (:background ,discrete))))
    ))
 
 ;;;###autoload
