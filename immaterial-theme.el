@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.3.2
+;; Version: 0.3.3
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -54,14 +54,14 @@ for constructing primary and secondary color schemes.")
 ;; Tip: enable rainbow-mode to preview the colors.
 (defconst immaterial-color-alist
   '(("background-primary"    . "#012027")
-    ("background-on"         . "#023747")
+    ("background-on"         . "#01343f")
     ("background-off"        . "#001017")
     ("foreground-primary"    . "#eeeeee")
     ("foreground-secondary"  . "#dbdbdb")
     ("foreground-tertiary"   . "#c8c8c8")
-    ("primary"               . "#80cbc4")
-    ("primary-light"         . "#b2fef7")
-    ("primary-dark"          . "#4f9a94")
+    ("primary"               . "#9fa8da")
+    ("primary-light"         . "#d1d9ff")
+    ("primary-dark"          . "#6f79a8")
     ("secondary"             . "#c5e1a5")
     ("secondary-light"       . "#f8ffd7")
     ("secondary-dark"        . "#94af76")

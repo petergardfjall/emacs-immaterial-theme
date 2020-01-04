@@ -65,9 +65,9 @@ The following are the full list of colors defined in the default
  | `foreground-primary`   | ![#eeeeee](https://placehold.it/15/eeeeee/000000?text=+) `#eeeeee` |
  | `foreground-secondary` | ![#dbdbdb](https://placehold.it/15/dbdbdb/000000?text=+) `#dbdbdb` |
  | `foreground-tertiary`  | ![#c8c8c8](https://placehold.it/15/c8c8c8/000000?text=+) `#c8c8c8` |
- | `primary`              | ![#80cbc4](https://placehold.it/15/4db6ac/000000?text=+) `#80cbc4` |
- | `primary-light`        | ![#b2fef7](https://placehold.it/15/82e9de/000000?text=+) `#b2fef7` |
- | `primary-dark`         | ![#4f9a94](https://placehold.it/15/00867d/000000?text=+) `#4f9a94` |
+ | `primary`              | ![#9fa8da](https://placehold.it/15/9fa8da/000000?text=+) `#9fa8da` |
+ | `primary-light`        | ![#d1d9ff](https://placehold.it/15/d1d9ff/000000?text=+) `#d1d9ff` |
+ | `primary-dark`         | ![#6f79a8](https://placehold.it/15/6f79a8/000000?text=+) `#6f79a8` |
  | `secondary`            | ![#c5e1a5](https://placehold.it/15/aed581/000000?text=+) `#c5e1a5` |
  | `secondary-light`      | ![#f8ffd7](https://placehold.it/15/e1ffb1/000000?text=+) `#f8ffd7` |
  | `secondary-dark`       | ![#94af76](https://placehold.it/15/7da453/000000?text=+) `#94af76` |
