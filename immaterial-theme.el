@@ -310,7 +310,7 @@ over the default ones defined in immaterial-color-alist."
    ;;
    ;; ivy/swiper
    ;;
-   `(ivy-current-match ((,class (:weight bold :background ,bg-on))))
+   `(ivy-current-match ((,class (:foreground ,sec-dark :weight bold))))
    ;; how to highlight the matching part of the search expression on presented
    ;; search candidates in the minibuffer.
    `(ivy-minibuffer-match-face-1 ((,class (:inherit isearch))))
