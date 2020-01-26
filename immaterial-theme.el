@@ -334,6 +334,29 @@ over the default ones defined in immaterial-color-alist."
    `(ivy-posframe-border ((,class (:background ,discrete))))
    ))
 
+(defvar immaterial-minibuffer-bgcolor
+  '(immaterial-color "background-off")
+  "Expression that evals to a background color for the active minibuffer.
+For example, '#000000'.")
+
+(defun immaterial-minibuffer-active-fn ()
+  "Apply the minibuffer background color."
+  (with-selected-window (minibuffer-window)
+    ;;(make-local-variable 'face-remapping-alist)
+    (face-remap-add-relative 'default :background (eval immaterial-minibuffer-bgcolor))
+    (face-remap-add-relative 'fringe :background (eval immaterial-minibuffer-bgcolor))))
+
+(defun immaterial-minibuffer-inactive-fn ()
+  "Apply the minibuffer background color."
+  (with-selected-window (get-buffer-window (current-buffer))
+    ;; (message "resetting: %s ..." face-remapping-alist)
+    (kill-local-variable 'face-remapping-alist)
+    (redraw-frame (selected-frame))))
+
+;; Change minibuffer background color when it becomes active (e.g. find-file).
+(add-hook 'minibuffer-setup-hook #'immaterial-minibuffer-active-fn)
+(add-hook 'minibuffer-exit-hook #'immaterial-minibuffer-inactive-fn)
+
 ;;;###autoload
 (when load-file-name
   (add-to-list 'custom-theme-load-path
