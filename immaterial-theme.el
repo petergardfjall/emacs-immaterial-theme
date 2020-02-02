@@ -156,9 +156,10 @@ over the default ones defined in immaterial-color-alist."
    ;; region selection
    ;;
    `(region ((,class (:background ,bg-on :foreground ,fg2))))
-   `(highlight ((,class (:background ,bg-on :foreground ,fg2))))
+   ;; face used for text highlighting in various contexts (e.g. ivy search)
+   `(highlight ((,class (:background ,bg-on :foreground ,fg2 :extend t))))
    ;; hl-line-mode background
-   `(hl-line ((,class (:background ,bg-on))))
+   `(hl-line ((,class (:background ,bg-on :extend t))))
    ;; linum-mode column
    `(linum ((t (:foreground ,discrete :background ,bg-prim :height 1.0 :weight normal))))
    ;; display-line-numbers-mode (emacs26+)
@@ -169,10 +170,10 @@ over the default ones defined in immaterial-color-alist."
    ;; show-paren-mode: how to highlight matching/mismatching parenthesis
    `(show-paren-match ((,class (:weight bold :background ,bg-on))))
    `(show-paren-mismatch ((,class (:background ,error))))
-   ;; current match of an on-going incremental search
-   `(isearch ((,class (:weight bold :background ,bg-on :foreground ,fg1))))
+   ;; current match of an on-going incremental search (isearch-forward)
+   `(isearch ((,class (:weight bold :foreground ,warning))))
    ;; other matches for the search string that are visible on display
-   `(lazy-highlight ((,class (:weight bold :background ,bg-on :foreground ,fg1))))
+   `(lazy-highlight ((,class (:weight bold :background ,bg-on :foreground ,warning))))
    ;;
    ;; mode-line
    ;;
@@ -310,7 +311,7 @@ over the default ones defined in immaterial-color-alist."
    ;;
    ;; ivy/swiper
    ;;
-   `(ivy-current-match ((,class (:background ,bg-on))))
+   `(ivy-current-match ((,class (:background ,bg-on :extend t))))
    ;; how to highlight the matching part of the search expression on presented
    ;; search candidates in the minibuffer.
    `(ivy-minibuffer-match-face-1 ((,class (:inherit isearch))))
