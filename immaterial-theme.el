@@ -68,7 +68,7 @@ for constructing primary and secondary color schemes.")
     ("error"                 . "#ff5555")
     ("warning"               . "#e86310")
     ("discrete"              . "#777777")
-    ("cursor"                . "#e86310"))
+    ("cursor"                . "#64d8cb"))
   "The default color palette to use for the theme.
 Values can be overridden via immaterial-color-override-alist).
 The palette was created using the https://material.io/tools/color/ tool.")
