@@ -66,7 +66,7 @@ for constructing primary and secondary color schemes.")
     ("secondary-light"       . "#f8ffd7")
     ("secondary-dark"        . "#94af76")
     ("error"                 . "#ff5555")
-    ("warning"               . "#e86310")
+    ("warning"               . "#ff9800")
     ("discrete"              . "#777777")
     ("cursor"                . "#64d8cb"))
   "The default color palette to use for the theme.
