@@ -168,7 +168,7 @@ over the default ones defined in immaterial-color-alist."
    `(fringe ((,class (:background ,bg-prim))))
    `(cursor ((,class (:background ,cursor))))
    ;; show-paren-mode: how to highlight matching/mismatching parenthesis
-   `(show-paren-match ((,class (:weight bold :background ,bg-on))))
+   `(show-paren-match ((,class (:weight bold :background ,bg-on :foreground ,warning))))
    `(show-paren-mismatch ((,class (:background ,error))))
    ;; current match of an on-going incremental search (isearch-forward)
    `(isearch ((,class (:weight bold :foreground ,warning))))
