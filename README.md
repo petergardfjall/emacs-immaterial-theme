@@ -59,22 +59,22 @@ The following are the full list of colors defined in the default
 
  | Property               | Color                                                              |
  | --------               | -----                                                              |
- | `background-primary`   | ![#102027](https://placehold.it/15/012027/000000?text=+) `#012027` |
- | `background-on`        | ![#023747](https://placehold.it/15/023747/000000?text=+) `#023747` |
+ | `background-primary`   | ![#012027](https://placehold.it/15/012027/000000?text=+) `#012027` |
+ | `background-on`        | ![#01343f](https://placehold.it/15/023747/000000?text=+) `#01343f` |
  | `background-off`       | ![#001017](https://placehold.it/15/001017/000000?text=+) `#001017` |
- | `foreground-primary`   | ![#eeeeee](https://placehold.it/15/eeeeee/000000?text=+) `#eeeeee` |
- | `foreground-secondary` | ![#dbdbdb](https://placehold.it/15/dbdbdb/000000?text=+) `#dbdbdb` |
- | `foreground-tertiary`  | ![#c8c8c8](https://placehold.it/15/c8c8c8/000000?text=+) `#c8c8c8` |
+ | `foreground-primary`   | ![#dddddd](https://placehold.it/15/eeeeee/000000?text=+) `#dddddd` |
+ | `foreground-secondary` | ![#c8c8c8](https://placehold.it/15/dbdbdb/000000?text=+) `#c8c8c8` |
+ | `foreground-tertiary`  | ![#b0b0b0](https://placehold.it/15/c8c8c8/000000?text=+) `#b0b0b0` |
  | `primary`              | ![#9fa8da](https://placehold.it/15/9fa8da/000000?text=+) `#9fa8da` |
  | `primary-light`        | ![#d1d9ff](https://placehold.it/15/d1d9ff/000000?text=+) `#d1d9ff` |
  | `primary-dark`         | ![#6f79a8](https://placehold.it/15/6f79a8/000000?text=+) `#6f79a8` |
  | `secondary`            | ![#c5e1a5](https://placehold.it/15/aed581/000000?text=+) `#c5e1a5` |
  | `secondary-light`      | ![#f8ffd7](https://placehold.it/15/e1ffb1/000000?text=+) `#f8ffd7` |
  | `secondary-dark`       | ![#94af76](https://placehold.it/15/7da453/000000?text=+) `#94af76` |
- | `error`                | ![#FF5555](https://placehold.it/15/FF5555/000000?text=+) `#ff5555` |
+ | `error`                | ![#ff5555](https://placehold.it/15/FF5555/000000?text=+) `#ff5555` |
  | `warning`              | ![#e86310](https://placehold.it/15/e86310/000000?text=+) `#e86310` |
  | `discrete`             | ![#777777](https://placehold.it/15/777777/000000?text=+) `#777777` |
- | `cursor`               | ![#e86310](https://placehold.it/15/e86310/000000?text=+) `#e86310` |
+ | `cursor`               | ![#64d8cb](https://placehold.it/15/e86310/000000?text=+) `#64d8cb` |
 
 Each of these values can be overridden through the
 `immaterial-color-override-alist` variable, which overrides the defaults in the
@@ -115,30 +115,12 @@ theme](https://ethanschoonover.com/solarized/).
 ![solarized-dark-like theme](screenshots/solarized-dark-like-gomode.png)
 
 
-With a palette producing a bright theme:
-
-    (setq immaterial-color-override-alist
-      '(("background-primary"   . "#fafafa")
-        ("background-on"        . "#cfd8dc")
-        ("background-off"       . "#eeeeee")
-        ("foreground-primary"   . "#263238")
-        ("foreground-secondary" . "#4f5b62")
-        ("foreground-tertiary"  . "#000a12")
-        ("primary"              . "#311b92")
-        ("primary-light"        . "#6746c3")
-        ("primary-dark"         . "#000063")
-        ("secondary"            . "#33691e")
-        ("secondary-light"      . "#629749")
-        ("secondary-dark"       . "#003d00")))
-
-![bright theme](screenshots/bright-gomode.png)
-
 With an updated `primary` palette:
 
     (setq immaterial-color-override-alist
-      '(("primary"         . "#b39ddb")
-        ("primary-light"   . "#e6ceff")
-        ("primary-dark"    . "#836fa9")))
+      '(("primary"         . "#81d4fa")
+        ("primary-light"   . "#b6ffff")
+        ("primary-dark"    . "#4ba3c7")))
 
 ![customized theme](screenshots/different-primary-gomode.png)
 
