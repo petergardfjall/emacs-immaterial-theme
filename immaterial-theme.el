@@ -68,7 +68,11 @@ for constructing primary and secondary color schemes.")
     ("error"                 . "#ff5555")
     ("warning"               . "#ff9800")
     ("discrete"              . "#777777")
-    ("cursor"                . "#64d8cb"))
+    ("cursor"                . "#64d8cb")
+    ("modeline-active-fg"    . "#dddddd")
+    ("modeline-active-bg"    . "#01343f")
+    ("modeline-inactive-fg"  . "#777777")
+    ("modeline-inactive-bg"  . "#001017"))
   "The default color palette to use for the theme.
 Values can be overridden via immaterial-color-override-alist).
 The palette was created using the https://material.io/tools/color/ tool.")
@@ -107,7 +111,13 @@ over the default ones defined in immaterial-color-alist."
       (negation   (immaterial-color "warning"))
       (warning    (immaterial-color "warning"))
       (error      (immaterial-color "error"))
-      (cursor     (immaterial-color "cursor")))
+      (cursor     (immaterial-color "cursor"))
+
+      (modeline-active-bg (immaterial-color "modeline-active-bg"))
+      (modeline-active-fg (immaterial-color "modeline-active-fg"))
+      (modeline-inactive-bg (immaterial-color "modeline-inactive-bg"))
+      (modeline-inactive-fg (immaterial-color "modeline-inactive-fg")))
+
   (custom-theme-set-faces
    'immaterial
    `(default ((,class (:background ,bg-prim :foreground ,fg1))))
@@ -178,20 +188,20 @@ over the default ones defined in immaterial-color-alist."
    ;; mode-line
    ;;
    ;; mode-line of the active buffer (e.g. in case of split window)
-   `(mode-line ((,class (:background ,bg-on :foreground ,fg1))))
+   `(mode-line ((,class (:background ,modeline-active-bg :foreground ,modeline-active-fg))))
    ;; mode-line of the inactive buffer (e.g. in case of split window)
-   `(mode-line-inactive  ((,class (:background ,bg-off :foreground ,discrete))))
+   `(mode-line-inactive  ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
    `(mode-line-buffer-id ((,class (:weight bold))))
 
    ;;
    ;; powerline
    ;;
    ;; for active buffer in the frame
-   `(powerline-active1 ((,class (:background ,bg-on :foreground ,fg1))))
-   `(powerline-active2 ((,class (:background ,bg-on :foreground ,fg1))))
+   `(powerline-active1 ((,class (:background ,modeline-active-bg :foreground ,modeline-active-fg))))
+   `(powerline-active2 ((,class (:background ,modeline-active-bg :foreground ,modeline-active-fg))))
    ;; for inactive buffers in the frame
-   `(powerline-inactive1 ((,class (:background ,bg-off :foreground ,discrete))))
-   `(powerline-inactive2 ((,class (:background ,bg-off :foreground ,discrete))))
+   `(powerline-inactive1 ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
+   `(powerline-inactive2 ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
 
    ;; the vertical line that separates windows in a frame
    `(vertical-border ((,class (:foreground ,bg-off))))
