@@ -55,7 +55,7 @@ for constructing primary and secondary color schemes.")
 (defconst immaterial-color-alist
   '(("background-primary"    . "#012027")
     ("background-on"         . "#01343f")
-    ("background-off"        . "#001017")
+    ("background-off"        . "#001b21")
     ("foreground-primary"    . "#dddddd")
     ("foreground-secondary"  . "#c8c8c8")
     ("foreground-tertiary"   . "#b0b0b0")
