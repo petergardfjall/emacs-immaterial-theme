@@ -158,9 +158,9 @@ over the default ones defined in immaterial-color-alist."
    ;;
    ;; Buttons and links
    ;;
-   `(button ((,class (:foreground ,sec :weight bold :underline t))))
-   `(link ((,class (:foreground ,sec :weight bold :underline t))))
-   `(link-visited ((,class (:foreground ,sec :weight bold :underline t))))
+   `(button ((,class (:foreground ,str :weight bold :underline t))))
+   `(link ((,class (:foreground ,str :weight bold :underline t))))
+   `(link-visited ((,class (:foreground ,str :weight bold :underline t))))
 
    ;;
    ;; region selection
