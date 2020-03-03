@@ -70,7 +70,7 @@ for constructing primary and secondary color schemes.")
     ("discrete"              . "#777777")
     ("cursor"                . "#64d8cb")
     ("modeline-active-fg"    . "#ffffff")
-    ("modeline-active-bg"    . "#01343f")
+    ("modeline-active-bg"    . "#005662")
     ("modeline-inactive-fg"  . "#777777")
     ("modeline-inactive-bg"  . "#001017"))
   "The default color palette to use for the theme.
@@ -204,7 +204,7 @@ over the default ones defined in immaterial-color-alist."
    `(powerline-inactive2 ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
 
    ;; the vertical line that separates windows in a frame
-   `(vertical-border ((,class (:foreground ,bg-off))))
+   `(vertical-border ((,class (:foreground ,discrete))))
    `(minibuffer-prompt ((,class (:bold t :foreground ,prim))))
    `(default-italic ((,class (:italic t))))
    `(link ((,class (:foreground ,prim-dark :underline t))))
