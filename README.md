@@ -52,6 +52,14 @@ elements:
     - `discrete`: for text that should be less pronounced (code comments, line
       numbers).
     - `cursor`: the color of the cursor.
+    - `modeline-active-fg`: foreground color to use for an active buffer
+      modeline.
+    - `modeline-active-bg`: background color to use for on an active buffer
+      modeline.
+    - `modeline-inactive-fg`: foreground color to use for on an inactive buffer
+      modeline.
+    - `modeline-inactive-bg`: background color to use for on an inactive buffer
+      modeline.
 
 The following are the full list of colors defined in the default
 `immaterial-color-alist`:
@@ -72,9 +80,13 @@ The following are the full list of colors defined in the default
  | `secondary-light`      | ![#f8ffd7](https://placehold.it/15/f8ffd7/000000?text=+) `#f8ffd7` |
  | `secondary-dark`       | ![#94af76](https://placehold.it/15/94af76/000000?text=+) `#94af76` |
  | `error`                | ![#ff5555](https://placehold.it/15/ff5555/000000?text=+) `#ff5555` |
- | `warning`              | ![#e86310](https://placehold.it/15/e86310/000000?text=+) `#e86310` |
+ | `warning`              | ![#ff9800](https://placehold.it/15/ff9800/000000?text=+) `#ff9800` |
  | `discrete`             | ![#777777](https://placehold.it/15/777777/000000?text=+) `#777777` |
  | `cursor`               | ![#64d8cb](https://placehold.it/15/64d8cb/000000?text=+) `#64d8cb` |
+ | `modeline-active-fg`   | ![#ffffff](https://placehold.it/15/ffffff/000000?text=+) `#ffffff` |
+ | `modeline-active-fg`   | ![#005662](https://placehold.it/15/005662/000000?text=+) `#005662` |
+ | `modeline-inactive-fg` | ![#777777](https://placehold.it/15/777777/000000?text=+) `#777777` |
+ | `modeline-inactive-bg` | ![#001017](https://placehold.it/15/001017/000000?text=+) `#001017` |
 
 Each of these values can be overridden through the
 `immaterial-color-override-alist` variable, which overrides the defaults in the
@@ -104,17 +116,6 @@ The default theme in `go-mode`:
 
 ![default theme](screenshots/default-gomode.png)
 
-With a background palette similar to the [Solarized dark
-theme](https://ethanschoonover.com/solarized/).
-
-    (setq immaterial-color-override-alist
-      '(("background-primary" . "#002b36")
-        ("background-on"      . "#003644")
-        ("background-off"     . "#00212b")))
-
-![solarized-dark-like theme](screenshots/solarized-dark-like-gomode.png)
-
-
 With an updated `primary` palette:
 
     (setq immaterial-color-override-alist
@@ -124,6 +125,31 @@ With an updated `primary` palette:
 
 ![customized theme](screenshots/different-primary-gomode.png)
 
+A bright mode:
+
+      (setq immaterial-color-override-alist
+        '(("background-primary"    . "#f5f5f5")
+          ("background-off"        . "#f2f2f2")
+          ("background-on"         . "#ecefe9")
+          ("foreground-primary"    . "#102027")
+          ("foreground-secondary"  . "#37474f")
+          ("foreground-tertiary"   . "#62727b")
+          ("primary"               . "#7b1fa2")
+          ("primary-light"         . "#ae52d4")
+          ("primary-dark"          . "#4a0072")
+          ("secondary"             . "#33691e")
+          ("secondary-light"       . "#629749")
+          ("secondary-dark"        . "#003d00")
+          ("error"                 . "#b0003a")
+          ("warning"               . "#ff6f00")
+          ("discrete"              . "#616161")
+          ("cursor"                . "#64d8cb")
+          ("modeline-active-bg"    . "#705697")
+          ("modeline-active-fg"    . "#ffffff")
+          ("modeline-inactive-bg"  . "#d0d0d0")
+          ("modeline-inactive-fg"  . "#616161")))
+
+![customized theme](screenshots/bright-customization.png)
 
 ## Install
 
