@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.4.0
+;; Version: 0.4.1
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -68,6 +68,7 @@ for constructing primary and secondary color schemes.")
     ("error"                 . "#ff5555")
     ("warning"               . "#ff9800")
     ("discrete"              . "#777777")
+    ("vertical-border"       . "#012830")
     ("cursor"                . "#64d8cb")
     ("modeline-active-fg"    . "#ffffff")
     ("modeline-active-bg"    . "#005662")
@@ -107,12 +108,12 @@ over the default ones defined in immaterial-color-alist."
       (type       (immaterial-color "secondary"))
       (var        (immaterial-color "secondary-dark"))
       (func       (immaterial-color "secondary-dark"))
-      (linum-fg   (immaterial-color "discrete"))
       (negation   (immaterial-color "warning"))
       (warning    (immaterial-color "warning"))
       (error      (immaterial-color "error"))
       (cursor     (immaterial-color "cursor"))
 
+      (v-border   (immaterial-color "vertical-border"))
       (modeline-active-bg (immaterial-color "modeline-active-bg"))
       (modeline-active-fg (immaterial-color "modeline-active-fg"))
       (modeline-inactive-bg (immaterial-color "modeline-inactive-bg"))
@@ -204,7 +205,7 @@ over the default ones defined in immaterial-color-alist."
    `(powerline-inactive2 ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
 
    ;; the vertical line that separates windows in a frame
-   `(vertical-border ((,class (:foreground ,discrete))))
+   `(vertical-border ((,class (:foreground ,v-border))))
    `(minibuffer-prompt ((,class (:bold t :foreground ,prim))))
    `(default-italic ((,class (:italic t))))
    `(link ((,class (:foreground ,prim-dark :underline t))))

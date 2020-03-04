@@ -52,6 +52,8 @@ elements:
     - `discrete`: for text that should be less pronounced (code comments, line
       numbers).
     - `cursor`: the color of the cursor.
+    - `vertical-border`: the color of the vertical line that separates windows
+      in a frame.
     - `modeline-active-fg`: foreground color to use for an active buffer
       modeline.
     - `modeline-active-bg`: background color to use for on an active buffer
@@ -83,6 +85,7 @@ The following are the full list of colors defined in the default
  | `warning`              | ![#ff9800](https://placehold.it/15/ff9800/000000?text=+) `#ff9800` |
  | `discrete`             | ![#777777](https://placehold.it/15/777777/000000?text=+) `#777777` |
  | `cursor`               | ![#64d8cb](https://placehold.it/15/64d8cb/000000?text=+) `#64d8cb` |
+ | `vertical-border`      | ![#012830](https://placehold.it/15/012830/000000?text=+) `#012830` |
  | `modeline-active-fg`   | ![#ffffff](https://placehold.it/15/ffffff/000000?text=+) `#ffffff` |
  | `modeline-active-fg`   | ![#005662](https://placehold.it/15/005662/000000?text=+) `#005662` |
  | `modeline-inactive-fg` | ![#777777](https://placehold.it/15/777777/000000?text=+) `#777777` |
@@ -144,6 +147,7 @@ A bright mode:
           ("warning"               . "#ff6f00")
           ("discrete"              . "#616161")
           ("cursor"                . "#64d8cb")
+          ("vertical-border"       . "#dddddd")
           ("modeline-active-bg"    . "#705697")
           ("modeline-active-fg"    . "#ffffff")
           ("modeline-inactive-bg"  . "#d0d0d0")
