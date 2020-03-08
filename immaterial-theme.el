@@ -346,45 +346,6 @@ over the default ones defined in immaterial-color-alist."
    `(ivy-posframe-border ((,class (:background ,discrete))))
    ))
 
-(defvar immaterial-minibuffer-bgcolor
-  '(immaterial-color "background-off")
-  "Expression that evals to a background color for the active minibuffer.
-This is intended to be used to highlight the minibuffer when it
-becomes active (such as on `find-file`) to differentiate it from
-the primary background color.  For example, '#000000'.")
-
-(defun immaterial-minibuffer-active-fn ()
-  "Apply the minibuffer background color.
-This function is intended to be added as a `minibuffer-setup-hook`."
-  (with-selected-window (minibuffer-window)
-    (make-local-variable 'face-remapping-alist)
-    ;; set the background color of the `default` face. Save a cookie to allow it
-    ;; to be undone when minibuffer is deactivated.
-    (set (make-local-variable 'minibuf-default-cookie)
-	 (face-remap-add-relative 'default :background (eval immaterial-minibuffer-bgcolor)))
-    ;; make minibuffer-local changes to remove the fringe from the minibuffer
-    ;; (it appears in the default background which is "unpretty".
-    (setq-local left-fringe-width 0)
-    (setq-local right-fringe-width 0)
-    ;; ... instead add a single character wide margin
-    (setq-local left-margin-width 1)
-    (setq-local right-margin-width 1)
-    ;; make the minibuffer-local changes take immediate effect.
-    (set-window-buffer (selected-window) (current-buffer))))
-
-(defun immaterial-minibuffer-inactive-fn ()
-  "Unset minibuffer-local face changes.
-This function is intended to be added as a `minibuffer-exit-hook`."
-  (with-selected-window (get-buffer-window (current-buffer))
-    (when (local-variable-p 'face-remapping-alist)
-      ;; undo the face updates made when minibuffer became active by removing
-      ;; the cookie.
-      (face-remap-remove-relative minibuf-default-cookie))))
-
-;; Change minibuffer background color when it becomes active (e.g. find-file).
-(add-hook 'minibuffer-setup-hook #'immaterial-minibuffer-active-fn)
-(add-hook 'minibuffer-exit-hook #'immaterial-minibuffer-inactive-fn)
-
 (defun immaterial-set-treemacs-bg-fn ()
   (with-current-buffer (treemacs-get-local-buffer)
     (setq-local face-remapping-alist
