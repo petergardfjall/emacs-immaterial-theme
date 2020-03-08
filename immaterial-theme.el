@@ -346,19 +346,6 @@ over the default ones defined in immaterial-color-alist."
    `(ivy-posframe-border ((,class (:background ,discrete))))
    ))
 
-(defun immaterial-set-treemacs-bg-fn ()
-  (with-current-buffer (treemacs-get-local-buffer)
-    (setq-local face-remapping-alist
-		`((default . (:background ,(immaterial-color "background-off")))
-		  (fringe  . (:background ,(immaterial-color "background-off")))))
-    ;; (setq-local left-fringe-width 0)
-    ;; (setq-local right-fringe-width 0)
-    ;; (setq-local left-margin-width 1)
-    ;; (setq-local right-margin-width 1)))
-    ))
-
-(add-hook 'treemacs-mode-hook #'immaterial-set-treemacs-bg-fn)
-
 ;;;###autoload
 (when load-file-name
   (add-to-list 'custom-theme-load-path
