@@ -300,7 +300,7 @@ over the default ones defined in immaterial-color-alist."
    `(treemacs-directory-face ((,class (:foreground ,sec-dark))))
    `(treemacs-file-face ((,class (:inherit immaterial-small-face))))
    `(treemacs-term-node-face ((,class (:foreground ,sec-dark :weight bold))))
-   `(treemacs-git-modified-face ((,class (:foreground ,fg1 :weight bold))))
+   `(treemacs-git-modified-face ((,class (:foreground ,prim :weight bold))))
    `(treemacs-git-added-face ((,class (:foreground ,prim-dark :weight bold))))
    `(treemacs-git-renamed-face ((,class (:foreground ,prim-dark :italic t))))
    `(treemacs-git-ignored-face ((,class (:foreground ,discrete))))
