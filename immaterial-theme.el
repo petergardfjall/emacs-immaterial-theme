@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.5.0
+;; Version: 0.5.1
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -65,7 +65,7 @@ using the https://material.io/resources/color/ tool."
   `(("background-primary"    . ,(if (eq variant 'dark) "#012027" "#fdfdfa"))
     ("background-off"        . ,(if (eq variant 'dark) "#001b21" "#fbfbf8"))
     ("background-on"         . ,(if (eq variant 'dark) "#01343f" "#f5f2fa"))
-    ("foreground-primary"    . ,(if (eq variant 'dark) "#dddddd" "#242424"))
+    ("foreground-primary"    . ,(if (eq variant 'dark) "#dddddd" "#24292e"))
     ("foreground-secondary"  . ,(if (eq variant 'dark) "#c8c8c8" "#505055"))
     ("foreground-tertiary"   . ,(if (eq variant 'dark) "#b0b0b0" "#8e8e8e"))
     ("primary"               . ,(if (eq variant 'dark) "#9fa8da" "#7e57c2"))
@@ -82,7 +82,15 @@ using the https://material.io/resources/color/ tool."
     ("modeline-active-fg"    . ,(if (eq variant 'dark) "#ffffff" "#ffffff"))
     ("modeline-active-bg"    . ,(if (eq variant 'dark) "#005662" "#9575cd"))
     ("modeline-inactive-fg"  . ,(if (eq variant 'dark) "#777777" "#9e9e9e"))
-    ("modeline-inactive-bg"  . ,(if (eq variant 'dark) "#001017" "#ede7f6"))))
+    ("modeline-inactive-bg"  . ,(if (eq variant 'dark) "#001017" "#ede7f6"))
+    ;; various task-specific colors
+    ("diff-added"            . ,(if (eq variant 'dark) "#0e3a19" "#e6ffed"))
+    ("diff-added-refined"    . ,(if (eq variant 'dark) "#1a8736" "#acf2bd"))
+    ("diff-removed"          . ,(if (eq variant 'dark) "#460b0e" "#ffeef0"))
+    ("diff-removed-refined"  . ,(if (eq variant 'dark) "#b51a22" "#fdb8c0"))
+    ("diff-changed"          . ,(if (eq variant 'dark) "#07275a" "#e1f0fe"))
+    ("diff-changed-refined"  . ,(if (eq variant 'dark) "#2674ed" "#a8d3ff"))
+    ))
 
 
 (defun immaterial-color (color-name)
@@ -485,7 +493,42 @@ NAME and VARIANT should be symbols."
        ;; `(org-upcoming-distant-deadline ((,class (:foreground ,suc :inherit org-priority))))
        ;; `(org-verse ((,class (:inherit org-block :slant italic))))
        `(org-warning ((,class (:foreground ,error))))
+
+       ;;
+       ;; diff-mode
+       ;;
+       ;; used to highlight file header lines in diffs
+       `(diff-file-header ((,class (:foreground ,prim :weight bold))))
+       `(diff-header ((,class (:foreground ,discrete))))
+       ;; used to highlight function names produced by `diff -p`
+       `(diff-function ((,class (:foreground ,discrete))))
+       ;; used to highlight added lines
+       `(diff-added ((,class (:background ,(immaterial-color "diff-added") :extend t))))
+       ;; face used for added characters shown by ‘diff-refine-hunk’.
+       `(diff-refine-added ((,class (:background ,(immaterial-color "diff-added-refined")))))
+       ;; used to highlight indicator of added lines (+, >)
+       `(diff-indicator-added ((,class (:background ,(immaterial-color "diff-added") :foreground ,(immaterial-color "diff-added-refined")))))
+       ;; used to highlight added lines
+       `(diff-removed ((,class (:background ,(immaterial-color "diff-removed")))))
+       ;; face used for removed characters shown by ‘diff-refine-hunk’.
+       `(diff-refine-removed ((,class (:background ,(immaterial-color "diff-removed-refined")))))
+       ;; used to highlight indicator of changed lines (-, <)
+       `(diff-indicator-removed ((,class (:background ,(immaterial-color "diff-removed") :foreground ,(immaterial-color "diff-removed-refined")))))
+       ;; face used to highlight changed lines
+       `(diff-changed ((,class (:background ,(immaterial-color "diff-changed")))))
+       ;; face used for char-based changes shown by ‘diff-refine-hunk’.
+       `(diff-refine-changed ((,class (:background ,(immaterial-color "diff-changed-refined")))))
+       ;; used to highlight indicator of changed lines
+       `(diff-indicator-changed ((,class (:background ,(immaterial-color "diff-changed") :foreground ,(immaterial-color "diff-changed-refined")))))
+
+       ;;
+       ;; diff-hl
+       ;;
+       `(diff-hl-insert ((,class (:background ,(immaterial-color "diff-added") :foreground ,(immaterial-color "diff-added-refined")))))
+       `(diff-hl-delete ((,class (:background ,(immaterial-color "diff-removed") :foreground ,(immaterial-color "diff-removed-refined")))))
+       `(diff-hl-change ((,class (:background ,(immaterial-color "diff-changed") :foreground ,(immaterial-color "diff-changed-refined")))))
        ))))
+
 
 ;;;###autoload
 (when load-file-name
