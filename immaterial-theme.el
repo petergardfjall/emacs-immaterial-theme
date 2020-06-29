@@ -209,6 +209,8 @@ NAME and VARIANT should be symbols."
        ;; region selection
        ;;
        `(region ((,class (:background ,bg-on :foreground ,fg2))))
+       ;; used for secondary selections and selected date/time in org-mode
+       `(secondary-selection ((,class (:background ,bg-on :foreground ,sec-dark))))
        ;; face used for text highlighting in various contexts (e.g. ivy search)
        `(highlight ((,class (:background ,bg-on :foreground ,fg2 :extend t))))
        ;; hl-line-mode background
@@ -410,13 +412,14 @@ NAME and VARIANT should be symbols."
        ;;
        ;; org-mode
        ;;
-
        ;; face to use for #+TITLE: document info keyword
        `(org-document-title ((,class (:foreground ,prim-light :weight bold))))
        ;; face to use for value following #+DATE:, #+AUTHOR:, #+EMAIL:
        `(org-document-info ((,class (:foreground ,prim-light))))
        ;; face to use for keywords #+DATE:, #+AUTHOR:, #+EMAIL:
        `(org-document-info-keyword ((,class (:foreground ,prim-dark))))
+       ;; face for lines starting with "#+"
+       `(org-meta-line ((,class (:foreground ,discrete))))
        ;; face used for headlines at different levels
        `(org-level-1 ((,class (:foreground ,sec-dark))))
        `(org-level-2 ((,class (:foreground ,sec-dark))))
@@ -434,18 +437,37 @@ NAME and VARIANT should be symbols."
        `(org-done ((,class (:weight bold :foreground ,sec-dark))))
        ;; face to use for :tag: markers
        `(org-tag ((,class (:foreground ,prim-light))))
+       ;; face used for priority cookies `[#A]`
+       `(org-priority ((,class (:foreground ,warning :weight bold))))
+       ;; face for special keywords such as SCHEDULED, DEADLINE
+       `(org-special-keyword ((,class (:foreground ,prim-dark))))
        ;; face for org-mode tables
        `(org-table ((,class (:foreground ,prim))))
        ;; face used for [[links][description]]
        `(org-link ((,class (:underline t :foreground ,prim-light))))
        ;; face used for footnodes: [fn:1]
        `(org-footnote  ((,class (:underline t :foreground ,prim-light))))
-
+       ;; face for =verbatim= items
+       `(org-verbatim ((,class (:foreground ,prim-light))))
+       ;; face for ~code~ text
+       `(org-code ((,class (:foreground ,prim))))
+       ;; diary-like sexp date specifications like `%%(org-calendar-holiday)`
+       `(org-sexp-date ((,class (:foreground ,prim-light))))
+       ;; face to use for content between #+BEGIN_SRC and #+END_SRC (unless a
+       ;; language syntax is specified via e.g. `#BEGIN_SRC emacs_lisp`)
+       `(org-block ((,class (:background ,bg-prim :foreground ,prim-light :extend t))))
+       ;; source code block #+BEGIN_SRC line
+       `(org-block-begin-line ((,class (:background ,bg-prim :foreground ,sec :extend t))))
+       ;; source code block #+END_SRC line
+       `(org-block-end-line ((,class (:background ,bg-prim :foreground ,sec :extend t))))
+       ;; face for #+BEGIN_VERSE blocks when `org-fontify-quote-and-verse-blocks` is set.
+       `(org-verse ((,class (:slant italic))))
+       ;; face for #+BEGIN_QUOTE blocks when `org-fontify-quote-and-verse-blocks` is set.
+       `(org-quote ((,class (:slant italic))))
        ;; face to use for <date> occurences
-       `(org-date ((,class (:underline t :foreground ,sec))))
+       `(org-date ((,class (:underline t :foreground ,prim-light))))
        ;; face for highlighting date under cursor in calendar selections
-       `(org-date-selected ((,class (:underline t :foreground ,sec))))
-
+       `(org-date-selected ((,class (:underline t :weight bold :foreground ,sec-dark))))
        ;; face for Monday-Friday entries in agenda view
        `(org-agenda-date ((,class (:foreground ,prim))))
        ;; face for today in agenda view
@@ -456,43 +478,25 @@ NAME and VARIANT should be symbols."
        `(org-agenda-done ((,class (:weight bold :foreground ,sec-dark))))
        ;; face used in agenda for captions and dates
        `(org-agenda-structure ((,class (:inherit bold :foreground ,sec-dark))))
-
-       ;; face for =verbatim= items
-       `(org-verbatim ((,class (:foreground ,prim-light))))
-
-       ;; face to use for content between #+BEGIN_SRC and #+END_SRC (unless a
-       ;; language syntax is specified via e.g. `#BEGIN_SRC emacs_lisp`)
-       `(org-block ((,class (:background ,bg-prim :foreground ,prim-light :extend t))))
-       ;; source code block #+BEGIN_SRC line
-       `(org-block-begin-line ((,class (:background ,bg-prim :foreground ,sec :extend t))))
-       ;; source code block #+END_SRC line
-       `(org-block-end-line ((,class (:background ,bg-prim :foreground ,sec :extend t))))
-
-       ;; TODO: everything below this!
-
-       ;; `(org-code ((,class (:foreground ,cyan))))
-       ;; `(org-column ((,class (:background ,highlight))))
-       ;; `(org-column-title ((,class (:background ,highlight))))
-       ;; `(org-hide ((,class (:foreground ,base))))
-       ;; `(org-kbd ((,class (:inherit region :foreground ,base :box (:line-width 1 :style released-button)))))
-
-       ;; `(org-meta-line ((,class (:foreground ,meta))))
-       ;; `(org-mode-line-clock-overrun ((,class (:foreground ,err))))
-       ;; `(org-priority ((,class (:foreground ,war :inherit bold :bold ,(if spacemacs-theme-org-priority-bold 'unspecified nil)))))
-       ;; `(org-quote ((,class (:inherit org-block :slant italic))))
-       ;; `(org-scheduled ((,class (:foreground ,comp))))
-       ;; `(org-scheduled-today ((,class (:foreground ,func :height ,(if spacemacs-theme-org-agenda-height 1.2 1.0)))))
-       ;; `(org-scheduled-previously ((,class (:foreground ,base :slant italic))))
-       ;; `(org-sexp-date ((,class (:foreground "red"))))
-       ;; `(org-special-keyword ((,class (:foreground ,func))))
-
-
-       ;; `(org-time-grid ((,class (:foreground ,str))))
-
+       ;; face used for time grid shown in agenda
+       `(org-time-grid ((,class (:foreground ,sec-light))))
+       ;; agenda face for items scheduled for a certain day
+       `(org-scheduled ((,class (:foreground ,prim))))
+       ;; agenda face for items scheduled today
+       `(org-scheduled-today ((,class (:foreground ,sec))))
+       ;; agenda face for items scheduled previously, and not yet done.
+       `(org-scheduled-previously ((,class (:foreground ,error))))
        `(org-upcoming-deadline ((,class (:foreground ,error))))
-       ;; `(org-upcoming-distant-deadline ((,class (:foreground ,suc :inherit org-priority))))
-       ;; `(org-verse ((,class (:inherit org-block :slant italic))))
+       `(org-upcoming-distant-deadline ((,class (:foreground ,warning))))
        `(org-warning ((,class (:foreground ,error))))
+       ;; face when header-line is used
+       `(header-line ((,class (:background ,bg-on :foreground ,prim :weight bold))))
+       ;; face to use for column view columns
+       `(org-column ((,class (:background ,bg-on))))
+       ;; face to use for top-row in column view
+       `(org-column-title ((,class (:inherit header-line))))
+       ;; face for clock display overrun tasks in mode line
+       `(org-mode-line-clock-overrun ((,class (:foreground ,error))))
 
        ;;
        ;; diff-mode
