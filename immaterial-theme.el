@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.5.2
+;; Version: 0.5.3
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -511,13 +511,13 @@ NAME and VARIANT should be symbols."
        ;; face used for added characters shown by ‘diff-refine-hunk’.
        `(diff-refine-added ((,class (:background ,(immaterial-color "diff-added-refined")))))
        ;; used to highlight indicator of added lines (+, >)
-       `(diff-indicator-added ((,class (:background ,(immaterial-color "diff-added") :foreground ,(immaterial-color "diff-added-refined")))))
+       `(diff-indicator-added ((,class (:background ,(immaterial-color "diff-added")))))
        ;; used to highlight added lines
        `(diff-removed ((,class (:background ,(immaterial-color "diff-removed")))))
        ;; face used for removed characters shown by ‘diff-refine-hunk’.
        `(diff-refine-removed ((,class (:background ,(immaterial-color "diff-removed-refined")))))
        ;; used to highlight indicator of changed lines (-, <)
-       `(diff-indicator-removed ((,class (:background ,(immaterial-color "diff-removed") :foreground ,(immaterial-color "diff-removed-refined")))))
+       `(diff-indicator-removed ((,class (:background ,(immaterial-color "diff-removed")))))
        ;; face used to highlight changed lines
        `(diff-changed ((,class (:background ,(immaterial-color "diff-changed")))))
        ;; face used for char-based changes shown by ‘diff-refine-hunk’.
