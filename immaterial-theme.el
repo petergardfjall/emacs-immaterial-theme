@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.5.3
+;; Version: 0.5.4
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -531,6 +531,20 @@ NAME and VARIANT should be symbols."
        `(diff-hl-insert ((,class (:background ,(immaterial-color "diff-added") :foreground ,(immaterial-color "diff-added-refined")))))
        `(diff-hl-delete ((,class (:background ,(immaterial-color "diff-removed") :foreground ,(immaterial-color "diff-removed-refined")))))
        `(diff-hl-change ((,class (:background ,(immaterial-color "diff-changed") :foreground ,(immaterial-color "diff-changed-refined")))))
+
+       ;;
+       ;; smerge-mode
+       ;;
+       ;; face for conflict markers
+       `(smerge-markers ((,class (:foreground ,error :weight bold))))
+       ;; face for upper version in conflict
+       `(smerge-upper ((,class (:background ,bg-on))))
+       ;; face for lower version in conflict
+       `(smerge-lower ((,class (:background ,bg-on))))
+       ;; face for added characters shown by smerge-refine
+       `(smerge-refined-added ((,class (:background ,(immaterial-color "diff-added-refined")))))
+       ;; face for removed characters shown by smerge-refine
+       `(smerge-refined-removed ((,class (:background ,(immaterial-color "diff-removed-refined")))))
        ))))
 
 
