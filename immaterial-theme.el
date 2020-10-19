@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.5.5
+;; Version: 0.5.6
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -386,7 +386,7 @@ NAME and VARIANT should be symbols."
        ;;
        ;; ivy/swiper
        ;;
-       `(ivy-current-match ((,class (:background ,bg-on :extend t))))
+       `(ivy-current-match ((,class (:background ,bg-on :weight bold :extend t))))
        ;; how to highlight the matching part of the search expression on presented
        ;; search candidates in the minibuffer.
        `(ivy-minibuffer-match-face-1 ((,class (:inherit isearch))))
