@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.5.6
+;; Version: 0.5.7
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -226,9 +226,9 @@ NAME and VARIANT should be symbols."
        `(show-paren-match ((,class (:weight bold :background ,bg-on :foreground ,warning))))
        `(show-paren-mismatch ((,class (:background ,error))))
        ;; current match of an on-going incremental search (isearch-forward)
-       `(isearch ((,class (:weight bold :foreground ,warning))))
+       `(isearch ((,class (:foreground ,warning :weight semi-bold))))
        ;; other matches for the search string that are visible on display
-       `(lazy-highlight ((,class (:weight bold :background ,bg-on :foreground ,warning))))
+       `(lazy-highlight ((,class (:background ,bg-on :foreground ,warning))))
        ;;
        ;; mode-line
        ;;
@@ -386,7 +386,7 @@ NAME and VARIANT should be symbols."
        ;;
        ;; ivy/swiper
        ;;
-       `(ivy-current-match ((,class (:background ,bg-on :weight bold :extend t))))
+       `(ivy-current-match ((,class (:background ,bg-on :weight semi-bold :extend t))))
        ;; how to highlight the matching part of the search expression on presented
        ;; search candidates in the minibuffer.
        `(ivy-minibuffer-match-face-1 ((,class (:inherit isearch))))
