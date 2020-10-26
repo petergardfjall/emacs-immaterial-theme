@@ -71,11 +71,15 @@ using the https://material.io/resources/color/ tool."
     ("primary"               . ,(if (eq variant 'dark) "#9fa8da" "#7e57c2"))
     ("primary-light"         . ,(if (eq variant 'dark) "#d1d9ff" "#b085f5"))
     ("primary-dark"          . ,(if (eq variant 'dark) "#6f79a8" "#4d2c91"))
-    ("secondary"             . ,(if (eq variant 'dark) "#c5e1a5" "#558b2f"))
-    ("secondary-light"       . ,(if (eq variant 'dark) "#f8ffd7" "#85bb5c"))
-    ("secondary-dark"        . ,(if (eq variant 'dark) "#94af76" "#255d00"))
+    ("secondary"             . ,(if (eq variant 'dark) "#c5e1a5" "#689f38"))
+    ("secondary-light"       . ,(if (eq variant 'dark) "#f8ffd7" "#99d066"))
+    ("secondary-dark"        . ,(if (eq variant 'dark) "#94af76" "#387002"))
+    ("tertiary"              . ,(if (eq variant 'dark) "#90caf9" "#1565c0"))
+    ("tertiary-light"        . ,(if (eq variant 'dark) "#c3fdff" "#5e92f3"))
+    ("tertiary-dark"         . ,(if (eq variant 'dark) "#5d99c6" "#003c8f"))
+
     ("error"                 . ,(if (eq variant 'dark) "#ff5555" "#b0003a"))
-    ("warning"               . ,(if (eq variant 'dark) "#ff9800" "#ff9800"))
+    ("warning"               . ,(if (eq variant 'dark) "#ff9800" "#e65100"))
     ("discrete"              . ,(if (eq variant 'dark) "#777777" "#888888"))
     ("vertical-border"       . ,(if (eq variant 'dark) "#012830" "#dddddd"))
     ("cursor"                . ,(if (eq variant 'dark) "#64d8cb" "#64d8cb"))
@@ -141,15 +145,19 @@ NAME and VARIANT should be symbols."
 	  (sec                  (immaterial-color "secondary"))
 	  (sec-light            (immaterial-color "secondary-light"))
 	  (sec-dark             (immaterial-color "secondary-dark"))
+	  (tert                 (immaterial-color "tertiary"))
+	  (tert-light           (immaterial-color "tertiary-light"))
+	  (tert-dark            (immaterial-color "tertiary-dark"))
 	  (discrete             (immaterial-color "discrete"))
 
 	  (keyword              (immaterial-color "primary"))
 	  (builtin              (immaterial-color "primary-light"))
 	  (const                (immaterial-color "primary-dark"))
-	  (str                  (immaterial-color "primary"))
 	  (type                 (immaterial-color "secondary"))
 	  (var                  (immaterial-color "secondary-dark"))
 	  (func                 (immaterial-color "secondary-dark"))
+	  (str                  (immaterial-color "tertiary"))
+	  (comment              (immaterial-color "discrete"))
 	  (negation             (immaterial-color "warning"))
 	  (warning              (immaterial-color "warning"))
 	  (error                (immaterial-color "error"))
@@ -159,7 +167,14 @@ NAME and VARIANT should be symbols."
 	  (modeline-active-bg   (immaterial-color "modeline-active-bg"))
 	  (modeline-active-fg   (immaterial-color "modeline-active-fg"))
 	  (modeline-inactive-bg (immaterial-color "modeline-inactive-bg"))
-	  (modeline-inactive-fg (immaterial-color "modeline-inactive-fg")))
+	  (modeline-inactive-fg (immaterial-color "modeline-inactive-fg"))
+
+	  (diff-added           (immaterial-color "diff-added"))
+	  (diff-added-refined   (immaterial-color "diff-added-refined"))
+	  (diff-changed         (immaterial-color "diff-changed"))
+	  (diff-changed-refined (immaterial-color "diff-changed-refined"))
+	  (diff-removed         (immaterial-color "diff-removed"))
+	  (diff-removed-refined (immaterial-color "diff-removed-refined")))
 
       (custom-theme-set-faces
        name
@@ -186,11 +201,11 @@ NAME and VARIANT should be symbols."
        `(font-lock-function-name-face ((,class (:foreground ,func ))))
 
        ;; for comments
-       `(font-lock-comment-face ((,class (:foreground ,discrete, :italic t))))
+       `(font-lock-comment-face ((,class (:foreground ,comment, :italic t))))
        ;; for comment delimiters, like ‘/*’ and ‘*/’ in C.
-       `(font-lock-comment-delimiter-face ((,class (:foreground ,discrete :italic t))))
+       `(font-lock-comment-delimiter-face ((,class (:foreground ,comment :italic t))))
        ;; for documentation strings in the code.
-       `(font-lock-doc-face ((,class (:foreground ,discrete :italic t))))
+       `(font-lock-doc-face ((,class (:foreground ,comment :italic t))))
 
        ;; for easily-overlooked negation characters.
        `(font-lock-negation-char-face ((,class (:foreground ,negation))))
@@ -327,16 +342,24 @@ NAME and VARIANT should be symbols."
        ;;
        ;; markdown-mode
        ;;
-       `(markdown-header-face-1 ((,class (:foreground ,sec-dark :weight bold))))
-       `(markdown-header-face-2 ((,class (:foreground ,sec-dark :weight bold))))
-       `(markdown-header-face-3 ((,class (:foreground ,sec-dark :weight bold))))
-       `(markdown-header-face-4 ((,class (:foreground ,sec-dark :weight bold))))
-       `(markdown-header-face-5 ((,class (:foreground ,sec-dark :weight bold))))
-       `(markdown-header-face-6 ((,class (:foreground ,sec-dark :weight bold))))
-       `(markdown-code-face ((,class (:foreground ,prim))))
-       `(markdown-link-face ((,class (:foreground ,sec))))
-       `(markdown-url-face ((,class (:foreground ,sec))))
-       `(markdown-plain-url-face ((,class (:foreground ,sec))))
+       ;; face to use for leading #:s
+       `(markdown-header-delimiter-face ((,class (:foreground ,prim :weight bold))))
+       `(markdown-header-face-1 ((,class (:foreground ,prim :weight bold))))
+       `(markdown-header-face-2 ((,class (:foreground ,prim :weight bold))))
+       `(markdown-header-face-3 ((,class (:foreground ,prim :weight bold))))
+       `(markdown-header-face-4 ((,class (:foreground ,prim :weight bold))))
+       `(markdown-header-face-5 ((,class (:foreground ,prim :weight bold))))
+       `(markdown-header-face-6 ((,class (:foreground ,prim :weight bold))))
+       `(markdown-code-face ((,class (:foreground ,sec))))
+       `(markdown-table-face ((,class (:foreground ,sec))))
+       `(markdown-list-face ((,class (:foreground ,sec))))
+       `(markdown-link-face ((,class (:foreground ,tert))))
+       `(markdown-reference-face ((,class (:foreground ,tert))))
+       `(markdown-blockquote-face ((,class (:inherit font-lock-doc-face))))
+       `(markdown-html-tag-face ((,class (:foreground ,sec))))
+       `(markdown-url-face ((,class (:foreground ,tert))))
+       `(markdown-plain-url-face ((,class (:foreground ,tert))))
+
        ;;
        ;; treemacs
        ;;
@@ -413,49 +436,52 @@ NAME and VARIANT should be symbols."
        ;; org-mode
        ;;
        ;; face to use for #+TITLE: document info keyword
-       `(org-document-title ((,class (:foreground ,prim-light :weight bold))))
+       `(org-document-title ((,class (:foreground ,prim :weight bold))))
        ;; face to use for value following #+DATE:, #+AUTHOR:, #+EMAIL:
-       `(org-document-info ((,class (:foreground ,prim-light))))
+       `(org-document-info ((,class (:foreground ,prim))))
        ;; face to use for keywords #+DATE:, #+AUTHOR:, #+EMAIL:
-       `(org-document-info-keyword ((,class (:foreground ,prim-dark))))
+       `(org-document-info-keyword ((,class (:foreground ,prim))))
        ;; face for lines starting with "#+"
        `(org-meta-line ((,class (:foreground ,discrete))))
        ;; face used for headlines at different levels
-       `(org-level-1 ((,class (:foreground ,sec-dark))))
-       `(org-level-2 ((,class (:foreground ,sec-dark))))
-       `(org-level-3 ((,class (:foreground ,sec-dark))))
-       `(org-level-4 ((,class (:foreground ,sec-dark))))
-       `(org-level-5 ((,class (:foreground ,sec-dark))))
-       `(org-level-6 ((,class (:foreground ,sec-dark))))
-       `(org-level-7 ((,class (:foreground ,sec-dark))))
-       `(org-level-8 ((,class (:foreground ,sec-dark))))
+       `(org-level-1 ((,class (:weight bold :foreground ,prim))))
+       `(org-level-2 ((,class (:weight bold :foreground ,prim))))
+       `(org-level-3 ((,class (:weight bold :foreground ,prim))))
+       `(org-level-4 ((,class (:weight bold :foreground ,prim))))
+       `(org-level-5 ((,class (:weight bold :foreground ,prim))))
+       `(org-level-6 ((,class (:weight bold :foreground ,prim))))
+       `(org-level-7 ((,class (:weight bold :foreground ,prim))))
+       `(org-level-8 ((,class (:weight bold :foreground ,prim))))
        ;; face for the ellipsis in folded text
-       `(org-ellipsis ((,class (:foreground ,prim-light))))
+       `(org-ellipsis ((,class (:foreground ,prim))))
        ;; face to use for TODO keyword
-       `(org-todo ((,class (:weight bold :foreground ,warning))))
+       ;; `(org-todo ((,class (:weight bold :foreground ,prim-light :background ,bg-on))))
+       `(org-todo ((,class (:weight bold :foreground ,tert-dark :box (:line-width -1 :color ,bg-on)))))
        ;; face to use for DONE keyword
-       `(org-done ((,class (:weight bold :foreground ,sec-dark))))
+       `(org-done ((,class (:weight bold :foreground ,discrete :box (:line-width -1 :color ,bg-on)))))
        ;; face to use for :tag: markers
        `(org-tag ((,class (:foreground ,prim-light))))
        ;; face used for priority cookies `[#A]`
-       `(org-priority ((,class (:foreground ,warning :weight bold))))
-       ;; face for special keywords such as SCHEDULED, DEADLINE
-       `(org-special-keyword ((,class (:foreground ,prim-dark))))
+       `(org-priority ((,class (:foreground ,tert :weight bold))))
+       ;; face for special keywords such as SCHEDULED, DEADLINE and properties.
+       `(org-special-keyword ((,class (:foreground ,discrete))))
+       ;; face used for outline metadata :DRAWER: and :END: markers
+       `(org-drawer ((,class (:foreground ,discrete))))
        ;; face for org-mode tables
-       `(org-table ((,class (:foreground ,prim))))
+       `(org-table ((,class (:foreground ,sec))))
        ;; face used for [[links][description]]
-       `(org-link ((,class (:underline t :foreground ,prim-light))))
-       ;; face used for footnodes: [fn:1]
-       `(org-footnote  ((,class (:underline t :foreground ,prim-light))))
+       `(org-link ((,class (:underline t :foreground ,tert))))
+       ;; face used for footnotes: [fn:1]
+       `(org-footnote  ((,class (:underline t :foreground ,tert))))
        ;; face for =verbatim= items
-       `(org-verbatim ((,class (:foreground ,prim-light))))
+       `(org-verbatim ((,class (:foreground ,sec))))
        ;; face for ~code~ text
-       `(org-code ((,class (:foreground ,prim))))
+       `(org-code ((,class (:foreground ,sec))))
        ;; diary-like sexp date specifications like `%%(org-calendar-holiday)`
        `(org-sexp-date ((,class (:foreground ,prim-light))))
        ;; face to use for content between #+BEGIN_SRC and #+END_SRC (unless a
        ;; language syntax is specified via e.g. `#BEGIN_SRC emacs_lisp`)
-       `(org-block ((,class (:background ,bg-prim :foreground ,prim-light :extend t))))
+       `(org-block ((,class (:background ,bg-prim :foreground ,sec :extend t))))
        ;; source code block #+BEGIN_SRC line
        `(org-block-begin-line ((,class (:background ,bg-prim :foreground ,sec :extend t))))
        ;; source code block #+END_SRC line
@@ -465,30 +491,33 @@ NAME and VARIANT should be symbols."
        ;; face for #+BEGIN_QUOTE blocks when `org-fontify-quote-and-verse-blocks` is set.
        `(org-quote ((,class (:slant italic))))
        ;; face to use for <date> occurences
-       `(org-date ((,class (:underline t :foreground ,prim-light))))
+       `(org-date ((,class (:underline t :foreground ,sec))))
        ;; face for highlighting date under cursor in calendar selections
-       `(org-date-selected ((,class (:underline t :weight bold :foreground ,sec-dark))))
+       `(org-date-selected ((,class (:weight ultra-bold :background ,sec :foreground ,bg-off))))
        ;; face for Monday-Friday entries in agenda view
-       `(org-agenda-date ((,class (:foreground ,prim))))
+       `(org-agenda-date ((,class (:foreground ,sec))))
        ;; face for today in agenda view
-       `(org-agenda-date-today ((,class (:foreground ,prim-light :weight bold))))
+       `(org-agenda-date-today ((,class (:foreground ,sec :weight bold :extend t :background ,bg-on))))
        ;; face for Saturday and Sunday entries in agenda view
-       `(org-agenda-date-weekend ((,class (:foreground ,discrete))))
+       `(org-agenda-date-weekend ((,class (:foreground ,sec))))
        ;; face used in agenda to indicate lines switched to DONE
-       `(org-agenda-done ((,class (:weight bold :foreground ,sec-dark))))
+       `(org-agenda-done ((,class (:foreground ,discrete))))
        ;; face used in agenda for captions and dates
        `(org-agenda-structure ((,class (:inherit bold :foreground ,sec-dark))))
        ;; face used for time grid shown in agenda
-       `(org-time-grid ((,class (:foreground ,sec-light))))
+       `(org-time-grid ((,class (:foreground ,sec))))
        ;; agenda face for items scheduled for a certain day
-       `(org-scheduled ((,class (:foreground ,prim))))
+       `(org-scheduled ((,class (:foreground ,fg1))))
        ;; agenda face for items scheduled today
-       `(org-scheduled-today ((,class (:foreground ,sec))))
+       `(org-scheduled-today ((,class (:foreground ,fg1))))
        ;; agenda face for items scheduled previously, and not yet done.
-       `(org-scheduled-previously ((,class (:foreground ,error))))
-       `(org-upcoming-deadline ((,class (:foreground ,error))))
-       `(org-upcoming-distant-deadline ((,class (:foreground ,warning))))
+       `(org-scheduled-previously ((,class (:foreground ,fg1))))
+       ;; face used for org-agenda deadlines
        `(org-warning ((,class (:foreground ,error))))
+       ;; upcoming deadlines
+       `(org-upcoming-deadline ((,class (:foreground ,warning))))
+       ;; distant deadlines
+       `(org-upcoming-distant-deadline ((,class (:foreground ,warning))))
        ;; face when header-line is used
        `(header-line ((,class (:background ,bg-on :foreground ,prim :weight bold))))
        ;; face to use for column view columns
