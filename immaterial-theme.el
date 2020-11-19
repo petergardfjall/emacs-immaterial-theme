@@ -5,7 +5,7 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.5.7
+;; Version: 0.6.0
 ;; Package-Requires: ((emacs "25"))
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
