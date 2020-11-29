@@ -79,7 +79,7 @@ using the https://material.io/resources/color/ tool."
     ("tertiary-dark"         . ,(if (eq variant 'dark) "#5d99c6" "#003c8f"))
 
     ("error"                 . ,(if (eq variant 'dark) "#ff5555" "#b0003a"))
-    ("warning"               . ,(if (eq variant 'dark) "#ff9800" "#e65100"))
+    ("warning"               . ,(if (eq variant 'dark) "#ff9800" "#ff9800"))
     ("discrete"              . ,(if (eq variant 'dark) "#777777" "#999999"))
     ("vertical-border"       . ,(if (eq variant 'dark) "#012830" "#dddddd"))
     ("cursor"                . ,(if (eq variant 'dark) "#64d8cb" "#64d8cb"))
