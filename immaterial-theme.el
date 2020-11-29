@@ -409,7 +409,7 @@ NAME and VARIANT should be symbols."
        ;;
        ;; ivy/swiper
        ;;
-       `(ivy-current-match ((,class (:background ,bg-on :weight semi-bold :extend t))))
+       `(ivy-current-match ((,class (:background ,bg-on :extend t))))
        ;; how to highlight the matching part of the search expression on presented
        ;; search candidates in the minibuffer.
        `(ivy-minibuffer-match-face-1 ((,class (:inherit isearch))))
