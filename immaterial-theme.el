@@ -201,11 +201,11 @@ NAME and VARIANT should be symbols."
        `(font-lock-function-name-face ((,class (:foreground ,func ))))
 
        ;; for comments
-       `(font-lock-comment-face ((,class (:foreground ,comment, :italic t))))
+       `(font-lock-comment-face ((,class (:foreground ,comment))))
        ;; for comment delimiters, like ‘/*’ and ‘*/’ in C.
-       `(font-lock-comment-delimiter-face ((,class (:foreground ,comment :italic t))))
+       `(font-lock-comment-delimiter-face ((,class (:foreground ,comment))))
        ;; for documentation strings in the code.
-       `(font-lock-doc-face ((,class (:foreground ,comment :italic t))))
+       `(font-lock-doc-face ((,class (:foreground ,comment))))
 
        ;; for easily-overlooked negation characters.
        `(font-lock-negation-char-face ((,class (:foreground ,negation))))
