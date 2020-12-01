@@ -151,10 +151,10 @@ NAME and VARIANT should be symbols."
 	  (discrete             (immaterial-color "discrete"))
 
 	  (keyword              (immaterial-color "primary"))
-	  (builtin              (immaterial-color "primary-light"))
-	  (const                (immaterial-color "primary-dark"))
+	  (builtin              (immaterial-color "primary"))
+	  (const                (immaterial-color "primary"))
 	  (type                 (immaterial-color "secondary"))
-	  (var                  (immaterial-color "secondary-dark"))
+	  (var                  (immaterial-color "foreground-primary"))
 	  (func                 (immaterial-color "secondary-dark"))
 	  (str                  (immaterial-color "tertiary"))
 	  (comment              (immaterial-color "discrete"))
