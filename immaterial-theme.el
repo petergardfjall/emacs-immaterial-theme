@@ -367,12 +367,13 @@ NAME and VARIANT should be symbols."
        `(treemacs-directory-face ((,class (:foreground ,sec-dark))))
        `(treemacs-file-face ((,class (:inherit immaterial-small-face))))
        `(treemacs-term-node-face ((,class (:foreground ,sec-dark :weight bold))))
-       `(treemacs-git-modified-face ((,class (:foreground ,prim :weight bold))))
-       `(treemacs-git-added-face ((,class (:foreground ,prim-dark :weight bold))))
-       `(treemacs-git-renamed-face ((,class (:foreground ,prim-dark :italic t))))
+       `(treemacs-git-modified-face ((,class (:background ,diff-changed :box (:line-width 1 :color ,diff-changed-refined :style nil)))))
+       `(treemacs-git-added-face ((,class (:background ,diff-added :box (:line-width 1 :color ,diff-added-refined :style nil)))))
+       `(treemacs-git-renamed-face ((,class (:background ,diff-changed :box (:line-width 1 :color ,diff-changed-refined :style nil) :italic t))))
        `(treemacs-git-ignored-face ((,class (:foreground ,discrete))))
        `(treemacs-git-untracked-face ((,class (:foreground ,discrete))))
-       `(treemacs-git-conflict-face ((,class (:foreground ,error :weight bold))))
+       `(treemacs-git-conflict-face ((,class (:background ,diff-removed :box (:line-width 1 :color ,diff-removed-refined :style nil) :italic t))))
+       `(treemacs-fringe-indicator-face ((,class (:foreground ,cursor :background red :extend nil))))
        ;;
        ;; lsp-ui
        ;;
