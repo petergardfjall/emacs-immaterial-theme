@@ -373,7 +373,7 @@ NAME and VARIANT should be symbols."
        `(treemacs-git-ignored-face ((,class (:foreground ,discrete))))
        `(treemacs-git-untracked-face ((,class (:foreground ,discrete))))
        `(treemacs-git-conflict-face ((,class (:background ,diff-removed :box (:line-width 1 :color ,diff-removed-refined :style nil) :italic t))))
-       `(treemacs-fringe-indicator-face ((,class (:foreground ,cursor :background red :extend nil))))
+
        ;;
        ;; lsp-ui
        ;;
