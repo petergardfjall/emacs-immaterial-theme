@@ -104,7 +104,7 @@ palette:
         ))
 
 **Note**: it is highly recommended to make use of the [Material color
-tool](https://material.io/tools/color) to experiment with color palettes and
+tool](https://material.io/resources/color) to experiment with color palettes and
 variants of a certain color. For dark themes, less saturated colors (200 and
 less) from the color palette improves readability.
 
