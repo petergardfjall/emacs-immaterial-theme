@@ -567,9 +567,9 @@ NAME and VARIANT should be symbols."
        ;; face for conflict markers
        `(smerge-markers ((,class (:foreground ,error :weight bold))))
        ;; face for upper version in conflict
-       `(smerge-upper ((,class (:background ,bg-on))))
+       `(smerge-upper ((,class (:background ,diff-changed))))
        ;; face for lower version in conflict
-       `(smerge-lower ((,class (:background ,bg-on))))
+       `(smerge-lower ((,class (:background ,diff-changed))))
        ;; face for added characters shown by smerge-refine
        `(smerge-refined-added ((,class (:background ,(immaterial-color "diff-added-refined")))))
        ;; face for removed characters shown by smerge-refine
