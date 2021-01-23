@@ -574,6 +574,12 @@ NAME and VARIANT should be symbols."
        `(smerge-refined-added ((,class (:background ,(immaterial-color "diff-added-refined")))))
        ;; face for removed characters shown by smerge-refine
        `(smerge-refined-removed ((,class (:background ,(immaterial-color "diff-removed-refined")))))
+
+       ;;
+       ;; xref
+       ;;
+       `(xref-file-header ((,class (:foreground ,prim))))
+       `(xref-line-number ((,class (:foreground ,discrete))))
        ))))
 
 
