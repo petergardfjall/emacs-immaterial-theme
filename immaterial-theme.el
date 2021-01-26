@@ -81,7 +81,7 @@ using the https://material.io/resources/color/ tool."
     ("error"                 . ,(if (eq variant 'dark) "#ef9a9a" "#b00202"))
     ("warning"               . ,(if (eq variant 'dark) "#ff9800" "#bf360c"))
     ("discrete"              . ,(if (eq variant 'dark) "#848484" "#757575"))
-    ("vertical-border"       . ,(if (eq variant 'dark) "#012830" "#dddddd"))
+    ("vertical-border"       . ,(if (eq variant 'dark) "#001b21" "#f8f8f4"))
     ("cursor"                . ,(if (eq variant 'dark) "#64d8cb" "#64d8cb"))
     ("modeline-active-fg"    . ,(if (eq variant 'dark) "#ffffff" "#ffffff"))
     ("modeline-active-bg"    . ,(if (eq variant 'dark) "#005662" "#9575cd"))
@@ -236,7 +236,7 @@ NAME and VARIANT should be symbols."
        ;; display-line-numbers-mode (emacs26+)
        `(line-number ((t (:foreground ,discrete :background ,bg-off :height 0.8 :weight normal))))
        `(line-number-current-line ((t (:foreground ,fg1 :background ,bg-off :height 0.8 :weight normal))))
-       `(fringe ((,class (:background ,bg-prim))))
+       `(fringe ((,class (:background ,bg-off))))
        `(cursor ((,class (:background ,cursor))))
        ;; show-paren-mode: how to highlight matching/mismatching parenthesis
        `(show-paren-match ((,class (:weight bold :background ,bg-on :foreground ,warning))))
@@ -265,7 +265,7 @@ NAME and VARIANT should be symbols."
        `(powerline-inactive2 ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
 
        ;; the vertical line that separates windows in a frame
-       `(vertical-border ((,class (:foreground ,bg-prim))))
+       `(vertical-border ((,class (:foreground ,bg-off))))
        `(minibuffer-prompt ((,class (:foreground ,warning :weight semi-bold))))
        `(default-italic ((,class (:italic t))))
 
