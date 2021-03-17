@@ -78,6 +78,16 @@ using the https://material.io/resources/color/ tool."
     ("tertiary-light"        . ,(if (eq variant 'dark) "#c3fdff" "#5472d3"))
     ("tertiary-dark"         . ,(if (eq variant 'dark) "#5d99c6" "#002171"))
 
+    ;; colors to use for popup-like UI behavior such as `company-mode`
+    ;; completions, ivy/counsel, and lsp-ui.
+    ("popup-bg-border"        . ,(if (eq variant 'dark) "#014957" "#eeeed4"))
+    ("popup-bg-prim"          . ,(if (eq variant 'dark) "#012830" "#fafaf2"))
+    ("popup-bg-on"            . ,(if (eq variant 'dark) "#01343e" "#f5f5e6"))
+
+
+    ("popup-bg1"             . ,(if (eq variant 'dark) "#012830" "#fafaf2"))
+    ("popup-bg2"             . ,(if (eq variant 'dark) "#012c35" "#f8f8ef"))
+
     ("error"                 . ,(if (eq variant 'dark) "#ef9a9a" "#b00202"))
     ("warning"               . ,(if (eq variant 'dark) "#ff9800" "#bf360c"))
     ("discrete"              . ,(if (eq variant 'dark) "#848484" "#757575"))
@@ -131,7 +141,7 @@ NAME and VARIANT should be symbols."
   (progn
     (setq immaterial-color-alist (immaterial-create-color-alist variant))
     ;; not sure why this isn't a custom face in lsp-ui-doc
-    (setq lsp-ui-doc-border (immaterial-color "modeline-active-bg"))
+    (setq lsp-ui-doc-border (immaterial-color "popup-bg-border"))
     (let ((class '((class color) (min-colors 89)))
 	  (fg1                  (immaterial-color "foreground-primary"))
 	  (fg2                  (immaterial-color "foreground-secondary"))
@@ -149,6 +159,10 @@ NAME and VARIANT should be symbols."
 	  (tert-light           (immaterial-color "tertiary-light"))
 	  (tert-dark            (immaterial-color "tertiary-dark"))
 	  (discrete             (immaterial-color "discrete"))
+
+	  (popup-bg-border      (immaterial-color "popup-bg-border"))
+	  (popup-bg-prim        (immaterial-color "popup-bg-prim"))
+	  (popup-bg-on          (immaterial-color "popup-bg-on"))
 
 	  (keyword              (immaterial-color "primary"))
 	  (builtin              (immaterial-color "primary"))
@@ -304,28 +318,33 @@ NAME and VARIANT should be symbols."
        ;;
        ;; company -- "complete any" completion engine
        ;;
-       ;; Face used for the common part of completions in the echo area
-       `(company-echo-common ((,class (:foreground ,fg1 :background ,bg-on))))
-       ;; display (single remaining) suggestion while typing
-       `(company-preview ((,class (:background ,bg-on :foreground ,fg1))))
-       `(company-preview-common ((,class (:background ,bg-on :foreground ,fg1))))
-       `(company-preview-search ((,class (:foreground ,bg-on :background ,fg1))))
+       ;; Face used for the common part of completions in the echo area (appears
+       ;; to only be used with the echo area frontend).
+       `(company-echo-common ((,class (:foreground ,warning))))
        ;; scrollbar style in company tooltip
-       `(company-scrollbar-bg ((,class (:background ,diff-changed))))
-       `(company-scrollbar-fg ((,class (:background ,diff-changed-refined))))
-       ;; general style of tooltip popup
-       `(company-tooltip ((,class (:foreground ,fg1 :background ,diff-changed :bold t :box (:line-width -1 :color ,diff-changed-refined :style nil)))))
-       ;; annotation appearance (could be the return-type of a function)
-       `(company-tooltip-annotation ((,class (:weight normal :foreground ,fg1))))
-       ;; annotation appearance for the selected item in the completion list
-       `(company-tooltip-annotation-selection ((,class (:weight normal :inherit company-tooltip-selection))))
-       `(company-tooltip-search ((,class (:weight normal :inherit company-tooltip-selection))))
-       ;; the highlight style to use when typing and showing common search prefix
+       `(company-scrollbar-bg ((,class (:background ,popup-bg-prim))))
+       `(company-scrollbar-fg ((,class (:background ,popup-bg-on))))
+       ;; ;; general style of tooltip popup candidate list
+       `(company-tooltip ((,class (:foreground ,discrete :background ,popup-bg-prim))))
+       ;; ;; annotation appearance (right-hand side text; could be the signature of a function)
+       `(company-tooltip-annotation ((,class (:foreground ,sec :italic t))))
+       ;; the style to use for showing the common matched search prefix in candidates
        `(company-tooltip-common ((,class (:foreground ,warning))))
-       `(company-tooltip-common-selection ((,class (:foreground ,warning))))
-       ;; style for item mouse is hovering over
-       `(company-tooltip-selection ((,class (:weight bold :foreground ,fg1 :background ,diff-changed-refined))))
-       `(company-tooltip-mouse ((,class (:inherit company-tooltip-selection))))
+       ;; the style to use for showing the common matched search prefix in the *selected* candidate
+       `(company-tooltip-common-selection ((,class (:foreground ,warning :bold t))))
+       ;; style to use to highlight the *selected* candidate
+       `(company-tooltip-selection ((,class (:foreground ,fg1 :weight semi-bold :background ,popup-bg-on))))
+       ;; annotation (i.e. RHS) appearance for the *selected* item in the completion list
+       `(company-tooltip-annotation-selection ((,class (:inherit company-tooltip-annotation :bold nil))))
+       ;; style to use for candidate over which mouse pointer is hovering
+       `(company-tooltip-mouse ((,class (:inherit highlight))))
+       ;; when using `company-search-mode` this is the face to use for the
+       ;; matches of the entered search phrase
+       `(company-tooltip-search ((,class (:bold t :foreground ,warning))))
+       ;; same as above but for the *selected* candidate
+       `(company-tooltip-search-selection ((,class (:inherit company-tooltip-selection))))
+
+
        ;;
        ;; sh-mode
        ;;
@@ -377,27 +396,31 @@ NAME and VARIANT should be symbols."
        ;; lsp-ui
        ;;
        ;; ui-doc popup
-       `(lsp-ui-doc-background ((,class (:background ,(immaterial-color-lighten bg-off -2)))))
+       `(lsp-ui-doc-background ((,class (:background ,popup-bg-prim))))
+
+       ;; TODO: what's this?
+       ;; `(lsp-face-highlight-textual ((,class (:inherit highlight :bold t :foreground "red"))))
 
        ;;
        ;; lsp-ui-peek
        ;;
        ;; face to use for the file being peeked (to the left)
-       `(lsp-ui-peek-peek ((,class (:background ,bg-off))))
-       ;; face to use for the peek file listing (to the right)
-       `(lsp-ui-peek-list ((,class (:background ,bg-off :foreground ,fg2))))
-       ;; face for current selection in peek file listing (to the right)
-       `(lsp-ui-peek-selection ((,class (:inherit lsp-ui-peek-list :weight bold :foreground ,warning))))
+       `(lsp-ui-peek-peek ((,class (:background ,popup-bg-prim))))
+       ;; ;; face to use for the peek file listing (to the right)
+       `(lsp-ui-peek-list ((,class (:background ,popup-bg-prim))))
+       ;; face for current selection in peek file listing (to the right). note:
+       ;; only background face attribute appears to work.
+       `(lsp-ui-peek-selection ((,class (:background ,popup-bg-on))))
        ;; face for file names in file listing (to the right)
-       `(lsp-ui-peek-filename ((,class (:foreground ,prim))))
+       `(lsp-ui-peek-filename ((,class (:foreground ,discrete))))
        ;; face for the type/object being peeked at in listing to the right
-       `(lsp-ui-peek-highlight ((,class (:foreground ,warning))))
+       `(lsp-ui-peek-highlight ((,class (:foreground ,warning :bold t))))
        ;; face for line numbers in listing to the right
        `(lsp-ui-peek-line-number ((,class (:foreground ,discrete))))
        ;; face for header line above entire peek frame
-       `(lsp-ui-peek-header ((,class (:background ,modeline-active-bg :foreground ,modeline-active-fg :weight bold))))
+       `(lsp-ui-peek-header ((,class (:foreground ,discrete :background ,popup-bg-border))))
        ;; face for footer line below entire peek frame
-       `(lsp-ui-peek-footer ((,class (:background ,modeline-active-bg :foreground ,modeline-active-fg :weight bold))))
+       `(lsp-ui-peek-footer ((,class (:background ,popup-bg-border))))
 
        ;;
        ;; ido
@@ -409,28 +432,29 @@ NAME and VARIANT should be symbols."
        ;;
        ;; ivy/swiper
        ;;
-       `(ivy-current-match ((,class (:background ,diff-changed :box (:line-width -1 :color ,diff-changed-refined)))))
+       ;; highlight current match under cursor
+       `(ivy-current-match ((,class (:weight semi-bold :background ,bg-on :extend t))))
+       ;; highlight match under mouse pointer
+       `(ivy-minibuffer-match-highlight ((,class (:inherit highlight))))
        ;; how to highlight the matching part of the search expression on presented
        ;; search candidates in the minibuffer.
+       ;; The background face for ‘ivy’ minibuffer matches.
        `(ivy-minibuffer-match-face-1 ((,class (:inherit isearch))))
+       ;; Face for ‘ivy’ minibuffer matches numbered 1 modulo 3.
        `(ivy-minibuffer-match-face-2 ((,class (:inherit isearch))))
+       ;; Face for ‘ivy’ minibuffer matches numbered 2 modulo 3.
        `(ivy-minibuffer-match-face-3 ((,class (:inherit isearch))))
+       ;; Face for ‘ivy’ minibuffer matches numbered 3 modulo 3.
        `(ivy-minibuffer-match-face-4 ((,class (:inherit isearch))))
-       ;; ivy information for grep-like searches (such as counsel-ag)
+       ;; ivy information for grep-like searches (such as `counsel-ag`)
        `(ivy-grep-info ((,class (:foreground ,sec-dark))))
        `(ivy-grep-line-number ((,class (:foreground ,sec-dark))))
-       ;; how to highlight the matching part of the search expression on presented
-       ;; search candidates in the buffer itself.
-       `(swiper-match-face-1 ((,class (:inherit isearch))))
-       `(swiper-match-face-2 ((,class (:inherit isearch))))
-       `(swiper-match-face-3 ((,class (:inherit isearch))))
-       `(swiper-match-face-4 ((,class (:inherit isearch))))
 
        ;;
        ;; ivy-posframe
        ;;
-       `(ivy-posframe ((,class (:background ,bg-off))))
-       `(ivy-posframe-border ((,class (:background ,discrete))))
+       `(ivy-posframe ((,class (:background ,popup-bg-prim))))
+       `(ivy-posframe-border ((,class (:background ,popup-bg-border))))
 
        ;;
        ;; org-mode
@@ -452,6 +476,8 @@ NAME and VARIANT should be symbols."
        `(org-level-6 ((,class (:weight semi-bold :foreground ,prim))))
        `(org-level-7 ((,class (:weight semi-bold :foreground ,prim))))
        `(org-level-8 ((,class (:weight semi-bold :foreground ,prim))))
+       ;; face used to indicate that a headline is DONE.
+       `(org-headline-done ((,class (:weight semi-bold :foreground ,discrete))))
        ;; face for the ellipsis in folded text
        `(org-ellipsis ((,class (:foreground ,tert))))
        ;; face to use for TODO keyword
@@ -580,6 +606,9 @@ NAME and VARIANT should be symbols."
        ;;
        `(xref-file-header ((,class (:foreground ,prim))))
        `(xref-line-number ((,class (:foreground ,discrete))))
+
+       `(compilation-info ((,class (:foreground ,prim))))
+       `(compilation-line-number ((,class (:foreground ,discrete))))
        ))))
 
 
