@@ -22,7 +22,7 @@
 ;;
 ;;; Commentary:
 ;;
-;; This file is part of wsp.el
+;; This file is part of immaterial-theme.el
 ;;
 ;;; Code:
 

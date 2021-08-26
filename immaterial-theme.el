@@ -62,12 +62,12 @@ Initialized when either of the theme variants is loaded.")
 VARIANT can either be 'dark of 'light.  Values can be overridden
 via immaterial-color-override-alist).  The palette was created
 using the https://material.io/resources/color/ tool."
-  `(("background-primary"    . ,(if (eq variant 'dark) "#012027" "#fdfdfa"))
-    ("background-off"        . ,(if (eq variant 'dark) "#001b21" "#f8f8f4"))
-    ("background-on"         . ,(if (eq variant 'dark) "#01343f" "#f5f5e7"))
-    ("foreground-primary"    . ,(if (eq variant 'dark) "#dddddd" "#333333"))
-    ("foreground-secondary"  . ,(if (eq variant 'dark) "#c8c8c8" "#444444"))
-    ("foreground-tertiary"   . ,(if (eq variant 'dark) "#aaaaaa" "#555555"))
+  `(("background-primary"    . ,(if (eq variant 'dark) "#012027" "#fdfefe"))
+    ("background-off"        . ,(if (eq variant 'dark) "#001b21" "#f9fafa"))
+    ("background-on"         . ,(if (eq variant 'dark) "#01343f" "#f3f3ec"))
+    ("foreground-primary"    . ,(if (eq variant 'dark) "#dddddd" "#222222"))
+    ("foreground-secondary"  . ,(if (eq variant 'dark) "#c8c8c8" "#333333"))
+    ("foreground-tertiary"   . ,(if (eq variant 'dark) "#aaaaaa" "#444444"))
     ("primary"               . ,(if (eq variant 'dark) "#b39ddb" "#4527a0"))
     ("primary-light"         . ,(if (eq variant 'dark) "#e6ceff" "#7953d2"))
     ("primary-dark"          . ,(if (eq variant 'dark) "#836fa9" "#000070"))
@@ -80,13 +80,10 @@ using the https://material.io/resources/color/ tool."
 
     ;; colors to use for popup-like UI behavior such as `company-mode`
     ;; completions, ivy/counsel, and lsp-ui.
-    ("popup-bg-border"        . ,(if (eq variant 'dark) "#014957" "#eeeed4"))
-    ("popup-bg-prim"          . ,(if (eq variant 'dark) "#012830" "#fafaf2"))
-    ("popup-bg-on"            . ,(if (eq variant 'dark) "#01343e" "#f5f5e6"))
+    ("popup-bg-border"        . ,(if (eq variant 'dark) "#024858" "#e3e3d3"))
+    ("popup-bg-prim"          . ,(if (eq variant 'dark) "#012830" "#f8f8f4"))
+    ("popup-bg-on"            . ,(if (eq variant 'dark) "#01343e" "#fdfdfd"))
 
-
-    ("popup-bg1"             . ,(if (eq variant 'dark) "#012830" "#fafaf2"))
-    ("popup-bg2"             . ,(if (eq variant 'dark) "#012c35" "#f8f8ef"))
 
     ("error"                 . ,(if (eq variant 'dark) "#ef9a9a" "#b00202"))
     ("warning"               . ,(if (eq variant 'dark) "#ff9800" "#bf360c"))
@@ -94,9 +91,9 @@ using the https://material.io/resources/color/ tool."
     ("vertical-border"       . ,(if (eq variant 'dark) "#001b21" "#f8f8f4"))
     ("cursor"                . ,(if (eq variant 'dark) "#64d8cb" "#64d8cb"))
     ("modeline-active-fg"    . ,(if (eq variant 'dark) "#ffffff" "#ffffff"))
-    ("modeline-active-bg"    . ,(if (eq variant 'dark) "#005662" "#9575cd"))
+    ("modeline-active-bg"    . ,(if (eq variant 'dark) "#005662" "#007b94"))
     ("modeline-inactive-fg"  . ,(if (eq variant 'dark) "#777777" "#9e9e9e"))
-    ("modeline-inactive-bg"  . ,(if (eq variant 'dark) "#001017" "#ede7f6"))
+    ("modeline-inactive-bg"  . ,(if (eq variant 'dark) "#001017" "#f9fafa"))
     ;; various task-specific colors
     ("diff-added"            . ,(if (eq variant 'dark) "#063314" "#e6ffed"))
     ("diff-added-refined"    . ,(if (eq variant 'dark) "#115c24" "#acf2bd"))
@@ -333,7 +330,7 @@ NAME and VARIANT should be symbols."
        ;; the style to use for showing the common matched search prefix in the *selected* candidate
        `(company-tooltip-common-selection ((,class (:foreground ,warning :bold t))))
        ;; style to use to highlight the *selected* candidate
-       `(company-tooltip-selection ((,class (:foreground ,fg1 :weight semi-bold :background ,popup-bg-on))))
+       `(company-tooltip-selection ((,class (:foreground ,fg1 :background ,popup-bg-on))))
        ;; annotation (i.e. RHS) appearance for the *selected* item in the completion list
        `(company-tooltip-annotation-selection ((,class (:inherit company-tooltip-annotation :bold nil))))
        ;; style to use for candidate over which mouse pointer is hovering
@@ -418,9 +415,9 @@ NAME and VARIANT should be symbols."
        ;; face for line numbers in listing to the right
        `(lsp-ui-peek-line-number ((,class (:foreground ,discrete))))
        ;; face for header line above entire peek frame
-       `(lsp-ui-peek-header ((,class (:foreground ,discrete :background ,popup-bg-border))))
+       `(lsp-ui-peek-header ((,class (:foreground ,discrete :background ,popup-bg-prim :weight semi-bold ))))
        ;; face for footer line below entire peek frame
-       `(lsp-ui-peek-footer ((,class (:background ,popup-bg-border))))
+       `(lsp-ui-peek-footer ((,class (:background ,popup-bg-prim))))
 
        ;;
        ;; ido
