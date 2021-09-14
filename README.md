@@ -64,41 +64,11 @@ elements:
     - `modeline-inactive-bg`: background color to use for on an inactive buffer
       modeline.
 
-The following are the full list of colors defined in the default
-`immaterial-color-alist`:
+All colors are defined in the default `immaterial-color-alist` (tip: enable `rainbow-mode` when exploring).
 
-
- | Property               | immaterial-dark                                                    | immaterial-light                                                   |
- | --------               | -----                                                              | ----                                                               |
- | `background-primary`   | ![#012027](https://placehold.it/15/012027/000000?text=+) `#012027` | ![#fdfdfa](https://placehold.it/15/fdfdfa/000000?text=+) `#fdfdfa` |
- | `background-on`        | ![#01343f](https://placehold.it/15/01343f/000000?text=+) `#01343f` | ![#f5f5e7](https://placehold.it/15/f5f5e7/000000?text=+) `#f5f5e7` |
- | `background-off`       | ![#001b21](https://placehold.it/15/001b21/000000?text=+) `#001b21` | ![#f8f8f4](https://placehold.it/15/f8f8f4/000000?text=+) `#f8f8f4` |
- | `foreground-primary`   | ![#dddddd](https://placehold.it/15/dddddd/000000?text=+) `#dddddd` | ![#333333](https://placehold.it/15/333333/000000?text=+) `#333333` |
- | `foreground-secondary` | ![#c8c8c8](https://placehold.it/15/c8c8c8/000000?text=+) `#c8c8c8` | ![#444444](https://placehold.it/15/444444/000000?text=+) `#444444` |
- | `foreground-tertiary`  | ![#aaaaaa](https://placehold.it/15/aaaaaa/000000?text=+) `#aaaaaa` | ![#555555](https://placehold.it/15/555555/000000?text=+) `#555555` |
- | `primary`              | ![#b39ddb](https://placehold.it/15/b39ddb/000000?text=+) `#b39ddb` | ![#4527a0](https://placehold.it/15/4527a0/000000?text=+) `#4527a0` |
- | `primary-light`        | ![#e6ceff](https://placehold.it/15/e6ceff/000000?text=+) `#e6ceff` | ![#7953d2](https://placehold.it/15/7953d2/000000?text=+) `#7953d2` |
- | `primary-dark`         | ![#836fa9](https://placehold.it/15/836fa9/000000?text=+) `#836fa9` | ![#000070](https://placehold.it/15/000070/000000?text=+) `#000070` |
- | `secondary`            | ![#c5e1a5](https://placehold.it/15/c5e1a5/000000?text=+) `#c5e1a5` | ![#33691e](https://placehold.it/15/33691e/000000?text=+) `#33691e` |
- | `secondary-light`      | ![#f8ffd7](https://placehold.it/15/f8ffd7/000000?text=+) `#f8ffd7` | ![#85bb5c](https://placehold.it/15/85bb5c/000000?text=+) `#85bb5c` |
- | `secondary-dark`       | ![#94af76](https://placehold.it/15/94af76/000000?text=+) `#94af76` | ![#255d00](https://placehold.it/15/255d00/000000?text=+) `#255d00` |
- | `tertiary`             | ![#90caf9](https://placehold.it/15/90caf9/000000?text=+) `#90caf9` | ![#0d47a1](https://placehold.it/15/0d47a1/000000?text=+) `#0d47a1` |
- | `tertiary-light`       | ![#c3fdff](https://placehold.it/15/c3fdff/000000?text=+) `#c3fdff` | ![#5472d3](https://placehold.it/15/5472d3/000000?text=+) `#5472d3` |
- | `tertiary-dark`        | ![#5d99c6](https://placehold.it/15/5d99c6/000000?text=+) `#5d99c6` | ![#002171](https://placehold.it/15/002171/000000?text=+) `#002171` |
- | `error`                | ![#ef9a9a](https://placehold.it/15/ef9a9a/000000?text=+) `#ef9a9a` | ![#b00202](https://placehold.it/15/b00202/000000?text=+) `#b00202` |
- | `warning`              | ![#ff9800](https://placehold.it/15/ff9800/000000?text=+) `#ff9800` | ![#bf360c](https://placehold.it/15/bf360c/000000?text=+) `#bf360c` |
- | `discrete`             | ![#848484](https://placehold.it/15/848484/000000?text=+) `#848484` | ![#757575](https://placehold.it/15/757575/000000?text=+) `#757575` |
- | `vertical-border`      | ![#012830](https://placehold.it/15/012830/000000?text=+) `#012830` | ![#dddddd](https://placehold.it/15/dddddd/000000?text=+) `#dddddd` |
- | `cursor`               | ![#64d8cb](https://placehold.it/15/64d8cb/000000?text=+) `#64d8cb` | ![#64d8cb](https://placehold.it/15/64d8cb/000000?text=+) `#64d8cb` |
- | `modeline-active-fg`   | ![#ffffff](https://placehold.it/15/ffffff/000000?text=+) `#ffffff` | ![#ffffff](https://placehold.it/15/ffffff/000000?text=+) `#ffffff` |
- | `modeline-active-bg`   | ![#005662](https://placehold.it/15/005662/000000?text=+) `#005662` | ![#9575cd](https://placehold.it/15/9575cd/000000?text=+) `#9575cd` |
- | `modeline-inactive-fg` | ![#777777](https://placehold.it/15/777777/000000?text=+) `#777777` | ![#9e9e9e](https://placehold.it/15/9e9e9e/000000?text=+) `#9e9e9e` |
- | `modeline-inactive-bg` | ![#001017](https://placehold.it/15/001017/000000?text=+) `#001017` | ![#ede7f6](https://placehold.it/15/ede7f6/000000?text=+) `#ede7f6` |
-
-Each of these values can be overridden through the
-`immaterial-color-override-alist` variable, which overrides the defaults in the
-`immaterial-color-alist`. As an example, to provide a different primary color
-palette:
+Each color can be overridden through the `immaterial-color-override-alist`
+variable, which overrides the defaults in the `immaterial-color-alist`. As an
+example, to provide a different primary color palette:
 
     (setq immaterial-color-override-alist
       '(("primary"         . "#ffa726")
@@ -106,10 +76,10 @@ palette:
         ("primary-dark"    . "#c77800")
         ))
 
-**Note**: it is highly recommended to make use of the [Material color
-tool](https://material.io/resources/color) to experiment with color palettes and
-variants of a certain color. For dark themes, less saturated colors (200 and
-less) from the color palette improves readability.
+**Note**: the [Material color tool](https://material.io/resources/color) is
+useful when experimenting with color palettes and variants of a certain
+color. For dark themes, less saturated colors (200 and less) from the color
+palette improves readability.
 
 **Note**: emacs [rainbow-mode](https://elpa.gnu.org/packages/rainbow-mode.html)
 comes in handy for highlighting each hex color being edited in you emacs init
