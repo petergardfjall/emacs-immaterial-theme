@@ -613,6 +613,16 @@ NAME and VARIANT should be symbols."
        ;; face used to highlight compiler line numbers (and commonly in other
        ;; moodes to display grep-like output such as file line numbers)
        `(compilation-line-number ((,class (:foreground ,discrete))))
+
+
+       ;;
+       ;; completion (minibuffer.el)
+       ;;
+       ;; face for the parts of completions which matched the pattern
+       `(completions-common-part ((,class (:foreground ,warning))))
+       `(completions-annotations ((,class (:inherit font-lock-comment-face))))
+       ;; face for the first character after point in completions
+       `(completions-first-difference ((,class (:foreground ,error :weight bold))))
        ))))
 
 
