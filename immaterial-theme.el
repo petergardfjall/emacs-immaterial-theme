@@ -604,7 +604,14 @@ NAME and VARIANT should be symbols."
        `(xref-file-header ((,class (:foreground ,prim))))
        `(xref-line-number ((,class (:foreground ,discrete))))
 
+       ;;
+       ;; compilation mode
+       ;;
+       ;; face used to highlight compiler information (and commonly in other
+       ;; moodes to display grep-like output such as file names)
        `(compilation-info ((,class (:foreground ,prim))))
+       ;; face used to highlight compiler line numbers (and commonly in other
+       ;; moodes to display grep-like output such as file line numbers)
        `(compilation-line-number ((,class (:foreground ,discrete))))
        ))))
 
