@@ -94,12 +94,12 @@ using the https://material.io/resources/color/ tool."
     ("modeline-inactive-fg"  . ,(if (eq variant 'dark) "#777777" "#9e9e9e"))
     ("modeline-inactive-bg"  . ,(if (eq variant 'dark) "#001017" "#f9fafa"))
     ;; various task-specific colors
-    ("diff-added"            . ,(if (eq variant 'dark) "#063314" "#e6ffed"))
-    ("diff-added-refined"    . ,(if (eq variant 'dark) "#115c24" "#acf2bd"))
-    ("diff-removed"          . ,(if (eq variant 'dark) "#450a0d" "#ffeef0"))
-    ("diff-removed-refined"  . ,(if (eq variant 'dark) "#7f1217" "#fdb8c0"))
-    ("diff-changed"          . ,(if (eq variant 'dark) "#07275a" "#e1f0fe"))
-    ("diff-changed-refined"  . ,(if (eq variant 'dark) "#0c4296" "#a8d3ff"))
+    ("diff-added"            . ,(if (eq variant 'dark) "#033521" "#e6ffed"))
+    ("diff-added-refined"    . ,(if (eq variant 'dark) "#175b2b" "#acf2bd"))
+    ("diff-removed"          . ,(if (eq variant 'dark) "#3b0f19" "#ffebe9"))
+    ("diff-removed-refined"  . ,(if (eq variant 'dark) "#8d2323" "#ffc0c0"))
+    ("diff-changed"          . ,(if (eq variant 'dark) "#082145" "#e1f0fe"))
+    ("diff-changed-refined"  . ,(if (eq variant 'dark) "#103d7f" "#a8d3ff"))
     ))
 
 
@@ -238,7 +238,7 @@ NAME and VARIANT should be symbols."
        ;; used for secondary selections and selected date/time in org-mode
        `(secondary-selection ((,class (:background ,bg-on :foreground ,sec-dark))))
        ;; face used for text highlighting in various contexts (e.g. ivy search)
-       `(highlight ((,class (:background ,bg-on :foreground ,fg2 :extend t))))
+       `(highlight ((,class (:background ,bg-on))))
        ;; hl-line-mode background
        `(hl-line ((,class (:background ,bg-on :extend t))))
        ;; linum-mode column
@@ -593,9 +593,9 @@ NAME and VARIANT should be symbols."
        ;; face for lower version in conflict
        `(smerge-lower ((,class (:background ,diff-changed))))
        ;; face for added characters shown by smerge-refine
-       `(smerge-refined-added ((,class (:background ,(immaterial-color "diff-added-refined")))))
+       `(smerge-refined-added ((,class (:background ,diff-added-refined))))
        ;; face for removed characters shown by smerge-refine
-       `(smerge-refined-removed ((,class (:background ,(immaterial-color "diff-removed-refined")))))
+       `(smerge-refined-removed ((,class (:background ,diff-removed-refined))))
 
        ;;
        ;; xref
@@ -622,6 +622,78 @@ NAME and VARIANT should be symbols."
        `(completions-annotations ((,class (:inherit font-lock-comment-face))))
        ;; face for the first character after point in completions
        `(completions-first-difference ((,class (:foreground ,error :weight bold))))
+
+       ;;
+       ;; magit
+       ;;
+       `(magit-section-heading ((,class (:foreground ,prim :weight bold))))
+       `(magit-section-secondary-heading ((,class (:foreground ,prim))))
+       `(magit-section-heading-selection ((,class (:foreground ,prim-light :weight bold :background ,bg-on))))
+       `(magit-section-highlight ((,class (:background ,bg-on))))
+       `(magit-header-line ((,class (:inherit header-line))))
+       `(magit-tag ((,class (:foreground ,sec))))
+       `(magit-hash ((,class (:foreground ,discrete))))
+       `(magit-filename ((,class (:foreground ,fg1 :weight semi-bold))))
+       ;; branch faces
+       `(magit-branch-local ((,class (:foreground ,sec))))
+       `(magit-branch-current ((,class (:foreground ,sec :background ,bg-on))))
+       `(magit-branch-remote ((,class (:foreground ,tert))))
+       `(magit-branch-remote-head ((,class (:foreground ,tert :background ,bg-on))))
+       ;; NOTE: magit-diff-hunk-heading, should be different from both
+       ;; magit-diff-hunk-heading-highlight and magit-section-highlight as well
+       ;; as from magit-diff-context and magit-diff-context-highlight
+       `(magit-diff-context ((,class (:foreground ,discrete :background ,bg-off))))
+       `(magit-diff-context-highlight ((,class (:foreground ,discrete :background ,bg-on))))
+       `(magit-diff-hunk-heading ((,class (:foreground ,discrete :background ,diff-changed))))
+       `(magit-diff-hunk-heading-highlight ((,class (:foreground ,discrete :background ,diff-changed-refined))))
+       `(magit-diff-hunk-heading-selection ((,class (:foreground ,fg1 :background ,diff-changed-refined))))
+       `(magit-diff-added ((,class (:background ,diff-added :extend t))))
+       `(magit-diff-added-highlight ((,class (:background ,diff-added-refined :extend t))))
+       `(magit-diff-removed ((,class (:background ,diff-removed :extend t))))
+       `(magit-diff-removed-highlight ((,class (:background ,diff-removed-refined))))
+       ;; face for file names in diffs
+       `(magit-diff-file-heading ((,class (:foreground ,fg3))))
+       `(magit-diff-file-heading-highlight ((,class (:foreground ,fg1 :background ,bg-on :extend t))))
+       ;; face to use when warning of trailing whitespace
+       `(magit-diff-whitespace-warning ((,class (:background ,diff-removed-refined))))
+       ;; NOTE: there are different `magit-blame` styles (heading, margin,
+       ;; highlight, lines). These can be cycled with "c". Some of these faces
+       ;; only apply to certain such styles.
+       `(magit-blame-heading ((,class (:foreground ,fg1 :slant normal :background ,diff-changed))))
+       `(magit-blame-highlight ((,class (:foreground ,fg1 :background ,diff-changed))))
+       ;; face used in `magit-blame` "margin mode" (use 'c' to cycle)
+       `(magit-blame-margin ((,class (:foreground ,fg1 :background ,diff-changed))))
+       ;; faces for formatting blame lines
+       `(magit-blame-name ((,class (:foreground ,fg1))))
+       `(magit-blame-date ((,class (:foreground ,fg1))))
+       `(magit-blame-summary ((,class (:foreground ,fg1))))
+       `(magit-blame-hash ((,class (:foreground ,fg1))))
+       `(magit-blame-dimmed ((,class (:foreground ,discrete))))
+       ;; magit-log
+       `(magit-log-graph ((,class (:foreground ,prim))))
+       `(magit-log-author ((,class (:foreground ,tert))))
+       `(magit-log-date ((,class (:foreground ,sec-dark))))
+       ;; magit-reflog
+       `(magit-reflog-amend ((,class (:foreground ,sec))))
+       `(magit-reflog-cherry-pick ((,class (:foreground ,sec-light))))
+       `(magit-reflog-commit ((,class (:foreground ,sec-dark))))
+       `(magit-reflog-merge ((,class (:foreground ,prim-dark))))
+       `(magit-reflog-rebase ((,class (:foreground ,prim-light))))
+       `(magit-reflog-checkout ((,class (:foreground ,tert))))
+       `(magit-reflog-remote ((,class (:foreground ,tert-dark))))
+       `(magit-reflog-other ((,class (:foreground ,tert-light))))
+       `(magit-reflog-reset ((,class (:foreground ,error))))
+       ;; face non-zero exit status
+       `(magit-process-ng ((,class (:foreground ,error))))
+       `(magit-process-ok ((,class (:foreground ,prim))))
+       ;; magit-cherry
+       ;; used for "+"
+       `(magit-cherry-unmatched ((,class (:foreground ,sec))))
+       ;; used for "-"
+       `(magit-cherry-equivalent ((,class (:foreground ,tert))))
+       ;; process status
+       `(magit-mode-line-process ((,class (:foreground ,fg1))))
+       `(magit-mode-line-process-error ((,class (:foreground ,error :weight bold))))
        ))))
 
 
