@@ -82,8 +82,7 @@ using the https://material.io/resources/color/ tool."
     ;; completions, ivy/counsel, and lsp-ui.
     ("popup-bg-border"        . ,(if (eq variant 'dark) "#024858" "#e3e3d3"))
     ("popup-bg-prim"          . ,(if (eq variant 'dark) "#012830" "#f8f8f4"))
-    ("popup-bg-on"            . ,(if (eq variant 'dark) "#01343e" "#fdfdfd"))
-
+    ("popup-bg-on"            . ,(if (eq variant 'dark) "#014453" "#fdfdfd"))
 
     ("error"                 . ,(if (eq variant 'dark) "#ef9a9a" "#b00202"))
     ("warning"               . ,(if (eq variant 'dark) "#ff9800" "#bf360c"))
