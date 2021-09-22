@@ -136,8 +136,6 @@ negative)."
 NAME and VARIANT should be symbols."
   (progn
     (setq immaterial-color-alist (immaterial-create-color-alist variant))
-    ;; not sure why this isn't a custom face in lsp-ui-doc
-    (setq lsp-ui-doc-border (immaterial-color "popup-bg-border"))
     (let ((class '((class color) (min-colors 89)))
 	  (fg1                  (immaterial-color "foreground-primary"))
 	  (fg2                  (immaterial-color "foreground-secondary"))
@@ -185,6 +183,15 @@ NAME and VARIANT should be symbols."
 	  (diff-changed-refined (immaterial-color "diff-changed-refined"))
 	  (diff-removed         (immaterial-color "diff-removed"))
 	  (diff-removed-refined (immaterial-color "diff-removed-refined")))
+
+      (custom-theme-set-variables
+       name
+       ;; note: this color vector controls the appearance of shell mode. It is
+       ;; set up to mimic the term-color-* faces. ["black" "red3" "green3"
+       ;; "yellow3" "blue2" "magenta3" "cyan3" "gray90"]
+       `(ansi-color-names-vector (vector ,fg1 ,sec ,prim ,warning ,sec-dark ,tert ,error ,bg-prim))
+       ;; not sure why this isn't a custom face in lsp-ui-doc
+       `(lsp-ui-doc-border ,popup-bg-border))
 
       (custom-theme-set-faces
        name
@@ -299,18 +306,24 @@ NAME and VARIANT should be symbols."
        `(slime-repl-inputed-output-face ((,class (:foreground ,sec))))
        `(trailing-whitespace ((,class :foreground nil :background ,warning)))
        ;;
-       ;; ansi-term/term: set up colors that work well with the theme at large
+       ;; ansi-term/term/vterm
        ;;
        `(term-default-fg-color ((,class (:foreground ,fg1, :background ,bg-prim))))
        `(term-default-bg-color ((,class (:foreground ,fg1 :background ,bg-prim))))
-       `(term-color-red        ((,class (:foreground ,error :background ,bg-prim))))
-       `(term-color-blue       ((,class (:foreground ,prim-dark))))
-       `(term-color-yellow     ((,class (:foreground ,prim))))
-       `(term-color-magenta    ((,class (:foreground ,prim-light))))
-       `(term-color-black      ((,class (:foreground ,sec-dark))))
-       `(term-color-green      ((,class (:foreground ,sec))))
-       `(term-color-cyan       ((,class (:foreground ,sec-light))))
-       `(term-color-white      ((,class (:foreground ,fg1))))
+       ;; used for most terminal text
+       `(term-color-black      ((,class (:foreground ,fg1))))
+       `(term-color-white      ((,class (:foreground ,bg-prim))))
+       ;; for example used for directories
+       `(term-color-blue       ((,class (:foreground ,sec-dark))))
+       ;; for example used for symlinks
+       `(term-color-cyan       ((,class (:foreground ,error))))
+       ;; for example used for scripts (.sh)
+       `(term-color-green      ((,class (:foreground ,prim))))
+       ;; for example used for archives (zip, deb, ...)
+       `(term-color-red        ((,class (:foreground ,sec))))
+       `(term-color-yellow     ((,class (:foreground ,warning))))
+       ;; for example used for media (images, audio, video)
+       `(term-color-magenta    ((,class (:foreground ,tert))))
        ;;
        ;; company -- "complete any" completion engine
        ;;
