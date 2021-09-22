@@ -707,6 +707,30 @@ NAME and VARIANT should be symbols."
        ;; process status
        `(magit-mode-line-process ((,class (:foreground ,fg1))))
        `(magit-mode-line-process-error ((,class (:foreground ,error :weight bold))))
+       ;;
+       ;; dired
+       ;;
+       `(dired-directory ((,class (:foreground ,sec-dark))))
+       ;; face used for files flagged for deletion
+       `(dired-flagged ((,class (:foreground ,fg1 :background ,diff-removed))))
+       `(dired-header ((,class (:foreground ,prim))))
+       ;; face used for files suffixed with ‘completion-ignored-extensions’.
+       `(dired-ignored ((,class (:foreground ,discrete))))
+       ;; face used for asterisk of marked files
+       `(dired-mark ((,class (:foreground ,warning :weight bold))))
+       ;; face used for files marked
+       `(dired-marked ((,class (:foreground ,fg1 :background ,diff-changed))))
+       ;; face used to highlight permissions of group- and world-writable files.
+       `(dired-perm-write ((,class (:foreground ,error))))
+       ;; face used to highlight permissions of suid and guid files.
+       `(dired-set-id ((,class (:foreground ,warning))))
+       ;; face used for sockets, pipes, block devices and char devices.
+       `(dired-special ((,class (:foreground ,tert-light))))
+       ;; face used for symlinks
+       `(dired-symlink ((,class (:foreground ,error))))
+       ;; face used to highlight broken symblinks
+       `(dired-broken-symlink ((,class (:foreground ,fg1 :background ,diff-removed-refined))))
+       `(dired-warning ((,class (:foreground ,warning :background ,bg-on))))
        ))))
 
 
