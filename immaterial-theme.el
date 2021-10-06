@@ -738,6 +738,13 @@ NAME and VARIANT should be symbols."
        ;; face used to highlight broken symblinks
        `(dired-broken-symlink ((,class (:foreground ,fg1 :background ,diff-removed-refined))))
        `(dired-warning ((,class (:foreground ,warning :background ,bg-on))))
+       ;;
+       ;; keycast
+       ;;
+       ;; face for the last key combination
+       `(keycast-key ((,class (:foreground ,warning :weight bold :height 1.1))))
+       ;; face for the last command
+       `(keycast-command ((,class (:foreground ,warning :weight bold :slant italic :height 1.1))))
        ))))
 
 
