@@ -270,7 +270,11 @@ NAME and VARIANT should be symbols."
        ;; mode-line of the inactive buffer (e.g. in case of split window)
        `(mode-line-inactive  ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
        `(mode-line-buffer-id ((,class (:weight bold))))
-
+       ;;
+       ;; buffer menu buffer (C-x C-b)
+       ;;
+       ;; face for buffer names in the buffer menu
+       `(buffer-menu-buffer ((,class (:foreground ,sec))))
        ;;
        ;; powerline
        ;;
