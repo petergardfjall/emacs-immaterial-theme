@@ -569,11 +569,14 @@ NAME and VARIANT should be symbols."
        ;;
        ;; diff-mode
        ;;
+       ;; face inherited by hunk and index header faces
+       `(diff-header ((,class (:foreground ,fg1))))
        ;; used to highlight file header lines in diffs
        `(diff-file-header ((,class (:foreground ,prim :weight bold))))
-       `(diff-header ((,class (:foreground ,discrete))))
+       ;; face of context (text surrounding a hunk)
+       `(diff-context ((,class (:foreground ,discrete))))
        ;; used to highlight function names produced by `diff -p`
-       `(diff-function ((,class (:foreground ,discrete))))
+       `(diff-function ((,class (:foreground ,fg1))))
        ;; used to highlight added lines
        `(diff-added ((,class (:background ,(immaterial-color "diff-added") :extend t))))
        ;; face used for added characters shown by ‘diff-refine-hunk’.
