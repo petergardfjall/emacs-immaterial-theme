@@ -266,7 +266,7 @@ NAME and VARIANT should be symbols."
        ;; mode-line
        ;;
        ;; mode-line of the active buffer (e.g. in case of split window)
-       `(mode-line ((,class (:background ,modeline-active-bg :foreground ,modeline-active-fg))))
+       `(mode-line ((,class (:inherit default :background ,modeline-active-bg :foreground ,modeline-active-fg))))
        ;; mode-line of the inactive buffer (e.g. in case of split window)
        `(mode-line-inactive  ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
        `(mode-line-buffer-id ((,class (:weight bold))))
