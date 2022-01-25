@@ -463,6 +463,16 @@ NAME and VARIANT should be symbols."
        `(ivy-grep-info ((,class (:foreground ,sec-dark))))
        `(ivy-grep-line-number ((,class (:foreground ,sec-dark))))
 
+       `(swiper-background-match-face-1 ((,class (:foreground ,warning))))
+       `(swiper-background-match-face-2 ((,class (:foreground ,warning))))
+       `(swiper-background-match-face-3 ((,class (:foreground ,warning))))
+       `(swiper-background-match-face-4 ((,class (:foreground ,warning))))
+
+       `(swiper-match-face-1 ((,class (:inherit highlight :foreground ,warning))))
+       `(swiper-match-face-2 ((,class (:inherit highlight :foreground ,warning))))
+       `(swiper-match-face-3 ((,class (:inherit highlight :foreground ,warning))))
+       `(swiper-match-face-4 ((,class (:inherit highlight :foreground ,warning))))
+
        ;;
        ;; ivy-posframe
        ;;
