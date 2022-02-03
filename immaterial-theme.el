@@ -465,6 +465,12 @@ NAME and VARIANT should be symbols."
        `(orderless-match-face-3 ((,class (:inherit warning :weight bold))))
 
        ;;
+       ;; vertico
+       ;;
+       `(vertico-group-title ((,class (:foreground ,discrete))))
+       `(vertico-group-separator ((,class (:foreground ,popup-bg-border :strike-through t))))
+
+       ;;
        ;; ivy/swiper
        ;;
        ;; highlight current match under cursor
