@@ -443,6 +443,28 @@ NAME and VARIANT should be symbols."
        `(ido-subdir ((,class (:foreground ,sec-dark))))
 
        ;;
+       ;; consult
+       ;;
+       ;; face used if async process (e.g. search) has failed
+       `(consult-async-failed ((,class (:inherit error :background ,bg-on))))
+       ;; face used while async process (e.g. search) is running
+       `(consult-async-running ((,class (:inherit warning :background ,bg-on))))
+       ;; `(consult-async-finished ((,class (:inherit diff-added-refined))))
+       ;; face used for marking cursor in a live preview
+       `(consult-preview-cursor ((,class (:inherit warning :weight semi-bold))))
+       ;; face used to for match previews in ‘consult-grep’.
+       `(consult-preview-match ((,class (:inherit warning :weight bold))))
+
+       ;;
+       ;; orderless
+       ;;
+       ;; match faces for search terms (modulo 4)
+       `(orderless-match-face-0 ((,class (:inherit warning :weight bold))))
+       `(orderless-match-face-1 ((,class (:inherit warning :weight bold))))
+       `(orderless-match-face-2 ((,class (:inherit warning :weight bold))))
+       `(orderless-match-face-3 ((,class (:inherit warning :weight bold))))
+
+       ;;
        ;; ivy/swiper
        ;;
        ;; highlight current match under cursor
@@ -648,7 +670,7 @@ NAME and VARIANT should be symbols."
        ;; completion (minibuffer.el)
        ;;
        ;; face for the parts of completions which matched the pattern
-       `(completions-common-part ((,class (:foreground ,warning))))
+       `(completions-common-part ((,class (:foreground ,warning :weight semi-bold))))
        `(completions-annotations ((,class (:inherit font-lock-comment-face))))
        ;; face for the first character after point in completions
        `(completions-first-difference ((,class (:foreground ,error :weight bold))))
