@@ -9,12 +9,21 @@ Emacs 26 and [enable
 truecolors](https://github.com/syl20bnr/spacemacs/wiki/Terminal) in your
 terminal.*
 
-Immaterial is an emacs color theme that comes in two flavors (`immateral-dark`
-and `immaterial-light`) and is loosely based on the principles of Google's
-[Material
-design](https://material.io/design/color/the-color-system.html#color-theme-creation). More
-specifically, it defines (and allows users to _redefine_) the following coloring
-elements:
+Immaterial is an emacs color theme that comes in two flavors: `immateral-dark`
+and `immaterial-light`.
+
+In its infancy it was loosely based on the principles of Google's [Material
+design](https://material.io/design/color/the-color-system.html#color-theme-creation),
+but that's all immaterial ...
+
+Since then it has evolved to become a theme focused on readability and a sober
+amount of coloring; enough to help you quickly grasp syntactical structure and
+identify key elements without bombarding your senses with an undue amount of
+colors (a lot of themes seem to take a "more is more" approach to coloring,
+ending up in a christmas tree where no element stands out from the rest).
+
+It is built from a number of "coloring building blocks". Their use is summarized
+below. For full details, refer to the [the code](immaterial-theme.el).
 
 - `background`: used for the background of buffers, modeline, etc.
 
@@ -25,44 +34,43 @@ elements:
   etc). `background-off` is used to tone down parts of the screen (such as the
   inactive modeline in a split frame with several buffers).
 
-  For dark themes, it is recommended to define `background-on` as a bit brigher
-  than `background-primary`, and `background-off` as darker than
-  `background-primary`.
-
-- `foreground`: used for plain text and editor decorations of different kinds.
+- `foreground`: used for the majority of the text.
 
   Comes in three flavors: `foreground-primary`, `foreground-secondary`,
   `foreground-tertiary` with falling degree of use in the theme.
 
-- `primary`: used for certain parts of the syntax highlighting (for example,
-  keywords). Refer to [the code](immaterial-theme.el) for details.
+- `primary`, `secondary`, `tertiary`: these groups of colors are accent colors
+  that are used mostly to highlight syntactical elements (in code) or other
+  notable text elements (such as headings, links, etc). Each comes in three
+  forms to give some variation to the accent: "plain", "low contrast", "high
+  contrast" (contrast being relative to the background):
 
-  Comes in three variants, which are used to add some slight variation in the
-  syntactic highlighting: `primary`, `primary-dark`, `primary-light`.
-
-- `secondary`: used for certain parts of the syntax highlighting (for example,
-  types and variables). Refer to [the code](immaterial-theme.el) for details.
-
-  Comes in three variants, which are used to add some slight variation in the
-  syntactic highlighting: `secondary`, `secondary-dark`, `secondary-light`.
+  - `primary`, `primary-hi`, `primary-lo`:
+    - code use: keywords, constants
+    - text use: headings
+  - `secondary`, `secondary-hi`, `secondary-lo`:
+    - code use: types, variables
+    - text use: code/verbatim elements, timestamps
+  - `tertiary`, `tertiary-hi`, `tertiary-lo`
+    - code: strings
+    - text use: links
 
 - some additional colors for specific types of highlighting:
 
-    - `error`: for highligting erroneous code.
-    - `warning`: for highligting suspicious code.
-    - `discrete`: for text that should be less pronounced (code comments, line
-      numbers).
+    - `discrete`: for less pronounced text (code comments, line numbers).
+    - `error`: for highlighting erroneous code.
+    - `warning`: for highlighting suspicious code. Also used to highlight search
+      matches.
     - `cursor`: the color of the cursor.
     - `vertical-border`: the color of the vertical line that separates windows
       in a frame.
-    - `modeline-active-fg`: foreground color to use for an active buffer
-      modeline.
-    - `modeline-active-bg`: background color to use for on an active buffer
-      modeline.
-    - `modeline-inactive-fg`: foreground color to use for on an inactive buffer
-      modeline.
-    - `modeline-inactive-bg`: background color to use for on an inactive buffer
-      modeline.
+    - `modeline-active-fg`: foreground color for active buffer modeline.
+    - `modeline-active-bg`: background color for active buffer modeline.
+    - `modeline-inactive-fg`: foreground color for inactive buffer modelines.
+    - `modeline-inactive-bg`: background color for inactive buffer modelines.
+    - `diff-{added,changed,removed}`: diff highlighting
+    - `diff-{added,changed,removed}-refined`: higher-granularity diff
+      highlighting
 
 All colors are defined in the default `immaterial-color-alist` (tip: enable `rainbow-mode` when exploring).
 
@@ -70,11 +78,15 @@ Each color can be overridden through the `immaterial-color-override-alist`
 variable, which overrides the defaults in the `immaterial-color-alist`. As an
 example, to provide a different primary color palette:
 
-    (setq immaterial-color-override-alist
-      '(("primary"         . "#ffa726")
-        ("primary-light"   . "#ffd95b")
-        ("primary-dark"    . "#c77800")
-        ))
+``` emacs-lisp
+(setq immaterial-color-override-alist
+  '(("background-primary" . ((dark  . "#000000") (light . "#eeffdd")))
+    ("background-on"      . ((dark  . "#003300") (light . "#ddffaa")))
+    ;; override 'primary' only for dark theme
+    ("primary"            . ((dark  . "#80cbc4")))
+    ;; override 'warning' only for light theme
+    ("warning"            . ((light . "#ed4079")))))
+```
 
 **Note**: the [Material color tool](https://material.io/resources/color) is
 useful when experimenting with color palettes and variants of a certain
