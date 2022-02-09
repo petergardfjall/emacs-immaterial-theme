@@ -137,7 +137,7 @@
   "Ensure that the immaterial light palette (foregrounds and backgrounds) foreground colors satisfy a minimum ratio of 4.5:1 (WCAG success criterion 1.4.3) and the primary foreground color satisfies a minimum ratio of 7:1 (WCAG success criterion 1.4.6)."
   (message "verifying color contrast for light theme")
 
-  (cl-assert (string= "#fdfefe" (immaterial-color "background-primary" 'light))
+  (cl-assert (string= "#fdfdfd" (immaterial-color "background-primary" 'light))
 	     "should be using light color variants")
 
   (cl-assert (<= 7 (immaterial-contrast-ratio
