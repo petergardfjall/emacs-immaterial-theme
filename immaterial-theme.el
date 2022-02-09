@@ -54,9 +54,9 @@ be helpful when constructing primary, secondary, tertiary color
 schemes.")
 
 (defvar immaterial-color-alist
-  '(("background-primary"    . ((dark . "#012027") (light . "#fdfefe")))
-    ("background-off"        . ((dark . "#001b21") (light . "#f9fafa")))
-    ("background-on"         . ((dark . "#01343f") (light . "#f3f3ec")))
+  '(("background-primary"    . ((dark . "#012027") (light . "#f5f5f5")))
+    ("background-off"        . ((dark . "#001b21") (light . "#efefef")))
+    ("background-on"         . ((dark . "#01343f") (light . "#f0f0e4")))
     ("foreground-primary"    . ((dark . "#dddddd") (light . "#222222")))
     ("foreground-secondary"  . ((dark . "#c8c8c8") (light . "#333333")))
     ("foreground-tertiary"   . ((dark . "#aaaaaa") (light . "#444444")))
