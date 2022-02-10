@@ -54,12 +54,12 @@ be helpful when constructing primary, secondary, tertiary color
 schemes.")
 
 (defvar immaterial-color-alist
-  '(("background-primary"    . ((dark . "#012027") (light . "#fdfdfd")))
-    ("background-off"        . ((dark . "#001b21") (light . "#f6f6f6")))
-    ("background-on"         . ((dark . "#01343f") (light . "#f1f1e8")))
-    ("foreground-primary"    . ((dark . "#dddddd") (light . "#222222")))
-    ("foreground-secondary"  . ((dark . "#c8c8c8") (light . "#333333")))
-    ("foreground-tertiary"   . ((dark . "#aaaaaa") (light . "#444444")))
+  '(("background-primary"    . ((dark . "#012027") (light . "#fcfcfb")))
+    ("background-off"        . ((dark . "#001b21") (light . "#f5f5f2")))
+    ("background-on"         . ((dark . "#01343f") (light . "#f5f2ea")))
+    ("foreground-primary"    . ((dark . "#dddddd") (light . "#333333")))
+    ("foreground-secondary"  . ((dark . "#c8c8c8") (light . "#484848")))
+    ("foreground-tertiary"   . ((dark . "#aaaaaa") (light . "#555555")))
     ("primary"               . ((dark . "#b39ddb") (light . "#4527a0")))
     ("primary-hi"            . ((dark . "#e6ceff") (light . "#000070")))
     ("primary-lo"            . ((dark . "#836fa9") (light . "#7953d2")))
@@ -70,18 +70,20 @@ schemes.")
     ("tertiary-hi"           . ((dark . "#c3fdff") (light . "#002171")))
     ("tertiary-lo"           . ((dark . "#5d99c6") (light . "#5472d3")))
     ;; colors to use for popup-like UI behavior such as `company-mode`and lsp-ui
-    ("popup-bg-border"       . ((dark . "#024858") (light . "#e3e3e3")))
-    ("popup-bg-prim"         . ((dark . "#012830") (light . "#f9f9f9")))
-    ("popup-bg-on"           . ((dark . "#014453") (light . "#f1f1e0")))
+    ("popup-bg-border"       . ((dark . "#01586c") (light . "#d9d9bc")))
+    ("popup-bg-prim"         . ((dark . "#012830") (light . "#f8f8f4")))
+    ("popup-bg-on"           . ((dark . "#014453") (light . "#f1ede3")))
     ("error"                 . ((dark . "#ef9a9a") (light . "#b00202")))
     ("warning"               . ((dark . "#ff9800") (light . "#bf360c")))
+    ("match"                 . ((dark . "#ff9800") (light . "#bf360c")))
     ("discrete"              . ((dark . "#848484") (light . "#757575")))
     ("vertical-border"       . ((dark . "#001b21") (light . "#f8f8f4")))
     ("cursor"                . ((dark . "#64d8cb") (light . "#64d8cb")))
     ("modeline-active-fg"    . ((dark . "#ffffff") (light . "#ffffff")))
-    ("modeline-active-bg"    . ((dark . "#005662") (light . "#007b94")))
-    ("modeline-inactive-fg"  . ((dark . "#777777") (light . "#9e9e9e")))
-    ("modeline-inactive-bg"  . ((dark . "#001017") (light . "#f9fafa")))
+    ("modeline-active-bg"    . ((dark . "#005662") (light . "#6a9a5e")))
+    ("modeline-active-border". ((dark . "#008295") (light . "#95dd84")))
+    ("modeline-inactive-fg"  . ((dark . "#848484") (light . "#757575")))
+    ("modeline-inactive-bg"  . ((dark . "#001017") (light . "#cfdfcb")))
     ;; various task-specific colors
     ("diff-added"            . ((dark . "#033521") (light . "#e6ffed")))
     ("diff-added-refined"    . ((dark . "#175b2b") (light . "#acf2bd")))
@@ -161,14 +163,16 @@ NAME and VARIANT should be symbols."
 	  (comment              (color-get "discrete"))
 	  (negation             (color-get "warning"))
 	  (warning              (color-get "warning"))
+	  (match                (color-get "match"))
 	  (error                (color-get "error"))
 	  (cursor               (color-get "cursor"))
 
-	  (v-border             (color-get "vertical-border"))
-	  (modeline-active-bg   (color-get "modeline-active-bg"))
-	  (modeline-active-fg   (color-get "modeline-active-fg"))
-	  (modeline-inactive-bg (color-get "modeline-inactive-bg"))
-	  (modeline-inactive-fg (color-get "modeline-inactive-fg"))
+	  (v-border               (color-get "vertical-border"))
+	  (modeline-active-bg     (color-get "modeline-active-bg"))
+	  (modeline-active-border (color-get "modeline-active-border"))
+	  (modeline-active-fg     (color-get "modeline-active-fg"))
+	  (modeline-inactive-bg   (color-get "modeline-inactive-bg"))
+	  (modeline-inactive-fg   (color-get "modeline-inactive-fg"))
 
 	  (diff-added           (color-get "diff-added"))
 	  (diff-added-refined   (color-get "diff-added-refined"))
@@ -189,6 +193,8 @@ NAME and VARIANT should be symbols."
       (custom-theme-set-faces
        name
        `(default ((,class (:background ,bg-prim :foreground ,fg1))))
+       `(match ((,class (:foreground ,match :weight semi-bold))))
+
        ;;
        ;; Syntax higlighting/font-lock minor mode. (syntax rules are provided by
        ;; the particular major-mode).
@@ -252,14 +258,16 @@ NAME and VARIANT should be symbols."
        `(show-paren-match ((,class (:weight bold :background ,bg-on :foreground ,warning))))
        `(show-paren-mismatch ((,class (:background ,error))))
        ;; current match of an on-going incremental search (isearch-forward)
-       `(isearch ((,class (:foreground ,warning :weight semi-bold))))
+       `(isearch ((,class (:inherit match))))
        ;; other matches for the search string that are visible on display
-       `(lazy-highlight ((,class (:background ,bg-on :foreground ,warning))))
+       `(lazy-highlight ((,class (:inherit isearch))))
+       ;; for highlighting failed part in isearch echo-area message.
+       `(isearch-fail ((,class (:foreground ,error :underline t))))
        ;;
        ;; mode-line
        ;;
        ;; mode-line of the active buffer (e.g. in case of split window)
-       `(mode-line ((,class (:inherit default :background ,modeline-active-bg :foreground ,modeline-active-fg))))
+       `(mode-line ((,class (:inherit default :background ,modeline-active-bg :foreground ,modeline-active-fg :box (:line-width 1 :color ,modeline-active-border :style nil) ))))
        ;; mode-line of the inactive buffer (e.g. in case of split window)
        `(mode-line-inactive  ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
        `(mode-line-buffer-id ((,class (:weight bold))))
@@ -326,18 +334,19 @@ NAME and VARIANT should be symbols."
        ;;
        ;; Face used for the common part of completions in the echo area (appears
        ;; to only be used with the echo area frontend).
-       `(company-echo-common ((,class (:foreground ,warning))))
+       `(company-echo-common ((,class (:inherit match))))
        ;; scrollbar style in company tooltip
-       `(company-scrollbar-bg ((,class (:background ,popup-bg-prim))))
-       `(company-scrollbar-fg ((,class (:background ,popup-bg-on))))
+       `(company-tooltip-scrollbar-track ((,class (:background ,popup-bg-on ))))
+       `(company-tooltip-scrollbar-thumb ((,class (:background ,popup-bg-border))))
        ;; ;; general style of tooltip popup candidate list
        `(company-tooltip ((,class (:foreground ,discrete :background ,popup-bg-prim))))
        ;; ;; annotation appearance (right-hand side text; could be the signature of a function)
        `(company-tooltip-annotation ((,class (:foreground ,sec :italic t))))
-       ;; the style to use for showing the common matched search prefix in candidates
-       `(company-tooltip-common ((,class (:foreground ,warning))))
+       ;; the style to use for showing the common matched search prefix in
+       ;; non-selected candidates
+       `(company-tooltip-common ((,class (:inherit match :bold nil))))
        ;; the style to use for showing the common matched search prefix in the *selected* candidate
-       `(company-tooltip-common-selection ((,class (:foreground ,warning :bold t))))
+       `(company-tooltip-common-selection ((,class (:inherit match :bold t))))
        ;; style to use to highlight the *selected* candidate
        `(company-tooltip-selection ((,class (:foreground ,fg1 :background ,popup-bg-on))))
        ;; annotation (i.e. RHS) appearance for the *selected* item in the completion list
@@ -346,10 +355,21 @@ NAME and VARIANT should be symbols."
        `(company-tooltip-mouse ((,class (:inherit highlight))))
        ;; when using `company-search-mode` this is the face to use for the
        ;; matches of the entered search phrase
-       `(company-tooltip-search ((,class (:bold t :foreground ,warning))))
+       `(company-tooltip-search ((,class (:inherit match))))
        ;; same as above but for the *selected* candidate
        `(company-tooltip-search-selection ((,class (:inherit company-tooltip-selection))))
 
+       ;;
+       ;; corfu - completion-at-point UI
+       ;;
+       ;; background and foreground color to use for popup
+       `(corfu-default ((,class (:background ,popup-bg-prim :foreground ,discrete))))
+       ;; background color is used for the thin border around the popup
+       `(corfu-border ((,class (:background ,popup-bg-border))))
+       ;; face used to highlight the currently selected candidate
+       `(corfu-current ((,class (:background ,popup-bg-on :foreground ,fg1))))
+       ;; background color is used for scrollbar
+       `(corfu-bar ((,class (:background ,popup-bg-border))))
 
        ;;
        ;; sh-mode
@@ -424,7 +444,7 @@ NAME and VARIANT should be symbols."
        ;; face for line numbers in listing to the right
        `(lsp-ui-peek-line-number ((,class (:foreground ,discrete))))
        ;; face for header line above entire peek frame
-       `(lsp-ui-peek-header ((,class (:foreground ,discrete :background ,popup-bg-prim :weight semi-bold ))))
+       `(lsp-ui-peek-header ((,class (:foreground ,discrete :background ,popup-bg-prim :weight semi-bold  :overline ,popup-bg-border))))
        ;; face for footer line below entire peek frame
        `(lsp-ui-peek-footer ((,class (:background ,popup-bg-prim))))
 
@@ -442,20 +462,20 @@ NAME and VARIANT should be symbols."
        `(consult-async-failed ((,class (:inherit error :background ,bg-on))))
        ;; face used while async process (e.g. search) is running
        `(consult-async-running ((,class (:inherit warning :background ,bg-on))))
-       ;; `(consult-async-finished ((,class (:inherit diff-added-refined))))
-       ;; face used for marking cursor in a live preview
-       `(consult-preview-cursor ((,class (:inherit warning :weight semi-bold))))
+       ;; face used for marking cursor in a live preview of a search candidate
+       `(consult-preview-cursor ((,class (:inherit match))))
        ;; face used to for match previews in ‘consult-grep’.
-       `(consult-preview-match ((,class (:inherit warning :weight bold))))
+       `(consult-preview-match ((,class (:inherit match))))
+       `(consult-line-number-wrapped ((,class (:inherit consult-line-number-prefix))))
 
        ;;
        ;; orderless
        ;;
        ;; match faces for search terms (modulo 4)
-       `(orderless-match-face-0 ((,class (:inherit warning :weight bold))))
-       `(orderless-match-face-1 ((,class (:inherit warning :weight bold))))
-       `(orderless-match-face-2 ((,class (:inherit warning :weight bold))))
-       `(orderless-match-face-3 ((,class (:inherit warning :weight bold))))
+       `(orderless-match-face-0 ((,class (:inherit match))))
+       `(orderless-match-face-1 ((,class (:inherit match))))
+       `(orderless-match-face-2 ((,class (:inherit match))))
+       `(orderless-match-face-3 ((,class (:inherit match))))
 
        ;;
        ;; vertico
@@ -470,29 +490,28 @@ NAME and VARIANT should be symbols."
        `(ivy-current-match ((,class (:weight semi-bold :background ,bg-on :extend t))))
        ;; highlight match under mouse pointer
        `(ivy-minibuffer-match-highlight ((,class (:inherit highlight))))
-       ;; how to highlight the matching part of the search expression on presented
-       ;; search candidates in the minibuffer.
-       ;; The background face for ‘ivy’ minibuffer matches.
-       `(ivy-minibuffer-match-face-1 ((,class (:inherit isearch))))
-       ;; Face for ‘ivy’ minibuffer matches numbered 1 modulo 3.
-       `(ivy-minibuffer-match-face-2 ((,class (:inherit isearch))))
-       ;; Face for ‘ivy’ minibuffer matches numbered 2 modulo 3.
-       `(ivy-minibuffer-match-face-3 ((,class (:inherit isearch))))
-       ;; Face for ‘ivy’ minibuffer matches numbered 3 modulo 3.
-       `(ivy-minibuffer-match-face-4 ((,class (:inherit isearch))))
+       ;; how to highlight first search term matches in candidate lines
+       `(ivy-minibuffer-match-face-1 ((,class (:inherit match))))
+       ;; how to highlight second search term matches in candidate lines
+       `(ivy-minibuffer-match-face-2 ((,class (:inherit match))))
+       ;; how to highlight third search term matches in candidate lines
+       `(ivy-minibuffer-match-face-3 ((,class (:inherit match))))
+       ;; how to highlight fourth search term matches in candidate lines
+       `(ivy-minibuffer-match-face-4 ((,class (:inherit match))))
        ;; ivy information for grep-like searches (such as `counsel-ag`)
        `(ivy-grep-info ((,class (:foreground ,sec-lo))))
        `(ivy-grep-line-number ((,class (:foreground ,sec-lo))))
 
-       `(swiper-background-match-face-1 ((,class (:foreground ,warning))))
-       `(swiper-background-match-face-2 ((,class (:foreground ,warning))))
-       `(swiper-background-match-face-3 ((,class (:foreground ,warning))))
-       `(swiper-background-match-face-4 ((,class (:foreground ,warning))))
-
-       `(swiper-match-face-1 ((,class (:inherit highlight :foreground ,warning))))
-       `(swiper-match-face-2 ((,class (:inherit highlight :foreground ,warning))))
-       `(swiper-match-face-3 ((,class (:inherit highlight :foreground ,warning))))
-       `(swiper-match-face-4 ((,class (:inherit highlight :foreground ,warning))))
+       ;; used to highlight search term matches for candidate line under cursor
+       `(swiper-match-face-1 ((,class (:inherit (highlight match)))))
+       `(swiper-match-face-2 ((,class (:inherit (highlight match)))))
+       `(swiper-match-face-3 ((,class (:inherit (highlight match)))))
+       `(swiper-match-face-4 ((,class (:inherit (highlight match)))))
+       ;; used to highlight search term matches for candidate lines not under cursor
+       `(swiper-background-match-face-1 ((,class (:inherit (highlight match)))))
+       `(swiper-background-match-face-2 ((,class (:inherit (highlight match)))))
+       `(swiper-background-match-face-3 ((,class (:inherit (highlight match)))))
+       `(swiper-background-match-face-4 ((,class (:inherit (highlight match)))))
 
        ;;
        ;; ivy-posframe
@@ -669,10 +688,10 @@ NAME and VARIANT should be symbols."
        ;; completion (minibuffer.el)
        ;;
        ;; face for the parts of completions which matched the pattern
-       `(completions-common-part ((,class (:foreground ,warning :weight semi-bold))))
-       `(completions-annotations ((,class (:inherit font-lock-comment-face))))
+       `(completions-common-part ((,class (:inherit match))))
+       `(completions-annotations ((,class (:foreground ,sec :italic t))))
        ;; face for the first character after point in completions
-       `(completions-first-difference ((,class (:foreground ,error :weight bold))))
+       `(completions-first-difference ((,class ()))) ;; no styling
 
        ;;
        ;; magit
