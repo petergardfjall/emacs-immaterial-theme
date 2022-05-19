@@ -683,6 +683,8 @@ NAME and VARIANT should be symbols."
        ;; moodes to display grep-like output such as file line numbers)
        `(compilation-line-number ((,class (:foreground ,discrete))))
 
+       ;; face to highlight leading space in Makefiles
+       `(makefile-space ((,class (:background ,diff-removed))))
 
        ;;
        ;; completion (minibuffer.el)
