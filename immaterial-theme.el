@@ -310,7 +310,7 @@ NAME and VARIANT should be symbols."
        `(undo-tree-visualizer-register-face ((,class :foreground ,sec)))
 
        `(slime-repl-inputed-output-face ((,class (:foreground ,sec))))
-       `(trailing-whitespace ((,class :foreground nil :background ,warning)))
+       `(trailing-whitespace ((,class :background ,warning)))
        ;;
        ;; ansi-term/term/vterm
        ;;
