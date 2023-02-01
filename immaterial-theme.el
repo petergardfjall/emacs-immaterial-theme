@@ -798,7 +798,17 @@ NAME and VARIANT should be symbols."
        `(keycast-key ((,class (:foreground ,warning :weight bold :height 1.1))))
        ;; face for the last command
        `(keycast-command ((,class (:foreground ,warning :weight bold :slant italic :height 1.1))))
-       ))))
+
+       ;;
+       ;; projtree
+       ;;
+       `(projtree-file ((,class (:inherit default))))
+       `(projtree-dir ((,class (:inherit dired-directory))))
+       `(projtree-git-modified ((,class (:background ,diff-changed :box (:line-width 1 :color ,diff-changed-refined :style nil)))))
+       `(projtree-git-added ((,class (:background ,diff-added :box (:line-width 1 :color ,diff-added-refined :style nil)))))
+       `(projtree-git-ignored ((,class (:foreground ,discrete :strike-through t))))
+       `(projtree-git-untracked ((,class (:foreground ,discrete))))
+       `(projtree-git-conflict ((,class (:background ,diff-removed :box (:line-width 1 :color ,diff-removed-refined :style nil) :italic t))))))))
 
 
 (defun immaterial-linear-rgb-component (col)
