@@ -193,6 +193,7 @@ NAME and VARIANT should be symbols."
       (custom-theme-set-faces
        name
        `(default ((,class (:background ,bg-prim :foreground ,fg1))))
+       `(shadow ((,class (:foreground ,discrete))))
        `(match ((,class (:foreground ,match :weight semi-bold))))
 
        ;;
