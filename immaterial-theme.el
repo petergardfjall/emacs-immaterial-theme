@@ -802,8 +802,9 @@ NAME and VARIANT should be symbols."
        ;;
        ;; projtree
        ;;
+       `(projtree-highlight ((,class (:inherit highlight))))
        `(projtree-file ((,class (:inherit default))))
-       `(projtree-dir ((,class (:inherit dired-directory))))
+       `(projtree-dir ((,class (:foreground ,sec-lo))))
        `(projtree-git-modified ((,class (:background ,diff-changed :box (:line-width 1 :color ,diff-changed-refined :style nil)))))
        `(projtree-git-added ((,class (:background ,diff-added :box (:line-width 1 :color ,diff-added-refined :style nil)))))
        `(projtree-git-ignored ((,class (:foreground ,discrete :strike-through t))))
