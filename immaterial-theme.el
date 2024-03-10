@@ -308,6 +308,21 @@ NAME and VARIANT should be symbols."
        `(undo-tree-visualizer-default-face ((,class :foreground ,fg2)))
        `(undo-tree-visualizer-unmodified-face ((,class :foreground ,sec-lo)))
        `(undo-tree-visualizer-register-face ((,class :foreground ,sec)))
+       ;;
+       ;; vundo
+       ;;
+       `(vundo-default ((,class :foreground ,sec-lo)))
+       `(vundo-node ((,class :foreground ,sec-lo)))
+       `(vundo-stem ((,class :foreground ,sec-lo)))
+       `(vundo-branch-stem ((,class :foreground ,sec-lo)))
+       `(vundo-branch-stem ((,class :foreground ,fg1)))
+       ;; Face for points in the undo tree where the file was saved.
+       `(vundo-saved ((,class :foreground ,sec)))
+       ;; Face for most recent save point in the undo tree.
+       `(vundo-last-saved ((,class :foreground ,sec :weight bold)))
+       ;; Face for currently selected point in undo tree.
+       `(vundo-highlight ((,class :foreground ,warning)))
+
 
        `(slime-repl-inputed-output-face ((,class (:foreground ,sec))))
        `(trailing-whitespace ((,class :background ,warning)))
