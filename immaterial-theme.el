@@ -446,6 +446,43 @@ NAME and VARIANT should be symbols."
        `(markdown-plain-url-face ((,class (:foreground ,tert))))
 
        ;;
+       ;; adoc-mode
+       ;;
+       `(adoc-gen-face ((,class (:foreground ,prim))))
+       `(adoc-title-face ((,class (:foreground ,prim :weight bold))))
+       `(adoc-title-0-face ((,class (:foreground ,prim :weight bold))))
+       `(adoc-title-1-face ((,class (:foreground ,prim :weight bold))))
+       `(adoc-title-2-face ((,class (:foreground ,prim :weight bold))))
+       `(adoc-title-3-face ((,class (:foreground ,prim :weight bold))))
+       `(adoc-title-4-face ((,class (:foreground ,prim :weight bold))))
+       `(adoc-title-4-face ((,class (:foreground ,prim :weight bold))))
+       `(adoc-comment-face ((,class (:foreground ,comment))))
+       `(adoc-meta-face ((,class (:foreground ,fg3))))
+       `(adoc-meta-hide-face ((,class (:inherit adoc-meta-face))))
+       `(adoc-attribute-face ((,class (:inherit adoc-meta-face))))
+       `(adoc-secondary-text-face ((,class (:inherit adoc-meta-face))))
+       ;; Used for code blocks.
+       `(adoc-code-face ((,class (:foreground ,sec))))
+       `(adoc-preprocessor-face ((,class (:foreground ,warning))))
+       `(adoc-command-face ((,class (:foreground ,warning))))
+       ;; An replacement macro such as "{doctitle}".
+       `(adoc-replacement-face ((,class (:foreground ,warning))))
+       ;; Used for [WARNING], [CAUTION], etc
+       `(adoc-complex-replacement-face ((,class (:foreground ,warning))))
+       `(adoc-bold-face ((,class (:weight bold))))
+       `(adoc-emphasis-face ((,class (:slant italic))))
+       ;; The LINK part of "PATH[LINK]" and "<<LINK>>".
+       `(adoc-reference-face ((,class (:foreground ,tert))))
+       ;; The PATH part of "PATH[LINK]".
+       `(adoc-internal-reference-face ((,class (:foreground ,tert))))
+       `(adoc-anchor-face ((,class (:inherit adoc-meta-face :underline t))))
+       `(adoc-list-face ((,class (:foreground ,sec))))
+       `(adoc-table-face ((,class (:foreground ,sec))))
+       ;; Used for text within backticks.
+       `(adoc-verbatim-face ((,class (:foreground ,sec))))
+       `(adoc-typewriter-face ((,class (:foreground ,sec))))
+
+       ;;
        ;; treemacs
        ;;
        `(treemacs-root-face ((,class (:foreground ,sec-lo :inherit bold))))
