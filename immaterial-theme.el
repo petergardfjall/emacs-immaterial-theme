@@ -886,7 +886,16 @@ NAME and VARIANT should be symbols."
        `(projtree-git-added ((,class (:background ,diff-added :box (:line-width 1 :color ,diff-added-refined :style nil)))))
        `(projtree-git-ignored ((,class (:foreground ,discrete :strike-through t))))
        `(projtree-git-untracked ((,class (:foreground ,discrete))))
-       `(projtree-git-conflict ((,class (:background ,diff-removed :box (:line-width 1 :color ,diff-removed-refined :style nil) :italic t))))))))
+       `(projtree-git-conflict ((,class (:background ,diff-removed :box (:line-width 1 :color ,diff-removed-refined :style nil) :italic t))))
+       ;;
+       ;; tab-bar-mode
+       ;;
+       `(tab-bar ((,class (:inherit default))))
+       `(mode-line ((,class (:inherit default :box (:line-width 1 :color ,modeline-active-border :style nil) ))))
+       ;; Face for selected tab.
+       `(tab-bar-tab ((,class (:foreground ,modeline-active-fg :background ,modeline-active-bg :box (:line-width 1 :color ,modeline-active-border)))))
+       ;; Face for non-selected tab.
+       `(tab-bar-tab-inactive ((,class (:foreground ,modeline-inactive-fg :background ,modeline-inactive-bg :box (:line-width 1 :color ,bg-on)))))))))
 
 
 (defun immaterial-linear-rgb-component (col)
