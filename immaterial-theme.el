@@ -895,7 +895,14 @@ NAME and VARIANT should be symbols."
        ;; Face for selected tab.
        `(tab-bar-tab ((,class (:foreground ,modeline-active-fg :background ,modeline-active-bg :box (:line-width 1 :color ,modeline-active-border)))))
        ;; Face for non-selected tab.
-       `(tab-bar-tab-inactive ((,class (:foreground ,modeline-inactive-fg :background ,modeline-inactive-bg :box (:line-width 1 :color ,bg-on)))))))))
+       `(tab-bar-tab-inactive ((,class (:foreground ,modeline-inactive-fg :background ,modeline-inactive-bg :box (:line-width 1 :color ,bg-on)))))
+       ;;
+       ;; dape
+       ;;
+       `(dape-breakpoint-face ((,class (:inherit warning) )))
+       `(dape-exception-description-face ((,class (:inherit error :italic t) )))
+       `(dape-repl-error-face ((,class (:inherit error :italic t) )))
+       ))))
 
 
 (defun immaterial-linear-rgb-component (col)
