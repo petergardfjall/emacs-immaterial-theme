@@ -902,6 +902,16 @@ NAME and VARIANT should be symbols."
        `(dape-breakpoint-face ((,class (:inherit warning) )))
        `(dape-exception-description-face ((,class (:inherit error :italic t) )))
        `(dape-repl-error-face ((,class (:inherit error :italic t) )))
+       ;;
+       ;; hydra
+       ;;
+       ;; Hydra heads that stay in the hydra.
+       `(hydra-face-red ((,class (:foreground ,prim :weight bold) )))
+       ;; Hydra heads that exit the hydra.
+       `(hydra-face-blue ((,class (:foreground ,sec :weight bold) )))
+       `(hydra-face-teal ((,class (:foreground ,tert :weight bold) )))
+       `(hydra-face-pink ((,class (:foreground ,warning :weight bold) )))
+       `(hydra-face-amaranth ((,class (:foreground ,error :weight bold) )))
        ))))
 
 
