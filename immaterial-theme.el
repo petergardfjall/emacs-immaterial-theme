@@ -1,12 +1,13 @@
-;;; immaterial-theme.el --- A flexible theme based on material design principles -*- lexical-binding: t -*-
+;;; immaterial-theme.el --- A family of themes loosely based on material colors -*- lexical-binding: t -*-
 
-;; Copyright (C) 2019-2020 Peter Gardfjäll
+;; Copyright (C) 2019-2025 Peter Gardfjäll
 
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.9.4
-;; Package-Requires: ((emacs "25"))
+;; Version: 0.10.0
+;; Package-Requires: ((emacs "29")(modus-themes "5.0.0"))
+;; Keywords: faces, theme
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
 ;; of this software and associated documentation files (the "Software"), to deal
@@ -34,80 +35,365 @@
 ;;   (load-theme 'immaterial-dark t)    ;; dark variant
 ;;   (load-theme 'immaterial-light t)   ;; light variant
 ;;
-;; Requirements: Emacs 25.
+;; Requirements: Emacs 29.
 ;;
 
 ;;; Code:
 
-(require 'cl-lib)
+(require 'modus-themes)
 
-(defface immaterial-small-face
-  '((t :height 0.95))
-  "Face that can be used via :inherit on faces that should have a smaller font size."
-  :group 'immaterial-faces)
+(defgroup immaterial-theme ()
+  "Immaterial themes.
+The `immaterial-theme' themes are built on top of the `modus-themes'."
+  :group 'faces
+  :group 'modus-themes
+  :link '(info-link "(immaterial-theme) Top")
+  :link '(info-link "(modus-themes) Top")
+  :prefix "immaterial-theme-"
+  :tag "Immaterial Themes")
 
-(defvar immaterial-color-override-alist
-  '(())
-  "Values provided here will override values in immaterial-color-alist.
-The material color tool https://material.io/resources/color/ can
-be helpful when constructing primary, secondary, tertiary color
-schemes.")
 
-(defvar immaterial-color-alist
-  '(("background-primary"    . ((dark . "#012027") (light . "#fcfcfb")))
-    ("background-off"        . ((dark . "#001b21") (light . "#f5f5f2")))
-    ("background-on"         . ((dark . "#01343f") (light . "#f5f2ea")))
-    ("foreground-primary"    . ((dark . "#dddddd") (light . "#333333")))
-    ("foreground-secondary"  . ((dark . "#c8c8c8") (light . "#484848")))
-    ("foreground-tertiary"   . ((dark . "#aaaaaa") (light . "#555555")))
-    ("primary"               . ((dark . "#b39ddb") (light . "#4527a0")))
-    ("primary-hi"            . ((dark . "#e6ceff") (light . "#000070")))
-    ("primary-lo"            . ((dark . "#836fa9") (light . "#7953d2")))
-    ("secondary"             . ((dark . "#c5e1a5") (light . "#295518")))
-    ("secondary-hi"          . ((dark . "#f8ffd7") (light . "#19350f")))
-    ("secondary-lo"          . ((dark . "#94af76") (light . "#4f7641")))
-    ("tertiary"              . ((dark . "#90caf9") (light . "#0d47a1")))
-    ("tertiary-hi"           . ((dark . "#c3fdff") (light . "#002171")))
-    ("tertiary-lo"           . ((dark . "#5d99c6") (light . "#5472d3")))
-    ;; colors to use for popup-like UI behavior such as `company-mode`and lsp-ui
-    ("popup-bg-border"       . ((dark . "#01586c") (light . "#d9d9bc")))
-    ("popup-bg-prim"         . ((dark . "#012830") (light . "#f8f8f4")))
-    ("popup-bg-on"           . ((dark . "#014453") (light . "#f1ede3")))
-    ("error"                 . ((dark . "#ef9a9a") (light . "#b00202")))
-    ("warning"               . ((dark . "#ff9800") (light . "#bf360c")))
-    ("match"                 . ((dark . "#ff9800") (light . "#bf360c")))
-    ("discrete"              . ((dark . "#848484") (light . "#757575")))
-    ("vertical-border"       . ((dark . "#001b21") (light . "#f8f8f4")))
-    ("cursor"                . ((dark . "#64d8cb") (light . "#64d8cb")))
-    ("modeline-active-fg"    . ((dark . "#ffffff") (light . "#ffffff")))
-    ("modeline-active-bg"    . ((dark . "#005662") (light . "#6a9a5e")))
-    ("modeline-active-border". ((dark . "#008295") (light . "#95dd84")))
-    ("modeline-inactive-fg"  . ((dark . "#848484") (light . "#757575")))
-    ("modeline-inactive-bg"  . ((dark . "#001017") (light . "#cfdfcb")))
-    ;; various task-specific colors
-    ("diff-added"            . ((dark . "#033521") (light . "#e6ffed")))
-    ("diff-added-refined"    . ((dark . "#175b2b") (light . "#acf2bd")))
-    ("diff-removed"          . ((dark . "#3b0f19") (light . "#ffebe9")))
-    ("diff-removed-refined"  . ((dark . "#8d2323") (light . "#ffc0c0")))
-    ("diff-changed"          . ((dark . "#082145") (light . "#e1f0fe")))
-    ("diff-changed-refined"  . ((dark . "#103d7f") (light . "#a8d3ff")))
-    "Defines the color palette for the different theme variants.
-It is a two-level association list with the first level keys
-being theme color elements and the second level associating a
-theme variant, such as dark or light, with a hex color value."))
+;; Common semantic color mappings for all immaterial theme variants.
+;;
+;; These mappings take the named color values that need to be defined by every
+;; immaterial theme variant and applies them to the semantic colors used by the
+;; `modus-themes'.
+(defconst immaterial-theme-common-palette
+  '(
+    ;; Graphs
 
-(defun immaterial--get-alist-color (color-alist color-name variant)
-  "Get the COLOR-NAME for a theme VARIANT registered in a COLOR-ALIST.
-If no such COLOR-NAME or VARIANT combination exists in
-COLOR-ALIST, nil is returned."
-  (cdr (assoc variant (cdr (assoc color-name color-alist)))))
+    (bg-graph-red-0     bg-red-intense)
+    (bg-graph-red-1     bg-red-subtle)
+    (bg-graph-green-0   bg-green-intense)
+    (bg-graph-green-1   bg-green-subtle)
+    (bg-graph-yellow-0  bg-yellow-intense)
+    (bg-graph-yellow-1  bg-yellow-subtle)
+    (bg-graph-blue-0    bg-blue-intense)
+    (bg-graph-blue-1    bg-blue-subtle)
+    (bg-graph-magenta-0 bg-magenta-intense)
+    (bg-graph-magenta-1 bg-magenta-subtle)
+    (bg-graph-cyan-0    bg-cyan-intense)
+    (bg-graph-cyan-1    bg-cyan-subtle)
 
-(defun immaterial-color (color-name variant)
-  "Retrieves the hex color value registered for a COLOR-NAME under a theme VARIANT.
-The overrides in `immaterial-color-override-alist' take precedence
-over the default ones defined in `immaterial-color-alist'."
-  (or (immaterial--get-alist-color immaterial-color-override-alist color-name variant)
-      (immaterial--get-alist-color immaterial-color-alist color-name variant)))
+    ;; Special purpose
+
+    (bg-completion       bg-selected) ;; Used for `modus-themes-completion-selected'.
+    (bg-hover            bg-active)
+    (bg-hover-secondary  bg-active)
+    (bg-hl-line          bg-active)
+    (bg-region           bg-active)
+    (fg-region           unspecified)
+
+    (modeline-err     red)            ;; Same as err.
+    (modeline-warning yellow-intense) ;; Same as warning
+    (modeline-info    accent-1)       ;; Same as info
+
+    (bg-tab-bar      bg-mode-line-inactive)
+    (bg-tab-current  bg-mode-line-active)
+    (bg-tab-other    bg-inactive)
+
+    ;; Paren match
+
+    (bg-paren-match       unspecified)
+    (bg-paren-expression  bg-selected) ;; When `show-paren-style' is set to 'expression.
+
+    ;; General mappings
+
+    (cursor warning)
+    (keybind warning)
+    (name accent-0)
+    (identifier accent-0)
+
+    (err red)
+    (warning yellow-intense)
+    (info accent-1)
+
+    (underline-err     err)
+    (underline-warning warning)
+    (underline-note    info)
+
+    (bg-prominent-err bg-red-intense)
+    (fg-prominent-err unspecified)
+    (bg-prominent-warning unspecified)
+    (fg-prominent-warning warning)
+    (bg-prominent-note unspecified)
+    (fg-prominent-note info)
+
+    ;; E.g. when param at point in a function is highlighted in echo area.
+    (bg-active-argument unspecified)
+    (fg-active-argument fg-prompt)
+    (bg-active-value unspecified)
+    (fg-active-value cyan-cooler)
+
+    ;; Code mappings
+
+    (builtin accent-0)
+    (comment fg-dim)
+    (constant accent-2)
+    (docstring fg-dim)
+    (fnname unspecified)
+    (fnname-call unspecified)
+    (keyword accent-0)
+    (preprocessor red-cooler)
+    (property unspecified)
+    (rx-backslash accent-3)
+    (rx-construct green-cooler)
+    (string accent-2)
+    (type unspecified)
+    (variable accent-1)
+    (variable-use unspecified)
+
+    ;; Accent mappings
+
+    (accent-0 magenta)
+    (accent-1 green)
+    (accent-2 blue)
+    (accent-3 magenta-intense)
+
+    ;; Completion mappings
+
+    (fg-completion-match-0 warning)
+    (fg-completion-match-1 warning)
+    (fg-completion-match-2 warning)
+    (fg-completion-match-3 warning)
+
+    ;; Date mappings
+
+    (date-common accent-1)
+    (date-deadline err)
+    (date-deadline-subtle warning)
+    (date-event fg-alt)
+    (date-holiday fg-dim)
+    (date-holiday-other fg-dim)
+    (date-range accent-1)
+    (date-scheduled fg-main)
+    (date-scheduled-subtle fg-main)
+    (date-weekday fg-alt)
+    (date-weekend fg-alt)
+
+    ;; Link mappings
+
+    (fg-link accent-2) ;; A link like a URL.
+    (bg-link unspecified)
+    (underline-link unspecified) ;; Underline link color.
+    (fg-link-symbolic fg-link)
+    (underline-link-symbolic bg-link)
+    (fg-link-visited fg-link)
+    (underline-link-visited underline-link)
+
+    ;; Mail mappings
+
+    (mail-cite-0 fg-dim)
+    (mail-cite-1 fg-dim)
+    (mail-cite-2 fg-dim)
+    (mail-cite-3 fg-dim)
+    (mail-part accent-1)
+    (mail-recipient accent-0)
+    (mail-subject accent-0)
+    (mail-other accent-0)
+
+    ;; Mark mappings
+
+    (bg-mark-delete bg-removed) ;; For example 'd'eleting a `dired' file.
+    (fg-mark-delete unspecified)
+    (bg-mark-select bg-added) ;; For example 'm'arking a `dired' file.
+    (fg-mark-select unspecified)
+    (bg-mark-other bg-changed)
+    (fg-mark-other unspecified)
+
+    ;; Prompt mappings
+
+    (fg-prompt warning)
+
+    ;; Prose mappings
+
+    (fg-prose-code accent-1)
+    (fg-prose-macro accent-1)
+    (fg-prose-verbatim accent-1)
+    (prose-done fg-dim)
+    (prose-tag accent-1) ;; org task priority.
+    (prose-todo accent-0)
+    (prose-metadata fg-dim)
+    (prose-metadata-value accent-1)
+    (prose-table accent-0)
+    (prose-table-formula accent-1)
+
+    ;; Rainbow mappings
+
+    (rainbow-0 fg-main)
+    (rainbow-1 magenta-intense)
+    (rainbow-2 cyan-intense)
+    (rainbow-3 red-warmer)
+    (rainbow-4 yellow-intense)
+    (rainbow-5 magenta-cooler)
+    (rainbow-6 green-intense)
+    (rainbow-7 blue-warmer)
+    (rainbow-8 magenta-warmer)
+
+    ;; Search mappings
+
+    (bg-search-current bg-green-intense) ;; Current item in `isearch'.
+    (bg-search-lazy    bg-green-intense) ;; Non-current items in an `isearch'.
+    (bg-search-static  bg-active) ;; Used for `match' face and similar.
+    (bg-search-replace bg-red-intense)    ;; Highlight to-be-replaced item.
+
+    ;; Used for capture groups in `isearch-forward-regexp'.
+    (bg-search-rx-group-0 bg-green-subtle)
+    (bg-search-rx-group-1 bg-yellow-subtle)
+    (bg-search-rx-group-2 bg-red-subtle)
+    (bg-search-rx-group-3 unspecified)
+
+    ;; Heading mappings
+
+    (fg-heading-0 fg-alt)
+    (fg-heading-1 fg-alt)
+    (fg-heading-2 fg-alt)
+    (fg-heading-3 fg-alt)
+    (fg-heading-4 fg-alt)
+    (fg-heading-5 fg-alt)
+    (fg-heading-6 fg-alt)
+    (fg-heading-7 fg-alt)
+    (fg-heading-8 fg-alt)
+
+    ;; Diff
+    (bg-diff-context    bg-main) ;; The surrounding context lines in diffs.
+    )
+  "Semantic color mappings applicable for all immaterial theme variants.")
+
+;; Defines semantic color mappings common to all immaterial variants.
+;; Based on `modus-themes-common-palette-mappings'.
+(defconst immaterial-theme-common-palette-mappings
+  (append
+   ;; Overrides to 'modus-themes-common-palette-mappings' go into this list.
+   '((fg-paren-match warning))
+   modus-themes-common-palette-mappings)
+  "Common palette mappings for the `immaterial-theme' themes.")
+
+
+;; Face definitions to override the ones in `modus-themes-faces'.
+(defconst immaterial-theme-custom-faces
+  '(
+    '(button ((t :underline nil)))
+    `(dape-breakpoint-face ((,c (:inherit warning) )))
+    `(dape-exception-description-face ((,c (:inherit err :italic t) )))
+    `(dape-repl-error-face ((,c (:inherit err :italic t) )))
+    ;; Add code colorization to pre blocks in markdown.
+    `(markdown-pre-face ((t (:foreground ,fg-prose-code))))
+    ;; Color of icons shown on minibuffer completions.
+    `(nerd-icons-completion-dir-face ((,c :foreground ,fg-main)))
+    ;; Make visited hunk in magit stand out more.
+    `(magit-diff-hunk-heading ((t :background ,bg-inactive :foreground ,fg-dim))) ;; Not visited hunk.
+    `(magit-diff-hunk-heading-highlight ((,c :weight bold :foreground ,accent-0))) ;; Visited hunk.
+    `(magit-diff-added ((,c :background ,bg-added-faint :foreground ,fg-dim))) ;; Not visited hunk.
+    `(magit-diff-added-highlight ((,c :background ,bg-added :foreground ,fg-added))) ;; Visited hunk.
+    `(magit-diff-removed ((,c :background ,bg-removed-faint :foreground ,fg-dim))) ;; Not visited hunk.
+    `(magit-diff-removed-highlight ((,c :background ,bg-removed :foreground ,fg-removed))) ;; Visited hunk.
+    ;; Date selection when selecing a date in `org-timestamp'.
+    `(org-date-selected ((,c (:foreground ,fg-main :background ,bg-selected :box (:line-width -1 :color ,bg-added-refine)))))
+    ;; Projtree.
+    `(projtree-dir ((t :inherit dired-directory)))
+    `(projtree-git-modified ((t :background ,bg-changed :box (:line-width 1 :color ,bg-changed-fringe :style nil))))
+    `(projtree-git-added ((t :background ,bg-added :box (:line-width 1 :color ,bg-added-fringe :style nil))))
+    `(projtree-git-conflict ((t :background ,bg-removed :box (:line-width 1 :color ,bg-removed-fringe :style nil) :italic t)))
+    `(projtree-highlight ((t :inherit region)))
+    ;; Highlight to use for value at point when a code template is inserted.
+    `(yas-field-highlight-face ((,c :background ,bg-region)))
+    )
+  "Face definitions to override the ones in `modus-themes-faces'.")
+
+
+(defun immaterial-color (color shade)
+  "Get a material COLOR of a given SHADE as a hex color.
+For example COLOR can be 'red and shade can be 400 for a value of #EF5350."
+  (unless (and (symbolp color))
+    (error "COLOR must be given as symbol"))
+  (unless (or (stringp shade))
+    (error "SHADE must be given as string"))
+  (cdr (assoc shade (alist-get color immaterial-colors))))
+
+
+(defconst immaterial-colors
+  '((red .         (("50"   . "#FFEBEE") ("100"  . "#FFCDD2") ("200"  . "#EF9A9A")
+                    ("300"  . "#E57373") ("400"  . "#EF5350") ("500"  . "#F44336")
+                    ("600"  . "#E53935") ("700"  . "#D32F2F") ("800"  . "#C62828")
+                    ("900"  . "#B71C1C") ("A100" . "#FF8A80") ("A200" . "#FF5252")
+                    ("A400" . "#FF1744") ("A700" . "#D50000")))
+    (pink .        (("50"   . "#FCE4EC") ("100"  . "#F8BBD0") ("200"  . "#F48FB1")
+                    ("300"  . "#F06292") ("400"  . "#EC407A") ("500"  . "#E91E63")
+                    ("600"  . "#D81B60") ("700"  . "#C2185B") ("800"  . "#AD1457")
+                    ("900"  . "#880E4F") ("A100" . "#FF80AB") ("A200" . "#FF4081")
+                    ("A400" . "#F50057") ("A700" . "#C51162")))
+    (purple .      (("50"   . "#F3E5F5") ("100"  . "#E1BEE7") ("200"  . "#CE93D8")
+                    ("300"  . "#BA68C8") ("400"  . "#AB47BC") ("500"  . "#9C27B0")
+                    ("600"  . "#8E24AA") ("700"  . "#7B1FA2") ("800"  . "#6A1B9A")
+                    ("900"  . "#4A148C") ("A100" . "#EA80FC") ("A200" . "#E040FB")
+                    ("A400" . "#D500F9") ("A700" . "#AA00FF")))
+    (deep-purple . (("50"   . "#EDE7F6") ("100"  . "#D1C4E9") ("200"  . "#B39DDB")
+                    ("300"  . "#9575CD") ("400"  . "#7E57C2") ("500"  . "#673AB7")
+                    ("600"  . "#5E35B1") ("700"  . "#512DA8") ("800"  . "#4527A0")
+                    ("900"  . "#311B92") ("A100" . "#B388FF") ("A200" . "#7C4DFF")
+                    ("A400" . "#651FFF") ("A700" . "#6200EA")))
+    (indigo .      (("50"   . "#E8EAF6") ("100"  . "#C5CAE9") ("200"  . "#9FA8DA")
+                    ("300"  . "#7986CB") ("400"  . "#5C6BC0") ("500"  . "#3F51B5")
+                    ("600"  . "#3949AB") ("700"  . "#303F9F") ("800"  . "#283593")
+                    ("900"  . "#1A237E") ("A100" . "#8C9EFF") ("A200" . "#536DFE")
+                    ("A400" . "#3D5AFE") ("A700" . "#304FFE")))
+    (blue .        (("50"  . "#E3F2FD")  ("100"  . "#BBDEFB") ("200"  . "#90CAF9")
+                    ("300"  . "#64B5F6") ("400"  . "#42A5F5") ("500"  . "#2196F3")
+                    ("600"  . "#1E88E5") ("700"  . "#1976D2") ("800"  . "#1565C0")
+                    ("900"  . "#0D47A1") ("A100" . "#82B1FF") ("A200" . "#448AFF")
+                    ("A400" . "#2979FF") ("A700" . "#2962FF")))
+    (light-blue .  (("50"   . "#E1F5FE") ("100"  . "#B3E5FC") ("200"  . "#81D4FA")
+                    ("300"  . "#4FC3F7") ("400"  . "#29B6F6") ("500"  . "#03A9F4")
+                    ("600"  . "#039BE5") ("700"  . "#0288D1") ("800"  . "#0277BD")
+                    ("900"  . "#01579B") ("A100" . "#80D8FF") ("A200" . "#40C4FF")
+                    ("A400" . "#00B0FF") ("A700" . "#0091EA")))
+    (cyan .        (("50"   . "#E0F7FA") ("100"  . "#B2EBF2") ("200"  . "#80DEEA")
+                    ("300"  . "#4DD0E1") ("400"  . "#26C6DA") ("500"  . "#00BCD4")
+                    ("600"  . "#00ACC1") ("700"  . "#0097A7") ("800"  . "#00838F")
+                    ("900"  . "#006064") ("A100" . "#84FFFF") ("A200" . "#18FFFF")
+                    ("A400" . "#00E5FF") ("A700" . "#00B8D4")))
+    (teal .        (("50"   . "#E0F2F1") ("100"  . "#B2DFDB") ("200"  . "#80CBC4")
+                    ("300"  . "#4DB6AC") ("400"  . "#26A69A") ("500"  . "#009688")
+                    ("600"  . "#00897B") ("700"  . "#00796B") ("800"  . "#00695C")
+                    ("900"  . "#004D40") ("A100" . "#A7FFEB") ("A200" . "#64FFDA")
+                    ("A400" . "#1DE9B6") ("A700" . "#00BFA5")))
+    (green .       (("50"   . "#E8F5E9") ("100" . "#C8E6C9") ("200"  . "#A5D6A7")
+                    ("300"  . "#81C784") ("400"  . "#66BB6A") ("500"  . "#4CAF50")
+                    ("600"  . "#43A047") ("700"  . "#388E3C") ("800"  . "#2E7D32")
+                    ("900"  . "#1B5E20") ("A100" . "#B9F6CA") ("A200" . "#69F0AE")
+                    ("A400" . "#00E676") ("A700" . "#00C853")))
+    (light-green . (("50"   . "#F1F8E9") ("100"  . "#DCEDC8") ("200"  . "#C5E1A5")
+                    ("300"  . "#AED581") ("400"  . "#9CCC65") ("500"  . "#8BC34A")
+                    ("600"  . "#7CB342") ("700"  . "#689F38") ("800"  . "#558B2F")
+                    ("900"  . "#33691E") ("A100" . "#CCFF90") ("A200" . "#B2FF59")
+                    ("A400" . "#76FF03") ("A700" . "#64DD17")))
+    (lime .        (("50"   . "#F9FBE7") ("100"  . "#F0F4C3") ("200"  . "#E6EE9C")
+                    ("300"  . "#DCE775") ("400"  . "#D4E157") ("500"  . "#CDDC39")
+                    ("600"  . "#C0CA33") ("700"  . "#AFB42B") ("800"  . "#9E9D24")
+                    ("900"  . "#827717") ("A100" . "#F4FF81") ("A200" . "#EEFF41")
+                    ("A400" . "#C6FF00") ("A700" . "#AEEA00")))
+    (yellow .      (("50"   . "#FFFDE7") ("100"  . "#FFF9C4") ("200"  . "#FFF59D")
+                    ("300"  . "#FFF176") ("400"  . "#FFEE58") ("500"  . "#FFEB3B")
+                    ("600"  . "#FDD835") ("700"  . "#FBC02D") ("800"  . "#F9A825")
+                    ("900"  . "#F57F17") ("A100" . "#FFFF8D") ("A200" . "#FFFF00")
+                    ("A400" . "#FFEA00") ("A700" . "#FFD600")))
+    (amber .       (("50"   . "#FFF8E1") ("100"  . "#FFECB3") ("200"  . "#FFE082")
+                    ("300"  . "#FFD54F") ("400"  . "#FFCA28") ("500"  . "#FFC107")
+                    ("600"  . "#FFB300") ("700"  . "#FFA000") ("800"  . "#FF8F00")
+                    ("900"  . "#FF6F00") ("A100" . "#FFE57F") ("A200" . "#FFD740")
+                    ("A400" . "#FFC400") ("A700" . "#FFAB00")))
+    (orange .      (("50"   . "#FFF3E0") ("100"  . "#FFE0B2") ("200"  . "#FFCC80")
+                    ("300"  . "#FFB347") ("400"  . "#FFA726") ("500"  . "#FF9800")
+                    ("600"  . "#FB8C00") ("700"  . "#F57C00") ("800"  . "#EF6C00")
+                    ("900"  . "#E65100") ("A100" . "#FFD180") ("A200" . "#FFAB40")
+                    ("A400" . "#FF9100") ("A700" . "#FF6D00")))
+    (deep-orange . (("50"   . "#FBE9E7") ("100"  . "#FFCCBC") ("200"  . "#FFAB91")
+                    ("300"  . "#FF8A65") ("400"  . "#FF7043") ("500"  . "#FF5722")
+                    ("600"  . "#F4511E") ("700"  . "#E64A19") ("800"  . "#D84315")
+                    ("900"  . "#BF360C") ("A100" . "#FF9E80") ("A200" . "#FF6E40")
+                    ("A400" . "#FF3D00") ("A700" . "#DD2C00")))))
+
 
 (defun immaterial-color-lighten (hex-color percent)
   "Determines a brighter/darker shade of a hex color.
@@ -127,793 +413,6 @@ negative)."
 			    (list percent-unsigned))))
 	     (list 2)))))
 
-(defun immaterial-create-theme (name variant)
-  "Initialize immaterial-theme for the given NAME and VARIANT.
-NAME and VARIANT should be symbols."
-  (cl-flet ( (color-get (color-name) (immaterial-color color-name variant)) )
-    (let ((class '((class color) (min-colors 89)))
-	  (fg1                  (color-get "foreground-primary"))
-	  (fg2                  (color-get "foreground-secondary"))
-	  (fg3                  (color-get "foreground-tertiary"))
-	  (bg-prim              (color-get "background-primary"))
-	  (bg-on                (color-get "background-on"))
-	  (bg-off               (color-get "background-off"))
-	  (prim                 (color-get "primary"))
-	  (prim-hi              (color-get "primary-hi"))
-	  (prim-lo              (color-get "primary-lo"))
-	  (sec                  (color-get "secondary"))
-	  (sec-hi               (color-get "secondary-hi"))
-	  (sec-lo               (color-get "secondary-lo"))
-	  (tert                 (color-get "tertiary"))
-	  (tert-hi              (color-get "tertiary-hi"))
-	  (tert-lo              (color-get "tertiary-lo"))
-	  (discrete             (color-get "discrete"))
-
-	  (popup-bg-border      (color-get "popup-bg-border"))
-	  (popup-bg-prim        (color-get "popup-bg-prim"))
-	  (popup-bg-on          (color-get "popup-bg-on"))
-
-	  (keyword              (color-get "primary"))
-	  (builtin              (color-get "primary"))
-	  (const                (color-get "primary"))
-	  (type                 (color-get "foreground-primary"))
-	  (var                  (color-get "secondary"))
-	  (func                 (color-get "foreground-primary"))
-	  (str                  (color-get "tertiary"))
-	  (comment              (color-get "discrete"))
-	  (negation             (color-get "warning"))
-	  (warning              (color-get "warning"))
-	  (match                (color-get "match"))
-	  (error                (color-get "error"))
-	  (cursor               (color-get "cursor"))
-
-	  (v-border               (color-get "vertical-border"))
-	  (modeline-active-bg     (color-get "modeline-active-bg"))
-	  (modeline-active-border (color-get "modeline-active-border"))
-	  (modeline-active-fg     (color-get "modeline-active-fg"))
-	  (modeline-inactive-bg   (color-get "modeline-inactive-bg"))
-	  (modeline-inactive-fg   (color-get "modeline-inactive-fg"))
-
-	  (diff-added           (color-get "diff-added"))
-	  (diff-added-refined   (color-get "diff-added-refined"))
-	  (diff-changed         (color-get "diff-changed"))
-	  (diff-changed-refined (color-get "diff-changed-refined"))
-	  (diff-removed         (color-get "diff-removed"))
-	  (diff-removed-refined (color-get "diff-removed-refined")))
-
-      (custom-theme-set-variables
-       name
-       ;; note: this color vector controls the appearance of shell mode. It is
-       ;; set up to mimic the term-color-* faces. ["black" "red3" "green3"
-       ;; "yellow3" "blue2" "magenta3" "cyan3" "gray90"]
-       `(ansi-color-names-vector (vector ,fg1 ,sec ,prim ,warning ,sec-lo ,tert ,error ,bg-prim))
-       ;; not sure why this isn't a custom face in lsp-ui-doc
-       `(lsp-ui-doc-border ,popup-bg-border))
-
-      (custom-theme-set-faces
-       name
-       `(default ((,class (:background ,bg-prim :foreground ,fg1))))
-       `(shadow ((,class (:foreground ,discrete))))
-       `(match ((,class (:foreground ,match :weight semi-bold))))
-
-       ;;
-       ;; Syntax higlighting/font-lock minor mode. (syntax rules are provided by
-       ;; the particular major-mode).
-       ;;
-
-       ;; for a keyword with special syntactic significance, like ‘if’.
-       `(font-lock-keyword-face ((,class (:foreground ,keyword))))
-       ;; for the names of built-in functions.
-       `(font-lock-builtin-face ((,class (:foreground ,builtin))))
-       ;; for the names of constants, like ‘NULL’ in C.
-       `(font-lock-constant-face ((,class (:foreground ,const))))
-       ;; for string literals.
-       `(font-lock-string-face ((,class (:foreground ,str))))
-
-       ;; for the names of user-defined data types.
-       `(font-lock-type-face ((,class (:foreground ,type))))
-       ;; for the name of a variable being defined or declared.
-       `(font-lock-variable-name-face ((,class (:foreground ,var))))
-       ;; for the name of a function being defined or declared.
-       `(font-lock-function-name-face ((,class (:foreground ,func ))))
-
-       ;; for comments
-       `(font-lock-comment-face ((,class (:foreground ,comment :slant italic))))
-       ;; for comment delimiters, like ‘/*’ and ‘*/’ in C.
-       `(font-lock-comment-delimiter-face ((,class (:foreground ,comment :slant italic))))
-       ;; for documentation strings in the code.
-       `(font-lock-doc-face ((,class (:foreground ,comment :slant italic))))
-
-       ;; for easily-overlooked negation characters.
-       `(font-lock-negation-char-face ((,class (:foreground ,negation))))
-       ;; for a construct that is peculiar, or that greatly changes the meaning of
-       ;; other text, like ‘;;;###autoload’ in Emacs Lisp and ‘#error’ in C.
-       `(font-lock-warning-face ((,class (:foreground ,warning :background ,bg-on))))
-
-       ;;
-       ;; Buttons and links
-       ;;
-       `(button ((,class (:foreground ,tert))))
-       ;; face for unvisited links
-       `(link ((,class (:foreground ,tert))))
-       `(link-visited ((,class (:foreground ,tert))))
-
-       ;;
-       ;; region selection
-       ;;
-       `(region ((,class (:background ,bg-on))))
-       ;; used for secondary selections and selected date/time in org-mode
-       `(secondary-selection ((,class (:background ,bg-on :foreground ,sec-lo))))
-       ;; face used for text highlighting in various contexts (e.g. ivy search)
-       `(highlight ((,class (:background ,bg-on))))
-       ;; hl-line-mode background
-       `(hl-line ((,class (:background ,bg-on :extend t))))
-       ;; linum-mode column
-       `(linum ((t (:foreground ,discrete :background ,bg-prim :height 0.8 :weight normal))))
-       ;; display-line-numbers-mode (emacs26+)
-       `(line-number ((t (:foreground ,discrete :background ,bg-off :height 0.8 :weight normal))))
-       `(line-number-current-line ((t (:foreground ,fg1 :background ,bg-off :height 0.8 :weight normal))))
-       `(fringe ((,class (:background ,bg-off))))
-       `(cursor ((,class (:background ,cursor))))
-       ;; show-paren-mode: how to highlight matching/mismatching parenthesis
-       `(show-paren-match ((,class (:weight bold :background ,bg-on :foreground ,warning))))
-       `(show-paren-mismatch ((,class (:background ,error))))
-       ;; current match of an on-going incremental search (isearch-forward)
-       `(isearch ((,class (:inherit match))))
-       ;; other matches for the search string that are visible on display
-       `(lazy-highlight ((,class (:inherit isearch))))
-       ;; for highlighting failed part in isearch echo-area message.
-       `(isearch-fail ((,class (:foreground ,error :underline t))))
-       ;;
-       ;; mode-line
-       ;;
-       ;; mode-line of the active buffer (e.g. in case of split window)
-       `(mode-line ((,class (:inherit default :background ,modeline-active-bg :foreground ,modeline-active-fg :box (:line-width 1 :color ,modeline-active-border :style nil) ))))
-       ;; mode-line of the inactive buffer (e.g. in case of split window)
-       `(mode-line-inactive  ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
-       `(mode-line-buffer-id ((,class (:weight bold))))
-       ;;
-       ;; buffer menu buffer (C-x C-b)
-       ;;
-       ;; face for buffer names in the buffer menu
-       `(buffer-menu-buffer ((,class (:foreground ,sec))))
-       ;;
-       ;; powerline
-       ;;
-       ;; for active buffer in the frame
-       `(powerline-active1 ((,class (:background ,modeline-active-bg :foreground ,modeline-active-fg))))
-       `(powerline-active2 ((,class (:background ,modeline-active-bg :foreground ,modeline-active-fg))))
-       ;; for inactive buffers in the frame
-       `(powerline-inactive1 ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
-       `(powerline-inactive2 ((,class (:background ,modeline-inactive-bg :foreground ,modeline-inactive-fg))))
-
-       ;; the vertical line that separates windows in a frame
-       `(vertical-border ((,class (:foreground ,bg-off))))
-       `(minibuffer-prompt ((,class (:foreground ,warning :weight semi-bold))))
-       `(default-italic ((,class (:italic t))))
-
-       `(gnus-header-content ((,class (:foreground ,prim))))
-       `(gnus-header-from ((,class (:foreground ,sec-lo))))
-       `(gnus-header-name ((,class (:foreground ,sec))))
-       `(gnus-header-subject ((,class (:foreground ,sec-lo :bold t))))
-       `(warning ((,class (:foreground ,warning))))
-       `(ac-completion-face ((,class (:underline t :foreground ,prim))))
-       `(info-quoted-name ((,class (:foreground ,prim-hi))))
-       `(info-string ((,class (:foreground ,prim))))
-       `(icompletep-determined ((,class :foreground ,prim-hi)))
-       ;;
-       ;; undo-tree
-       ;;
-       `(undo-tree-visualizer-current-face ((,class :foreground ,prim-hi)))
-       `(undo-tree-visualizer-default-face ((,class :foreground ,fg2)))
-       `(undo-tree-visualizer-unmodified-face ((,class :foreground ,sec-lo)))
-       `(undo-tree-visualizer-register-face ((,class :foreground ,sec)))
-       ;;
-       ;; vundo
-       ;;
-       `(vundo-default ((,class :foreground ,sec-lo)))
-       `(vundo-node ((,class :foreground ,sec-lo)))
-       `(vundo-stem ((,class :foreground ,sec-lo)))
-       `(vundo-branch-stem ((,class :foreground ,sec-lo)))
-       `(vundo-branch-stem ((,class :foreground ,fg1)))
-       ;; Face for points in the undo tree where the file was saved.
-       `(vundo-saved ((,class :foreground ,sec)))
-       ;; Face for most recent save point in the undo tree.
-       `(vundo-last-saved ((,class :foreground ,sec :weight bold)))
-       ;; Face for currently selected point in undo tree.
-       `(vundo-highlight ((,class :foreground ,warning)))
-
-
-       `(slime-repl-inputed-output-face ((,class (:foreground ,sec))))
-       `(trailing-whitespace ((,class :background ,warning)))
-
-       ;;
-       ;; Faces used by `term', `ansi-term', `vterm' and `shell'.
-       ;;
-       ;; Face used to highlight prompts.
-       `(comint-highlight-prompt ((,class (:foreground ,warning :weight semi-bold))))
-       ;; Face used to render different terminal color codes.
-       `(ansi-color-black ((,class (:foreground ,bg-prim))))
-       `(ansi-color-bright-black ((,class (:foreground ,bg-on))))
-       `(ansi-color-white ((,class (:foreground ,fg1))))
-       `(ansi-color-bright-white ((,class (:foreground ,fg2))))
-       ;; Red is used for archives (zip, tar.gz, deb).
-       `(ansi-color-red ((,class (:foreground ,error))))
-       `(ansi-color-bright-red ((,class (:foreground ,error))))
-       ;; Green is used for executables.
-       `(ansi-color-green ((,class (:foreground ,sec))))
-       `(ansi-color-bright-green ((,class (:foreground ,sec-hi))))
-       ;; Blue is used for directories.
-       `(ansi-color-blue ((,class (:foreground ,tert))))
-       `(ansi-color-bright-blue ((,class (:foreground ,tert-hi))))
-       ;; Cyan is used for symlinks.
-       `(ansi-color-cyan ((,class (:foreground ,cursor))))
-       `(ansi-color-bright-cyan ((,class (:foreground ,cursor))))
-       ;; Yellow is used for devices.
-       `(ansi-color-yellow ((,class (:foreground ,warning))))
-       `(ansi-color-bright-yellow ((,class (:foreground ,warning))))
-       ;; Magenta is used for image files.
-       `(ansi-color-magenta ((,class (:foreground ,prim))))
-       `(ansi-color-bright-magenta ((,class (:foreground ,prim-hi))))
-       ;;
-       ;; Faces used by `eshell'.
-       ;;
-       `(eshell-ls-archive ((,class (:inherit ansi-color-red))))
-       `(eshell-ls-backup ((,class (:inherit discrete))))
-       `(eshell-ls-clutter ((,class (:inherit ansi-color-red))))
-       `(eshell-ls-directory ((,class (:inherit ansi-color-blue))))
-       `(eshell-ls-executable ((,class (:inherit ansi-color-green))))
-       `(eshell-ls-missing ((,class (:inherit ansi-color-red))))
-       `(eshell-ls-product ((,class (:inherit ansi-color-ellow))))
-       `(eshell-ls-special ((,class (:inherit ansi-color-yellow))))
-       `(eshell-ls-symlink ((,class (:inherit ansi-color-cyan))))
-       `(eshell-ls-unreadable ((,class (:inherit ansi-color-red))))
-       `(eshell-prompt ((,class (:inherit comint-highlight-prompt))))
-
-       ;;
-       ;; company -- "complete any" completion engine
-       ;;
-       ;; Face used for the common part of completions in the echo area (appears
-       ;; to only be used with the echo area frontend).
-       `(company-echo-common ((,class (:inherit match))))
-       ;; scrollbar style in company tooltip
-       `(company-tooltip-scrollbar-track ((,class (:background ,popup-bg-on ))))
-       `(company-tooltip-scrollbar-thumb ((,class (:background ,popup-bg-border))))
-       ;; ;; general style of tooltip popup candidate list
-       `(company-tooltip ((,class (:foreground ,discrete :background ,popup-bg-prim))))
-       ;; ;; annotation appearance (right-hand side text; could be the signature of a function)
-       `(company-tooltip-annotation ((,class (:foreground ,sec :italic t))))
-       ;; the style to use for showing the common matched search prefix in
-       ;; non-selected candidates
-       `(company-tooltip-common ((,class (:inherit match :bold nil))))
-       ;; the style to use for showing the common matched search prefix in the *selected* candidate
-       `(company-tooltip-common-selection ((,class (:inherit match :bold t))))
-       ;; style to use to highlight the *selected* candidate
-       `(company-tooltip-selection ((,class (:foreground ,fg1 :background ,popup-bg-on))))
-       ;; annotation (i.e. RHS) appearance for the *selected* item in the completion list
-       `(company-tooltip-annotation-selection ((,class (:inherit company-tooltip-annotation :bold nil))))
-       ;; style to use for candidate over which mouse pointer is hovering
-       `(company-tooltip-mouse ((,class (:inherit highlight))))
-       ;; when using `company-search-mode` this is the face to use for the
-       ;; matches of the entered search phrase
-       `(company-tooltip-search ((,class (:inherit match))))
-       ;; same as above but for the *selected* candidate
-       `(company-tooltip-search-selection ((,class (:inherit company-tooltip-selection))))
-
-       ;;
-       ;; corfu - completion-at-point UI
-       ;;
-       ;; background and foreground color to use for popup
-       `(corfu-default ((,class (:background ,popup-bg-prim :foreground ,discrete))))
-       ;; background color is used for the thin border around the popup
-       `(corfu-border ((,class (:background ,popup-bg-border))))
-       ;; face used to highlight the currently selected candidate
-       `(corfu-current ((,class (:background ,popup-bg-on :foreground ,fg1))))
-       ;; background color is used for scrollbar
-       `(corfu-bar ((,class (:background ,popup-bg-border))))
-
-       ;;
-       ;; sh-mode
-       ;;
-       `(sh-heredoc ((,class (:foreground nil :inherit font-lock-string-face :weight normal))))
-       `(sh-quoted-exec ((,class (:foreground nil :inherit font-lock-function-name-face))))
-       ;;
-       ;; neotree
-       ;;
-       `(neo-dir-link-face ((,class (:foreground ,prim :inherit bold))))
-       `(neo-expand-btn-face ((,class (:foreground ,fg1))))
-       `(neo-file-link-face ((,class (:foreground ,fg1))))
-       `(neo-root-dir-face ((,class (:foreground ,sec-lo :inherit bold))))
-       ;;
-       ;; markdown-mode
-       ;;
-       ;; face to use for leading #:s
-       `(markdown-header-delimiter-face ((,class (:foreground ,prim :weight bold))))
-       `(markdown-header-face-1 ((,class (:foreground ,prim :weight bold))))
-       `(markdown-header-face-2 ((,class (:foreground ,prim :weight bold))))
-       `(markdown-header-face-3 ((,class (:foreground ,prim :weight bold))))
-       `(markdown-header-face-4 ((,class (:foreground ,prim :weight bold))))
-       `(markdown-header-face-5 ((,class (:foreground ,prim :weight bold))))
-       `(markdown-header-face-6 ((,class (:foreground ,prim :weight bold))))
-       `(markdown-code-face ((,class (:foreground ,sec))))
-       `(markdown-table-face ((,class (:foreground ,sec))))
-       `(markdown-list-face ((,class (:foreground ,sec))))
-       `(markdown-link-face ((,class (:foreground ,fg1))))
-       `(markdown-reference-face ((,class (:foreground ,tert))))
-       `(markdown-blockquote-face ((,class (:inherit font-lock-doc-face))))
-       `(markdown-html-tag-face ((,class (:foreground ,sec))))
-       `(markdown-url-face ((,class (:foreground ,tert))))
-       `(markdown-plain-url-face ((,class (:foreground ,tert))))
-
-       ;;
-       ;; adoc-mode
-       ;;
-       `(adoc-gen-face ((,class (:foreground ,prim))))
-       `(adoc-title-face ((,class (:foreground ,prim :weight bold))))
-       `(adoc-title-0-face ((,class (:foreground ,prim :weight bold))))
-       `(adoc-title-1-face ((,class (:foreground ,prim :weight bold))))
-       `(adoc-title-2-face ((,class (:foreground ,prim :weight bold))))
-       `(adoc-title-3-face ((,class (:foreground ,prim :weight bold))))
-       `(adoc-title-4-face ((,class (:foreground ,prim :weight bold))))
-       `(adoc-title-4-face ((,class (:foreground ,prim :weight bold))))
-       `(adoc-comment-face ((,class (:foreground ,comment))))
-       `(adoc-meta-face ((,class (:foreground ,fg3))))
-       `(adoc-meta-hide-face ((,class (:inherit adoc-meta-face))))
-       `(adoc-attribute-face ((,class (:inherit adoc-meta-face))))
-       `(adoc-secondary-text-face ((,class (:inherit adoc-meta-face))))
-       ;; Used for code blocks.
-       `(adoc-code-face ((,class (:foreground ,sec))))
-       `(adoc-preprocessor-face ((,class (:foreground ,warning))))
-       `(adoc-command-face ((,class (:foreground ,warning))))
-       ;; An replacement macro such as "{doctitle}".
-       `(adoc-replacement-face ((,class (:foreground ,warning))))
-       ;; Used for [WARNING], [CAUTION], etc
-       `(adoc-complex-replacement-face ((,class (:foreground ,warning))))
-       `(adoc-bold-face ((,class (:weight bold))))
-       `(adoc-emphasis-face ((,class (:slant italic))))
-       ;; The LINK part of "PATH[LINK]" and "<<LINK>>".
-       `(adoc-reference-face ((,class (:foreground ,tert))))
-       ;; The PATH part of "PATH[LINK]".
-       `(adoc-internal-reference-face ((,class (:foreground ,tert))))
-       `(adoc-anchor-face ((,class (:inherit adoc-meta-face :underline t))))
-       `(adoc-list-face ((,class (:foreground ,sec))))
-       `(adoc-table-face ((,class (:foreground ,sec))))
-       ;; Used for text within backticks.
-       `(adoc-verbatim-face ((,class (:foreground ,sec))))
-       `(adoc-typewriter-face ((,class (:foreground ,sec))))
-
-       ;;
-       ;; treemacs
-       ;;
-       `(treemacs-root-face ((,class (:foreground ,sec-lo :inherit bold))))
-       `(treemacs-directory-face ((,class (:foreground ,sec-lo))))
-       `(treemacs-file-face ((,class (:inherit immaterial-small-face))))
-       `(treemacs-term-node-face ((,class (:foreground ,sec-lo :weight bold))))
-       `(treemacs-git-modified-face ((,class (:background ,diff-changed :box (:line-width 1 :color ,diff-changed-refined :style nil)))))
-       `(treemacs-git-added-face ((,class (:background ,diff-added :box (:line-width 1 :color ,diff-added-refined :style nil)))))
-       `(treemacs-git-renamed-face ((,class (:background ,diff-changed :box (:line-width 1 :color ,diff-changed-refined :style nil) :italic t))))
-       `(treemacs-git-ignored-face ((,class (:foreground ,discrete))))
-       `(treemacs-git-untracked-face ((,class (:foreground ,discrete))))
-       `(treemacs-git-conflict-face ((,class (:background ,diff-removed :box (:line-width 1 :color ,diff-removed-refined :style nil) :italic t))))
-
-       ;;
-       ;; lsp-ui
-       ;;
-       ;; ui-doc popup
-       `(lsp-ui-doc-background ((,class (:background ,popup-bg-prim))))
-
-       ;; TODO: what's this?
-       ;; `(lsp-face-highlight-textual ((,class (:inherit highlight :bold t :foreground "red"))))
-
-       ;;
-       ;; lsp-ui-peek
-       ;;
-       ;; face to use for the file being peeked (to the left)
-       `(lsp-ui-peek-peek ((,class (:background ,popup-bg-prim))))
-       ;; ;; face to use for the peek file listing (to the right)
-       `(lsp-ui-peek-list ((,class (:background ,popup-bg-prim))))
-       ;; face for current selection in peek file listing (to the right). note:
-       ;; only background face attribute appears to work.
-       `(lsp-ui-peek-selection ((,class (:background ,popup-bg-on))))
-       ;; face for file names in file listing (to the right)
-       `(lsp-ui-peek-filename ((,class (:foreground ,discrete))))
-       ;; face for the type/object being peeked at in listing to the right
-       `(lsp-ui-peek-highlight ((,class (:foreground ,warning :bold t))))
-       ;; face for line numbers in listing to the right
-       `(lsp-ui-peek-line-number ((,class (:foreground ,discrete))))
-       ;; face for header line above entire peek frame
-       `(lsp-ui-peek-header ((,class (:foreground ,discrete :background ,popup-bg-prim :weight semi-bold  :overline ,popup-bg-border))))
-       ;; face for footer line below entire peek frame
-       `(lsp-ui-peek-footer ((,class (:background ,popup-bg-prim))))
-
-       ;;
-       ;; ido
-       ;;
-       `(ido-first-match ((,class (:weight bold))))
-       `(ido-only-match ((,class (:weight bold))))
-       `(ido-subdir ((,class (:foreground ,sec-lo))))
-
-       ;;
-       ;; consult
-       ;;
-       ;; face used if async process (e.g. search) has failed
-       `(consult-async-failed ((,class (:inherit error :background ,bg-on))))
-       ;; face used while async process (e.g. search) is running
-       `(consult-async-running ((,class (:inherit warning :background ,bg-on))))
-       ;; face used for marking cursor in a live preview of a search candidate
-       `(consult-preview-cursor ((,class (:inherit match))))
-       ;; face used to for match previews in ‘consult-grep’.
-       `(consult-preview-match ((,class (:inherit match))))
-       `(consult-line-number-wrapped ((,class (:inherit consult-line-number-prefix))))
-
-       ;;
-       ;; orderless
-       ;;
-       ;; match faces for search terms (modulo 4)
-       `(orderless-match-face-0 ((,class (:inherit match))))
-       `(orderless-match-face-1 ((,class (:inherit match))))
-       `(orderless-match-face-2 ((,class (:inherit match))))
-       `(orderless-match-face-3 ((,class (:inherit match))))
-
-       ;;
-       ;; vertico
-       ;;
-       `(vertico-group-title ((,class (:foreground ,discrete))))
-       `(vertico-group-separator ((,class (:foreground ,popup-bg-border :strike-through t))))
-
-       ;;
-       ;; ivy/swiper
-       ;;
-       ;; highlight current match under cursor
-       `(ivy-current-match ((,class (:weight semi-bold :background ,bg-on :extend t))))
-       ;; highlight match under mouse pointer
-       `(ivy-minibuffer-match-highlight ((,class (:inherit highlight))))
-       ;; how to highlight first search term matches in candidate lines
-       `(ivy-minibuffer-match-face-1 ((,class (:inherit match))))
-       ;; how to highlight second search term matches in candidate lines
-       `(ivy-minibuffer-match-face-2 ((,class (:inherit match))))
-       ;; how to highlight third search term matches in candidate lines
-       `(ivy-minibuffer-match-face-3 ((,class (:inherit match))))
-       ;; how to highlight fourth search term matches in candidate lines
-       `(ivy-minibuffer-match-face-4 ((,class (:inherit match))))
-       ;; ivy information for grep-like searches (such as `counsel-ag`)
-       `(ivy-grep-info ((,class (:foreground ,sec-lo))))
-       `(ivy-grep-line-number ((,class (:foreground ,sec-lo))))
-
-       ;; used to highlight search term matches for candidate line under cursor
-       `(swiper-match-face-1 ((,class (:inherit (highlight match)))))
-       `(swiper-match-face-2 ((,class (:inherit (highlight match)))))
-       `(swiper-match-face-3 ((,class (:inherit (highlight match)))))
-       `(swiper-match-face-4 ((,class (:inherit (highlight match)))))
-       ;; used to highlight search term matches for candidate lines not under cursor
-       `(swiper-background-match-face-1 ((,class (:inherit (highlight match)))))
-       `(swiper-background-match-face-2 ((,class (:inherit (highlight match)))))
-       `(swiper-background-match-face-3 ((,class (:inherit (highlight match)))))
-       `(swiper-background-match-face-4 ((,class (:inherit (highlight match)))))
-
-       ;;
-       ;; ivy-posframe
-       ;;
-       `(ivy-posframe ((,class (:background ,popup-bg-prim))))
-       `(ivy-posframe-border ((,class (:background ,popup-bg-border))))
-
-       ;;
-       ;; org-mode
-       ;;
-       ;; face to use for #+TITLE: document info keyword
-       `(org-document-title ((,class (:foreground ,prim :weight bold))))
-       ;; face to use for value following #+DATE:, #+AUTHOR:, #+EMAIL:
-       `(org-document-info ((,class (:foreground ,prim))))
-       ;; face to use for keywords #+DATE:, #+AUTHOR:, #+EMAIL:
-       `(org-document-info-keyword ((,class (:foreground ,prim))))
-       ;; face for lines starting with "#+"
-       `(org-meta-line ((,class (:foreground ,discrete))))
-       ;; face used for headlines at different levels
-       `(org-level-1 ((,class (:weight semi-bold :foreground ,prim))))
-       `(org-level-2 ((,class (:weight semi-bold :foreground ,prim))))
-       `(org-level-3 ((,class (:weight semi-bold :foreground ,prim))))
-       `(org-level-4 ((,class (:weight semi-bold :foreground ,prim))))
-       `(org-level-5 ((,class (:weight semi-bold :foreground ,prim))))
-       `(org-level-6 ((,class (:weight semi-bold :foreground ,prim))))
-       `(org-level-7 ((,class (:weight semi-bold :foreground ,prim))))
-       `(org-level-8 ((,class (:weight semi-bold :foreground ,prim))))
-       ;; face used to indicate that a headline is DONE.
-       `(org-headline-done ((,class (:weight semi-bold :foreground ,discrete))))
-       ;; face for the ellipsis in folded text
-       `(org-ellipsis ((,class (:foreground ,tert))))
-       ;; face to use for TODO keyword
-       `(org-todo ((,class (:weight bold :foreground ,prim-lo :box (:line-width -1 :color ,bg-on)))))
-       ;; face to use for DONE keyword
-       `(org-done ((,class (:weight bold :foreground ,discrete :box (:line-width -1 :color ,bg-on)))))
-       ;; face to use for :tag: markers
-       `(org-tag ((,class (:foreground ,prim-hi))))
-       ;; face used for priority cookies `[#A]`
-       `(org-priority ((,class (:foreground ,prim-hi :weight bold))))
-       ;; face for special keywords such as SCHEDULED, DEADLINE and properties.
-       `(org-special-keyword ((,class (:foreground ,discrete))))
-       ;; face used for outline metadata :DRAWER: and :END: markers
-       `(org-drawer ((,class (:foreground ,discrete))))
-       ;; face for org-mode tables
-       `(org-table ((,class (:foreground ,sec))))
-       ;; face used for [[links][description]]
-       `(org-link ((,class (:foreground ,tert))))
-       ;; face used for footnotes: [fn:1]
-       `(org-footnote  ((,class (:foreground ,tert))))
-       ;; face for =verbatim= items
-       `(org-verbatim ((,class (:foreground ,sec))))
-       ;; face for ~code~ text
-       `(org-code ((,class (:foreground ,sec))))
-       ;; diary-like sexp date specifications like `%%(org-calendar-holiday)`
-       `(org-sexp-date ((,class (:foreground ,prim-hi))))
-       ;; face to use for content between #+BEGIN_SRC and #+END_SRC (unless a
-       ;; language syntax is specified via e.g. `#BEGIN_SRC emacs_lisp`)
-       `(org-block ((,class (:background ,bg-prim :foreground ,sec :extend t))))
-       ;; source code block #+BEGIN_SRC line
-       `(org-block-begin-line ((,class (:background ,bg-prim :foreground ,sec :extend t))))
-       ;; source code block #+END_SRC line
-       `(org-block-end-line ((,class (:background ,bg-prim :foreground ,sec :extend t))))
-       ;; face for #+BEGIN_VERSE blocks when `org-fontify-quote-and-verse-blocks` is set.
-       `(org-verse ((,class (:slant italic))))
-       ;; face for #+BEGIN_QUOTE blocks when `org-fontify-quote-and-verse-blocks` is set.
-       `(org-quote ((,class (:slant italic))))
-       ;; face to use for <date> occurences
-       `(org-date ((,class (:foreground ,sec-lo))))
-       ;; face for highlighting date under cursor in calendar selections
-       `(org-date-selected ((,class (:foreground ,fg1 :background ,diff-added :box (:line-width -1 :color ,diff-added-refined)))))
-
-       ;; face for Monday-Friday entries in agenda view
-       `(org-agenda-date ((,class (:foreground ,sec-lo))))
-       ;; face for today in agenda view
-       `(org-agenda-date-today ((,class (:foreground ,sec :weight bold :extend t :background ,bg-on))))
-       ;; face for Saturday and Sunday entries in agenda view
-       `(org-agenda-date-weekend ((,class (:foreground ,discrete))))
-       ;; face used in agenda to indicate lines switched to DONE
-       `(org-agenda-done ((,class (:foreground ,discrete))))
-       ;; face used in agenda for captions and dates
-       `(org-agenda-structure ((,class (:inherit bold :foreground ,sec-lo))))
-       ;; face used for time grid shown in agenda
-       `(org-time-grid ((,class (:foreground ,sec))))
-       ;; agenda face for items scheduled for a certain day
-       `(org-scheduled ((,class (:foreground ,fg1))))
-       ;; agenda face for items scheduled today
-       `(org-scheduled-today ((,class (:foreground ,fg1))))
-       ;; agenda face for items scheduled previously, and not yet done.
-       `(org-scheduled-previously ((,class (:foreground ,fg1))))
-       ;; face used for org-agenda deadlines
-       `(org-warning ((,class (:foreground ,error))))
-       ;; upcoming deadlines
-       `(org-upcoming-deadline ((,class (:foreground ,warning))))
-       ;; distant deadlines
-       `(org-upcoming-distant-deadline ((,class (:foreground ,warning))))
-       ;; face when header-line is used
-       `(header-line ((,class (:background ,bg-on :foreground ,prim :weight bold))))
-       ;; face to use for column view columns
-       `(org-column ((,class (:background ,bg-on))))
-       ;; face to use for top-row in column view
-       `(org-column-title ((,class (:inherit header-line))))
-       ;; face for clock display overrun tasks in mode line
-       `(org-mode-line-clock-overrun ((,class (:foreground ,error))))
-
-       ;;
-       ;; diff-mode
-       ;;
-       ;; face inherited by hunk and index header faces
-       `(diff-header ((,class (:foreground ,fg1))))
-       ;; used to highlight file header lines in diffs
-       `(diff-file-header ((,class (:foreground ,prim :weight bold))))
-       ;; face of context (text surrounding a hunk)
-       `(diff-context ((,class (:foreground ,discrete))))
-       ;; used to highlight function names produced by `diff -p`
-       `(diff-function ((,class (:foreground ,fg1))))
-       ;; used to highlight added lines
-       `(diff-added ((,class (:background ,(color-get "diff-added") :extend t))))
-       ;; face used for added characters shown by ‘diff-refine-hunk’.
-       `(diff-refine-added ((,class (:background ,(color-get "diff-added-refined")))))
-       ;; used to highlight indicator of added lines (+, >)
-       `(diff-indicator-added ((,class (:background ,(color-get "diff-added")))))
-       ;; used to highlight added lines
-       `(diff-removed ((,class (:background ,(color-get "diff-removed")))))
-       ;; face used for removed characters shown by ‘diff-refine-hunk’.
-       `(diff-refine-removed ((,class (:background ,(color-get "diff-removed-refined")))))
-       ;; used to highlight indicator of changed lines (-, <)
-       `(diff-indicator-removed ((,class (:background ,(color-get "diff-removed")))))
-       ;; face used to highlight changed lines
-       `(diff-changed ((,class (:background ,(color-get "diff-changed")))))
-       ;; face used for char-based changes shown by ‘diff-refine-hunk’.
-       `(diff-refine-changed ((,class (:background ,(color-get "diff-changed-refined")))))
-       ;; used to highlight indicator of changed lines
-       `(diff-indicator-changed ((,class (:background ,(color-get "diff-changed") :foreground ,(color-get "diff-changed-refined")))))
-
-       ;;
-       ;; diff-hl
-       ;;
-       `(diff-hl-insert ((,class (:background ,(color-get "diff-added") :foreground ,(color-get "diff-added-refined")))))
-       `(diff-hl-delete ((,class (:background ,(color-get "diff-removed") :foreground ,(color-get "diff-removed-refined")))))
-       `(diff-hl-change ((,class (:background ,(color-get "diff-changed") :foreground ,(color-get "diff-changed-refined")))))
-
-       ;;
-       ;; smerge-mode
-       ;;
-       ;; face for conflict markers
-       `(smerge-markers ((,class (:foreground ,error :weight bold))))
-       ;; face for upper version in conflict
-       `(smerge-upper ((,class (:background ,diff-changed))))
-       ;; face for lower version in conflict
-       `(smerge-lower ((,class (:background ,diff-changed))))
-       ;; face for added characters shown by smerge-refine
-       `(smerge-refined-added ((,class (:background ,diff-added-refined))))
-       ;; face for removed characters shown by smerge-refine
-       `(smerge-refined-removed ((,class (:background ,diff-removed-refined))))
-
-       ;;
-       ;; xref
-       ;;
-       `(xref-file-header ((,class (:foreground ,prim))))
-       `(xref-line-number ((,class (:foreground ,discrete))))
-
-       ;;
-       ;; compilation mode
-       ;;
-       ;; face used to highlight compiler information (and commonly in other
-       ;; moodes to display grep-like output such as file names)
-       `(compilation-info ((,class (:foreground ,prim))))
-       ;; face used to highlight compiler line numbers (and commonly in other
-       ;; moodes to display grep-like output such as file line numbers)
-       `(compilation-line-number ((,class (:foreground ,discrete))))
-
-       ;; face to highlight leading space in Makefiles
-       `(makefile-space ((,class (:background ,diff-removed))))
-
-       ;;
-       ;; completion (minibuffer.el)
-       ;;
-       ;; face for the parts of completions which matched the pattern
-       `(completions-common-part ((,class (:inherit match))))
-       `(completions-annotations ((,class (:foreground ,sec :italic t))))
-       ;; face for the first character after point in completions
-       `(completions-first-difference ((,class ()))) ;; no styling
-
-       ;;
-       ;; magit
-       ;;
-       `(magit-section-heading ((,class (:foreground ,prim :weight bold))))
-       `(magit-section-secondary-heading ((,class (:foreground ,prim))))
-       `(magit-section-heading-selection ((,class (:foreground ,prim-hi :weight bold :background ,bg-on))))
-       `(magit-section-highlight ((,class (:background ,bg-on))))
-       `(magit-header-line ((,class (:inherit header-line))))
-       `(magit-tag ((,class (:foreground ,sec))))
-       `(magit-hash ((,class (:foreground ,discrete))))
-       `(magit-filename ((,class (:foreground ,fg1 :weight semi-bold))))
-       ;; branch faces
-       `(magit-branch-local ((,class (:foreground ,sec))))
-       `(magit-branch-current ((,class (:foreground ,sec :background ,bg-on))))
-       `(magit-branch-remote ((,class (:foreground ,tert))))
-       `(magit-branch-remote-head ((,class (:foreground ,tert :background ,bg-on))))
-       ;; NOTE: magit-diff-hunk-heading, should be different from both
-       ;; magit-diff-hunk-heading-highlight and magit-section-highlight as well
-       ;; as from magit-diff-context and magit-diff-context-highlight
-       `(magit-diff-context ((,class (:foreground ,discrete :background ,bg-off))))
-       `(magit-diff-context-highlight ((,class (:foreground ,discrete :background ,bg-on))))
-       `(magit-diff-hunk-heading ((,class (:foreground ,discrete :background ,diff-changed))))
-       `(magit-diff-hunk-heading-highlight ((,class (:foreground ,discrete :background ,diff-changed-refined))))
-       `(magit-diff-hunk-heading-selection ((,class (:foreground ,fg1 :background ,diff-changed-refined))))
-       `(magit-diff-added ((,class (:background ,diff-added :extend t))))
-       `(magit-diff-added-highlight ((,class (:background ,diff-added-refined :extend t))))
-       `(magit-diff-removed ((,class (:background ,diff-removed :extend t))))
-       `(magit-diff-removed-highlight ((,class (:background ,diff-removed-refined))))
-       ;; face for file names in diffs
-       `(magit-diff-file-heading ((,class (:foreground ,fg3))))
-       `(magit-diff-file-heading-highlight ((,class (:foreground ,fg1 :background ,bg-on :extend t))))
-       ;; face to use when warning of trailing whitespace
-       `(magit-diff-whitespace-warning ((,class (:background ,diff-removed-refined))))
-       ;; NOTE: there are different `magit-blame` styles (heading, margin,
-       ;; highlight, lines). These can be cycled with "c". Some of these faces
-       ;; only apply to certain such styles.
-       `(magit-blame-heading ((,class (:foreground ,fg1 :slant normal :background ,diff-changed))))
-       `(magit-blame-highlight ((,class (:foreground ,fg1 :background ,diff-changed))))
-       ;; face used in `magit-blame` "margin mode" (use 'c' to cycle)
-       `(magit-blame-margin ((,class (:foreground ,fg1 :background ,diff-changed))))
-       ;; faces for formatting blame lines
-       `(magit-blame-name ((,class (:foreground ,fg1))))
-       `(magit-blame-date ((,class (:foreground ,fg1))))
-       `(magit-blame-summary ((,class (:foreground ,fg1))))
-       `(magit-blame-hash ((,class (:foreground ,fg1))))
-       `(magit-blame-dimmed ((,class (:foreground ,discrete))))
-       ;; magit-log
-       `(magit-log-graph ((,class (:foreground ,prim))))
-       `(magit-log-author ((,class (:foreground ,tert))))
-       `(magit-log-date ((,class (:foreground ,sec-lo))))
-       ;; magit-reflog
-       `(magit-reflog-amend ((,class (:foreground ,sec))))
-       `(magit-reflog-cherry-pick ((,class (:foreground ,sec-hi))))
-       `(magit-reflog-commit ((,class (:foreground ,sec-lo))))
-       `(magit-reflog-merge ((,class (:foreground ,prim-lo))))
-       `(magit-reflog-rebase ((,class (:foreground ,prim-hi))))
-       `(magit-reflog-checkout ((,class (:foreground ,tert))))
-       `(magit-reflog-remote ((,class (:foreground ,tert-lo))))
-       `(magit-reflog-other ((,class (:foreground ,tert-hi))))
-       `(magit-reflog-reset ((,class (:foreground ,error))))
-       ;; face non-zero exit status
-       `(magit-process-ng ((,class (:foreground ,error))))
-       `(magit-process-ok ((,class (:foreground ,prim))))
-       ;; magit-cherry
-       ;; used for "+"
-       `(magit-cherry-unmatched ((,class (:foreground ,sec))))
-       ;; used for "-"
-       `(magit-cherry-equivalent ((,class (:foreground ,tert))))
-       ;; process status
-       `(magit-mode-line-process ((,class (:foreground ,fg1))))
-       `(magit-mode-line-process-error ((,class (:foreground ,error :weight bold))))
-       ;;
-       ;; dired
-       ;;
-       `(dired-directory ((,class (:foreground ,sec-lo))))
-       ;; face used for files flagged for deletion
-       `(dired-flagged ((,class (:foreground ,fg1 :background ,diff-removed))))
-       `(dired-header ((,class (:foreground ,prim))))
-       ;; face used for files suffixed with ‘completion-ignored-extensions’.
-       `(dired-ignored ((,class (:foreground ,discrete))))
-       ;; face used for asterisk of marked files
-       `(dired-mark ((,class (:foreground ,warning :weight bold))))
-       ;; face used for files marked
-       `(dired-marked ((,class (:foreground ,fg1 :background ,diff-changed))))
-       ;; face used to highlight permissions of group- and world-writable files.
-       `(dired-perm-write ((,class (:foreground ,error))))
-       ;; face used to highlight permissions of suid and guid files.
-       `(dired-set-id ((,class (:foreground ,warning))))
-       ;; face used for sockets, pipes, block devices and char devices.
-       `(dired-special ((,class (:foreground ,tert-hi))))
-       ;; face used for symlinks
-       `(dired-symlink ((,class (:foreground ,error))))
-       ;; face used to highlight broken symblinks
-       `(dired-broken-symlink ((,class (:foreground ,fg1 :background ,diff-removed-refined))))
-       `(dired-warning ((,class (:foreground ,warning :background ,bg-on))))
-       ;;
-       ;; keycast
-       ;;
-       ;; face for the last key combination
-       `(keycast-key ((,class (:foreground ,warning :weight bold :height 1.1))))
-       ;; face for the last command
-       `(keycast-command ((,class (:foreground ,warning :weight bold :slant italic :height 1.1))))
-
-       ;;
-       ;; projtree
-       ;;
-       `(projtree-highlight ((,class (:inherit highlight))))
-       `(projtree-file ((,class (:inherit default))))
-       `(projtree-dir ((,class (:foreground ,sec-lo))))
-       `(projtree-git-modified ((,class (:background ,diff-changed :box (:line-width 1 :color ,diff-changed-refined :style nil)))))
-       `(projtree-git-added ((,class (:background ,diff-added :box (:line-width 1 :color ,diff-added-refined :style nil)))))
-       `(projtree-git-ignored ((,class (:foreground ,discrete :strike-through t))))
-       `(projtree-git-untracked ((,class (:foreground ,discrete))))
-       `(projtree-git-conflict ((,class (:background ,diff-removed :box (:line-width 1 :color ,diff-removed-refined :style nil) :italic t))))
-       ;;
-       ;; tab-bar-mode
-       ;;
-       `(tab-bar ((,class (:inherit default))))
-       `(mode-line ((,class (:inherit default :box (:line-width 1 :color ,modeline-active-border :style nil) ))))
-       ;; Face for selected tab.
-       `(tab-bar-tab ((,class (:foreground ,modeline-active-fg :background ,modeline-active-bg :box (:line-width 1 :color ,modeline-active-border)))))
-       ;; Face for non-selected tab.
-       `(tab-bar-tab-inactive ((,class (:foreground ,modeline-inactive-fg :background ,modeline-inactive-bg :box (:line-width 1 :color ,bg-on)))))
-       ;;
-       ;; dape
-       ;;
-       `(dape-breakpoint-face ((,class (:inherit warning) )))
-       `(dape-exception-description-face ((,class (:inherit error :italic t) )))
-       `(dape-repl-error-face ((,class (:inherit error :italic t) )))
-       ;;
-       ;; hydra
-       ;;
-       ;; Hydra heads that stay in the hydra.
-       `(hydra-face-red ((,class (:foreground ,prim :weight bold) )))
-       ;; Hydra heads that exit the hydra.
-       `(hydra-face-blue ((,class (:foreground ,sec :weight bold) )))
-       `(hydra-face-teal ((,class (:foreground ,tert :weight bold) )))
-       `(hydra-face-pink ((,class (:foreground ,warning :weight bold) )))
-       `(hydra-face-amaranth ((,class (:foreground ,error :weight bold) )))
-       ))))
-
 
 (defun immaterial-linear-rgb-component (col)
   "Calculates the linear RGB value for an sRGB color component COL.
@@ -923,6 +422,7 @@ COL must be a real value in the range [0.0, 1.0]."
   (if (> col 0.03928)
       (expt (/ (+ col 0.055) 1.055) 2.4)
     (/ col 12.92)))
+
 
 (defun immaterial-relative-luminance (hex-color)
   "Calculates the relative luminance of color HEX-COLOR.
@@ -934,6 +434,7 @@ lightest white."
 	 (g (immaterial-linear-rgb-component (nth 1 srgb)))
 	 (b (immaterial-linear-rgb-component (nth 2 srgb))))
     (+ (* 0.2126 r) (* 0.7152 g) (* 0.0722 b))))
+
 
 (defun immaterial-contrast-ratio (hex-color1 hex-color2)
   "Calculates the contrast ratio between two colors HEX-COLOR1 and HEX-COLOR2.

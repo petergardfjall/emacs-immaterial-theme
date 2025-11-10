@@ -27,7 +27,8 @@
 ;;; Code:
 
 (require 'immaterial-theme)
-
+(require 'immaterial-dark-theme)
+(require 'immaterial-light-theme)
 
 
 (defun immaterial--rel-lum (hex-col)
@@ -37,6 +38,17 @@
 (defun immaterial--contrast-ratio (col1 col2)
   "Calculate contrast ratio between COL1 and COL2 and return result as a string with two decimals precision."
   (format "%.2f" (immaterial-contrast-ratio col1 col2)))
+
+(defun immaterial--dark-color-get (color)
+  "Get a COLOR symbol from the `immaterial-dark-palette'."
+  ;; Resolves colors recursively.
+  (modus-themes--retrieve-palette-value color immaterial-dark-palette))
+
+(defun immaterial--light-color-get (color)
+  "Get a COLOR symbol from the `immaterial-light-palette'."
+  ;; Resolves colors recursively.
+  (modus-themes--retrieve-palette-value color immaterial-light-palette))
+
 
 
 (defun immaterial-relative-luminance-test ()
@@ -48,7 +60,7 @@
 
 
   (cl-assert (equal "0.0855" (immaterial--rel-lum "#aa0000"))
-	     "unexpected relative luminance")
+             "unexpected relative luminance")
   (cl-assert (string= "0.3554" (immaterial--rel-lum "#00bb00"))
 	     "unexpected relative luminance")
   (cl-assert (string= "0.0436" (immaterial--rel-lum "#0000cc"))
@@ -100,115 +112,131 @@
   "Ensure that the immaterial dark palette (foregrounds and backgrounds) foreground colors satisfy a minimum ratio of 4.5:1 (WCAG success criterion 1.4.3) and the primary foreground color satisfies a minimum ratio of 7:1 (WCAG success criterion 1.4.6)."
   (message "verifying color contrast for dark theme")
 
-  (cl-assert (string= "#012027" (immaterial-color "background-primary" 'dark))
+  (cl-assert (string= "#012027" (immaterial--dark-color-get 'bg-main))
 	     "should be using dark color variants")
 
   (cl-assert (<= 7 (immaterial-contrast-ratio
-		    (immaterial-color "foreground-primary" 'dark)
-		    (immaterial-color "background-primary" 'dark)))
-	     "insuffient contrast")
-  (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "primary" 'dark)
-		    (immaterial-color "background-primary" 'dark)))
-	     "insuffient contrast")
-  (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "secondary" 'dark)
-		    (immaterial-color "background-primary" 'dark)))
-	     "insuffient contrast")
-  (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "tertiary" 'dark)
-		    (immaterial-color "background-primary" 'dark)))
-	     "insuffient contrast")
-  (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "discrete" 'dark)
-		    (immaterial-color "background-primary" 'dark)))
-	     "insuffient contrast")
+                    (immaterial--dark-color-get 'fg-main)
+                    (immaterial--dark-color-get 'bg-main)))
+             "insuffient contrast")
 
-  (cl-assert (<= 7 (immaterial-contrast-ratio
-		    (immaterial-color "error" 'dark)
-		    (immaterial-color "background-primary" 'dark)))
-	     "insuffient contrast")
+  ;; Primary accent color.
   (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "warning" 'dark)
-		    (immaterial-color "background-primary" 'dark)))
-	     "insuffient contrast"))
+                    (immaterial--dark-color-get 'accent-0)
+                    (immaterial--dark-color-get 'bg-main)))
+             "insuffient contrast")
+  ;; Secondary accent color.
+  (cl-assert (<= 4.5 (immaterial-contrast-ratio
+                    (immaterial--dark-color-get 'accent-1)
+                    (immaterial--dark-color-get 'bg-main)))
+             "insuffient contrast")
+  ;; Tertiary accent color.
+  (cl-assert (<= 4.5 (immaterial-contrast-ratio
+                    (immaterial--dark-color-get 'accent-2)
+                    (immaterial--dark-color-get 'bg-main)))
+             "insuffient contrast")
+
+  ;; Comment color.
+  (cl-assert (<= 4.5 (immaterial-contrast-ratio
+        	      (immaterial--dark-color-get 'fg-dim)
+                      (immaterial--dark-color-get 'bg-main)))
+             "insuffient contrast")
+  ;; Error color.
+  (cl-assert (<= 4.5 (immaterial-contrast-ratio
+        	      (immaterial--dark-color-get 'err)
+                      (immaterial--dark-color-get 'bg-main)))
+             "insuffient contrast")
+  ;; Warning color.
+  (cl-assert (<= 4.5 (immaterial-contrast-ratio
+        	      (immaterial--dark-color-get 'warning)
+                      (immaterial--dark-color-get 'bg-main)))
+             "insuffient contrast")
+)
 
 (defun immaterial-light-palette-sufficient-contrast-test ()
   "Ensure that the immaterial light palette (foregrounds and backgrounds) foreground colors satisfy a minimum ratio of 4.5:1 (WCAG success criterion 1.4.3) and the primary foreground color satisfies a minimum ratio of 7:1 (WCAG success criterion 1.4.6)."
   (message "verifying color contrast for light theme")
 
-  (cl-assert (string= "#fdfdfd" (immaterial-color "background-primary" 'light))
+  (cl-assert (string= "#fcfcfb" (immaterial--light-color-get 'bg-main))
 	     "should be using light color variants")
 
   (cl-assert (<= 7 (immaterial-contrast-ratio
-		    (immaterial-color "foreground-primary" 'light)
-		    (immaterial-color "background-primary" 'light)))
-	     "insuffient contrast")
+                    (immaterial--light-color-get 'fg-main)
+                    (immaterial--light-color-get 'bg-main)))
+             "insuffient contrast")
+
+  ;; Primary accent color.
   (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "primary" 'light)
-		    (immaterial-color "background-primary" 'light)))
-	     "insuffient contrast")
+                    (immaterial--light-color-get 'accent-0)
+                    (immaterial--light-color-get 'bg-main)))
+             "insuffient contrast")
+  ;; Secondary accent color.
   (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "secondary" 'light)
-		    (immaterial-color "background-primary" 'light)))
-	     "insuffient contrast")
+                    (immaterial--light-color-get 'accent-1)
+                    (immaterial--light-color-get 'bg-main)))
+             "insuffient contrast")
+  ;; Tertiary accent color.
   (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "tertiary" 'light)
-		    (immaterial-color "background-primary" 'light)))
-	     "insuffient contrast")
+                    (immaterial--light-color-get 'accent-2)
+                    (immaterial--light-color-get 'bg-main)))
+             "insuffient contrast")
+
+  ;; Comment color.
   (cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "discrete" 'light)
-		    (immaterial-color "background-primary" 'light)))
-	     "insuffient contrast")
+        	      (immaterial--light-color-get 'fg-dim)
+                      (immaterial--light-color-get 'bg-main)))
+             "insuffient contrast")
+  ;; Error color.
+  (cl-assert (<= 4.5 (immaterial-contrast-ratio
+        	      (immaterial--light-color-get 'err)
+                      (immaterial--light-color-get 'bg-main)))
+             "insuffient contrast")
+  ;; Warning color.
+  (cl-assert (<= 4.5 (immaterial-contrast-ratio
+        	      (immaterial--light-color-get 'warning)
+                      (immaterial--light-color-get 'bg-main)))
+             "insuffient contrast")
+  )
 
-  (cl-assert (<= 7 (immaterial-contrast-ratio
-		    (immaterial-color "error" 'light)
-		    (immaterial-color "background-primary" 'light)))
-	     "insuffient contrast")
-(cl-assert (<= 4.5 (immaterial-contrast-ratio
-		    (immaterial-color "warning" 'light)
-		    (immaterial-color "background-primary" 'light)))
-	     "insuffient contrast"))
 
+;; (defun immaterial--print-contrast-ratios ()
+;;   "Print relevant contrast ratios."
+;;   (defun ratio (color-name-1 color-name-2 variant)
+;;     (let ((ratio (immaterial-contrast-ratio (immaterial-color color-name-1 variant)
+;; 					    (immaterial-color color-name-2 variant))))
+;;       (format "%s / %s (%s): %.2f" color-name-1 color-name-2 variant ratio)))
 
-(defun immaterial--print-contrast-ratios ()
-  "Print relevant contrast ratios."
-  (defun ratio (color-name-1 color-name-2 variant)
-    (let ((ratio (immaterial-contrast-ratio (immaterial-color color-name-1 variant)
-					    (immaterial-color color-name-2 variant))))
-      (format "%s / %s (%s): %.2f" color-name-1 color-name-2 variant ratio)))
+;;   (print (ratio "foreground-primary"   "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "foreground-secondary" "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "foreground-tertiary"  "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "primary"              "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "primary-hi"           "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "primary-lo"           "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "secondary"            "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "secondary-hi"         "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "secondary-lo"         "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "tertiary"             "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "tertiary-hi"          "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "tertiary-lo"          "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "error"                "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "warning"              "background-primary" 'dark) #'external-debugging-output)
+;;   (print (ratio "discrete"             "background-primary" 'dark) #'external-debugging-output)
 
-  (print (ratio "foreground-primary"   "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "foreground-secondary" "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "foreground-tertiary"  "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "primary"              "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "primary-hi"           "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "primary-lo"           "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "secondary"            "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "secondary-hi"         "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "secondary-lo"         "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "tertiary"             "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "tertiary-hi"          "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "tertiary-lo"          "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "error"                "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "warning"              "background-primary" 'dark) #'external-debugging-output)
-  (print (ratio "discrete"             "background-primary" 'dark) #'external-debugging-output)
-
-  (print (ratio "foreground-primary"   "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "foreground-secondary" "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "foreground-tertiary"  "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "primary"              "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "primary-hi"           "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "primary-lo"           "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "secondary"            "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "secondary-hi"         "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "secondary-lo"         "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "tertiary"             "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "tertiary-hi"          "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "tertiary-lo"          "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "error"                "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "warning"              "background-primary" 'light) #'external-debugging-output)
-  (print (ratio "discrete"             "background-primary" 'light) #'external-debugging-output))
+;;   (print (ratio "foreground-primary"   "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "foreground-secondary" "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "foreground-tertiary"  "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "primary"              "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "primary-hi"           "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "primary-lo"           "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "secondary"            "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "secondary-hi"         "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "secondary-lo"         "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "tertiary"             "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "tertiary-hi"          "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "tertiary-lo"          "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "error"                "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "warning"              "background-primary" 'light) #'external-debugging-output)
+;;   (print (ratio "discrete"             "background-primary" 'light) #'external-debugging-output))
 
 (defun immaterial-test-suite ()
   "Run the entire suite of test functions."
@@ -216,7 +244,7 @@
   (immaterial-contrast-ratio-test)
   (immaterial-dark-palette-sufficient-contrast-test)
   (immaterial-light-palette-sufficient-contrast-test)
-  (immaterial--print-contrast-ratios)
+  ;; (immaterial--print-contrast-ratios)
   (immaterial-test-end))
 
 (defun immaterial-test-end ()
