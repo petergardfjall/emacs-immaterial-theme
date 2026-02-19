@@ -294,6 +294,7 @@ The `immaterial-theme' themes are built on top of the `modus-themes'."
     `(projtree-dir ((t :inherit dired-directory)))
     `(projtree-git-modified ((t :background ,bg-changed :box (:line-width 1 :color ,bg-changed-fringe :style nil))))
     `(projtree-git-added ((t :background ,bg-added :box (:line-width 1 :color ,bg-added-fringe :style nil))))
+    `(projtree-git-ignored ((t :foreground ,fg-dim :strike-through t)))
     `(projtree-git-conflict ((t :background ,bg-removed :box (:line-width 1 :color ,bg-removed-fringe :style nil) :italic t)))
     `(projtree-highlight ((t :inherit region)))
     ;; Highlight to use for value at point when a code template is inserted.
