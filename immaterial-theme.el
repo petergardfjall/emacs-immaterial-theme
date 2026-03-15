@@ -130,6 +130,7 @@ The `immaterial-theme' themes are built on top of the `modus-themes'."
     (builtin accent-0)
     (comment fg-dim)
     (constant accent-2)
+    (docmarkup magenta)
     (docstring fg-dim)
     (fnname unspecified)
     (fnname-call unspecified)
