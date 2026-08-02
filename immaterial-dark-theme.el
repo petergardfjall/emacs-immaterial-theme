@@ -1,4 +1,4 @@
-;;; immaterial-dark-theme.el --- A dark immaterial theme variant
+;;; immaterial-dark-theme.el --- A dark immaterial theme variant  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2019-2025 Peter Gardfjäll
 ;; Author: Peter Gardfjäll

@@ -6,7 +6,7 @@
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
 ;; Version: 0.10.0
-;; Package-Requires: ((emacs "29")(modus-themes "5.0.0"))
+;; Package-Requires: ((emacs "31"))
 ;; Keywords: faces, theme
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -35,12 +35,12 @@
 ;;   (load-theme 'immaterial-dark t)    ;; dark variant
 ;;   (load-theme 'immaterial-light t)   ;; light variant
 ;;
-;; Requirements: Emacs 29.
+;; Requirements: Emacs 31.
 ;;
 
 ;;; Code:
 
-(require 'modus-themes)
+(require-theme 'modus-themes)
 
 (defgroup immaterial-theme ()
   "Immaterial themes.
