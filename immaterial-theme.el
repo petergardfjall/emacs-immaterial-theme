@@ -245,6 +245,12 @@ The `immaterial-theme' themes are built on top of the `modus-themes'."
     (bg-search-rx-group-2 bg-red-subtle)
     (bg-search-rx-group-3 unspecified)
 
+    ;; Space mappings
+
+    (bg-space unspecified)
+    (fg-space fg-dim) ;; Used for visual whitespace in `whitespace-mode'.
+    (bg-space-err bg-prominent-err) ;; Used for trailing whitespace in `whitespace-mode'.
+
     ;; Heading mappings
 
     (fg-heading-0 fg-alt)
