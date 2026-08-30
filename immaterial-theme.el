@@ -5,8 +5,8 @@
 ;; Author: Peter Gardfjäll
 ;; Keywords: themes
 ;; URL: https://github.com/petergardfjall/emacs-immaterial-theme
-;; Version: 0.11.0
-;; Package-Requires: ((emacs "31"))
+;; Version: 0.12.0
+;; Package-Requires: ((emacs "29")(modus-themes "5.3.0")
 ;; Keywords: faces, theme
 
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -40,7 +40,8 @@
 
 ;;; Code:
 
-(require-theme 'modus-themes)
+;; (require-theme 'modus-themes) ;; To use modus-themes built-into Emacs.
+(require 'modus-themes)
 
 (defgroup immaterial-theme ()
   "Immaterial themes.
